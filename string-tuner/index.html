@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>STRING TUNER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/string-tuner/assets/index-CJl8bYmP.js"></script>
+  <link rel="stylesheet" crossorigin href="/string-tuner/assets/index-D25BA6_D.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ═══ HEADER ═══════════════════════════════════════════ -->
+    <header id="mainHeader">
+      <div class="brand">
+        <div class="brand-dot" id="brandDot"></div>
+        <span class="brand-name">STRING TUNER</span>
+        <span class="brand-model">ST-440</span>
+      </div>
+      <div class="header-right">
+        <div class="power-indicator" id="powerIndicator">
+          <span class="dot"></span>
+          <span>STANDBY</span>
+        </div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ═══ SLIDE PANEL (Chord Library) ══════════════════════ -->
+    <div class="panel-overlay" id="panelOverlay"></div>
+    <aside class="slide-panel" id="slidePanel">
+      <div class="panel-header">
+        <span class="panel-title">CHORD LIBRARY</span>
+        <button class="panel-close" id="panelClose">✕</button>
+      </div>
+
+      <!-- Instrument tabs -->
+      <div class="panel-inst-tabs">
+        <button class="p-inst-btn active" data-pinst="guitar">GUITAR</button>
+        <button class="p-inst-btn" data-pinst="ukulele">UKULELE</button>
+      </div>
+
+      <!-- Note selector -->
+      <div class="chord-note-row" id="chordNoteRow">
+        <!-- filled by JS -->
+      </div>
+
+      <!-- 2×2 chord grid — all 4 qualities at once -->
+      <div class="chord-grid" id="chordGrid">
+        <!-- filled by JS -->
+      </div>
+
+    </aside>
+
+    <!-- ═══ TUNER VIEW ════════════════════════════════════════ -->
+    <main id="tunerView">
+
+      <!-- ① PARTICLE CANVAS + OVERLAY -->
+      <section class="display-section" id="displaySection">
+        <canvas id="particleCanvas"></canvas>
+        <div class="display-overlay">
+          <div class="freq-row">
+            <span class="freq-value" id="freqValue">---</span>
+            <span class="freq-unit">Hz</span>
+          </div>
+          <div class="note-row">
+            <span class="note-name" id="noteName">·</span>
+            <span class="note-octave" id="noteOctave"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ② METER -->
+      <section class="meter-section" id="meterSection">
+        <div class="meter-labels">
+          <span>LOOSEN</span>
+          <span class="center-label">· IN TUNE ·</span>
+          <span>TIGHTEN</span>
+        </div>
+        <div class="meter-track" id="meterTrack">
+          <div class="meter-needle" id="meterNeedle"></div>
+          <div class="meter-center-mark"></div>
+        </div>
+        <div class="meter-status" id="meterStatus">— WAITING FOR SIGNAL —</div>
+      </section>
+
+      <!-- ③ MIC BUTTON -->
+      <section class="mic-section">
+        <button class="mic-btn" id="micBtn">
+          <span class="mic-icon">◉</span>
+          <span class="mic-label" id="micLabel">TAP TO TUNE</span>
+        </button>
+        <div class="signal-bar-container">
+          <span class="signal-label">SIG</span>
+          <div class="signal-bar-track">
+            <div class="signal-bar" id="signalBar"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ④ STRING SELECTOR -->
+      <section class="section string-section" id="stringSectionEl">
+        <label class="section-label">STRING — <span id="autoDetectLabel">AUTO DETECT</span></label>
+        <div class="string-buttons" id="stringButtons"></div>
+        <div class="auto-hint" id="autoHint">tap to lock on a string</div>
+      </section>
+
+      <!-- ⑤ SETTINGS -->
+      <section class="section settings-section">
+        <div class="settings-row">
+          <div class="settings-col">
+            <label class="section-label">INSTRUMENT</label>
+            <div class="instrument-buttons">
+              <button class="inst-btn active" data-instrument="guitar">GUITAR</button>
+              <button class="inst-btn" data-instrument="ukulele">UKULELE</button>
+            </div>
+          </div>
+          <div class="settings-col">
+            <label class="section-label">TUNING</label>
+            <div class="tuning-buttons" id="tuningButtons"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+</body>
+</html>
