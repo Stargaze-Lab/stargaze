@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work Cosmos — ESCO Occupation Atlas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/work-cosmos/assets/index-DkA897rb.js"></script>
+  <link rel="stylesheet" crossorigin href="/work-cosmos/assets/index-0IP3ctA0.css">
+</head>
+<body>
+
+  <header id="header">
+    <div class="header-left">
+      <span class="logo-mark">✦</span>
+      <div class="logo-text">
+        <span class="logo-title">Work Cosmos</span>
+        <span class="logo-sub">ESCO Occupation Atlas</span>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="view-toggle" id="view-toggle">
+        <button class="vt-btn active" data-view="force">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="2" fill="currentColor"/><circle cx="1.5" cy="1.5" r="1.5" fill="currentColor" opacity=".5"/><circle cx="11.5" cy="2" r="1.5" fill="currentColor" opacity=".5"/><circle cx="2" cy="11" r="1.5" fill="currentColor" opacity=".5"/><circle cx="11" cy="11" r="1.5" fill="currentColor" opacity=".5"/><line x1="6.5" y1="6.5" x2="1.5" y2="1.5" stroke="currentColor" stroke-width=".8" opacity=".35"/><line x1="6.5" y1="6.5" x2="11.5" y2="2" stroke="currentColor" stroke-width=".8" opacity=".35"/><line x1="6.5" y1="6.5" x2="2" y2="11" stroke="currentColor" stroke-width=".8" opacity=".35"/><line x1="6.5" y1="6.5" x2="11" y2="11" stroke="currentColor" stroke-width=".8" opacity=".35"/></svg>
+          Graph
+        </button>
+        <button class="vt-btn" data-view="pack">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6" stroke="currentColor" stroke-width=".8" fill="none" opacity=".4"/><circle cx="4" cy="4.5" r="2.5" fill="currentColor" opacity=".35"/><circle cx="9" cy="4.5" r="2" fill="currentColor" opacity=".35"/><circle cx="6.5" cy="9.5" r="1.8" fill="currentColor" opacity=".35"/></svg>
+          Pack
+        </button>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="stat-pill">
+        <span id="counter-num">—</span>
+        <span class="counter-label">nodes</span>
+      </div>
+      <button id="help-btn" class="icon-btn">?</button>
+    </div>
+  </header>
+
+  <div id="canvas-container">
+    <svg id="main-svg"></svg>
+    <div class="fog-overlay"></div>
+
+    <div id="loading-screen">
+      <div class="loading-inner">
+        <div class="loading-orb"></div>
+        <p class="loading-text">Mapping the world of work</p>
+        <p class="loading-stage" id="loading-stage">Initialising…</p>
+        <div class="progress-wrap">
+          <div class="progress-track">
+            <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+          </div>
+          <div class="progress-meta">
+            <span id="progress-pct">0%</span>
+            <span id="progress-detail">Starting up</span>
+          </div>
+        </div>
+        <div class="loading-log" id="loading-log"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR LEFT -->
+  <aside id="sidebar-left" class="sidebar">
+    <button class="sidebar-toggle" id="left-toggle">
+      <span class="toggle-icon">◈</span>
+      <span class="toggle-label">Explore</span>
+    </button>
+    <div class="sidebar-content">
+      <div class="panel-section">
+        <label class="panel-label">Search occupations</label>
+        <div class="search-wrap">
+          <input type="text" id="search-input" placeholder="e.g. nurse, architect…" autocomplete="off" />
+          <div id="search-results" class="search-results hidden"></div>
+        </div>
+      </div>
+      <div class="panel-section">
+        <label class="panel-label">ISCO Occupational Groups</label>
+        <div id="category-list" class="category-list"></div>
+      </div>
+      <div class="panel-section" id="active-filter-section" style="display:none">
+        <label class="panel-label">Active filter</label>
+        <div id="active-filter-badge" class="filter-badge"></div>
+        <button id="clear-filter" class="clear-btn">Clear filter</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- SIDEBAR RIGHT -->
+  <aside id="sidebar-right" class="sidebar sidebar-right">
+    <button class="sidebar-toggle" id="right-toggle">
+      <span class="toggle-icon">◉</span>
+      <span class="toggle-label">Impact</span>
+    </button>
+    <div class="sidebar-content">
+      <p class="panel-intro">Paint the cosmos by global forces shaping the future of work.</p>
+      <div class="panel-section">
+        <label class="panel-label">Impact lens</label>
+        <div id="lens-list" class="lens-list"></div>
+      </div>
+      <div class="panel-section" id="lens-legend" style="display:none">
+        <label class="panel-label">Scale</label>
+        <div class="legend-bar">
+          <div class="legend-gradient"></div>
+          <div class="legend-labels"><span>Low</span><span>High</span></div>
+        </div>
+        <p class="legend-note" id="lens-note"></p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- DETAIL PANEL -->
+  <div id="detail-panel" class="detail-panel hidden">
+    <button id="detail-close" class="detail-close">✕</button>
+    <div class="detail-body">
+      <div class="detail-tag" id="detail-category">—</div>
+      <h2 id="detail-title">—</h2>
+      <p id="detail-desc" class="detail-desc">—</p>
+      <div class="detail-section">
+        <h3>Impact scores</h3>
+        <div id="detail-impacts" class="impact-bars"></div>
+      </div>
+      <div class="detail-section">
+        <h3>Essential skills</h3>
+        <div id="detail-skills" class="skills-chips"></div>
+      </div>
+      <a id="detail-esco-link" href="#" target="_blank" class="esco-link">View in ESCO ↗</a>
+    </div>
+  </div>
+
+  <div id="tooltip" class="tooltip hidden"></div>
+
+  <div id="help-modal" class="modal hidden">
+    <div class="modal-inner">
+      <button class="modal-close">✕</button>
+      <h2>Work Cosmos</h2>
+      <p>An interactive atlas of the <strong>ESCO</strong> taxonomy — 3,039 occupations and 13,939 skills mapped by the forces reshaping work.</p>
+      <ul>
+        <li><strong>Scroll</strong> to zoom · <strong>drag</strong> to pan</li>
+        <li><strong>Click</strong> any node to see details &amp; highlight connections</li>
+        <li><strong>Impact →</strong> heatmap by AI risk, climate, automation &amp; more</li>
+        <li><strong>Explore ←</strong> filter by ISCO group or search by name</li>
+        <li><strong>Graph / Pack</strong> toggle between force graph and circle packing</li>
+      </ul>
+      <p class="modal-note">Larger nodes = occupations · smaller nodes = skills · hover to read · click to explore</p>
+      <p class="modal-credit">Data: <a href="https://esco.ec.europa.eu" target="_blank">ESCO v1.2 — European Commission</a></p>
+    </div>
+  </div>
+
+</body>
+</html>
