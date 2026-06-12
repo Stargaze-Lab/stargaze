@@ -1,0 +1,10 @@
+{
+  "title": "Work Cosmos",
+  "desc": "An interactive atlas of the ESCO taxonomy — 3,039 occupations mapped across 5 visualisation modes including force graph, circle packing, sunburst, scatter and timeline. Each occupation is painted by impact lenses covering AI displacement, automation risk, climate sensitivity and real green share data from the European Commission.",
+  "tools": ["D3.js", "Vite", "ESCO API", "Force Simulation", "Circle Packing", "Sunburst", "FLIP Animation"],
+  "type": "dataviz",
+  "year": "2025",
+  "card": "wide",
+  "thumb": "thumb.png",
+  "slug": "work-cosmos"
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Life Threads",
+  "desc": "A circular timeline that maps the key events of a historical figure's life across 100 years, organized by category and month. Hover any event to reveal its story — synchronized between the 3D ring and the lateral index.",
+  "tools": ["Three.js", "Vite", "JavaScript", "CSV"],
+  "type": "dataviz",
+  "year": "2025",
+  "card": "wide",
+  "thumb": "thumb.png",
+  "slug": "experimento-01"
+}

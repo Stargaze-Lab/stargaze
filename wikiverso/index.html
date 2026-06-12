@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#04060f" />
+  <title>Wikiverso — navegue o conhecimento como um mapa estelar</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Space+Grotesk:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Silkscreen&display=swap"
+    rel="stylesheet" />
+  <script type="module" crossorigin src="/wikiverso/assets/index-CLL734eo.js"></script>
+  <link rel="stylesheet" crossorigin href="/wikiverso/assets/index-D0Hv5ECq.css">
+</head>
+<body>
+
+  <!-- 3D canvas vai aqui -->
+  <div id="app"></div>
+
+  <!-- mira do modo voo -->
+  <div id="crosshair" hidden><span></span></div>
+
+  <!-- ═══════════ HUD ═══════════ -->
+  <header id="hud" hidden>
+    <div class="hud-left">
+      <img class="hud-logo" src="./stargaze.svg" alt="stargaze" width="24" height="24" />
+      <span class="logo">WIKI<em>VERSO</em></span>
+      <span id="lang-badge" class="badge">PT</span>
+    </div>
+
+    <div class="hud-center">
+      <div class="searchbox">
+        <input id="search" type="text" placeholder="Buscar estrela na Wikipédia…" autocomplete="off" spellcheck="false" />
+        <ul id="search-results" hidden></ul>
+      </div>
+      <input id="filter" type="text" placeholder="Filtrar universo…" autocomplete="off" spellcheck="false" />
+    </div>
+
+    <div class="hud-right">
+      <button id="btn-fly" class="ghost" title="Modo voo (F)">✦ Voar</button>
+      <button id="btn-select" class="ghost">Selecionar</button>
+      <button id="btn-lite" class="ghost" title="Alternar modo Lite">☽ Lite</button>
+      <button id="btn-share" class="ghost">Compartilhar</button>
+      <button id="btn-about" class="ghost round" title="Sobre">?</button>
+      <button id="btn-new" class="ghost">Novo universo</button>
+    </div>
+  </header>
+
+  <!-- barra do modo selecionar/limpar -->
+  <div id="lockbar" hidden>
+    <p id="lock-hint"></p>
+    <div class="lock-actions">
+      <button id="lock-apply" class="primary">Limpar não selecionadas</button>
+      <button id="lock-cancel" class="ghost">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- cartão da estrela selecionada -->
+  <aside id="card" hidden>
+    <button id="card-close" class="x" title="Fechar (Esc)">✕</button>
+    <div id="card-thumb"></div>
+    <div class="card-body">
+      <p id="card-kicker" class="kicker"></p>
+      <h2 id="card-title"></h2>
+      <p id="card-extract"></p>
+      <div class="card-actions">
+        <button id="btn-expand" class="primary">Expandir constelação</button>
+        <button id="btn-read" class="ghost">Ler artigo</button>
+        <a id="card-wiki" class="ghost link" target="_blank" rel="noopener">Wikipédia ↗</a>
+      </div>
+      <p class="card-shortcuts"><kbd>E</kbd> expandir · <kbd>R</kbd> ler · <kbd>Esc</kbd> fechar</p>
+    </div>
+  </aside>
+
+  <!-- trilha de exploração -->
+  <nav id="trail" hidden></nav>
+
+  <!-- rodapé: stats + controles -->
+  <footer id="bottombar" hidden>
+    <span id="stats"></span>
+    <span id="help"></span>
+  </footer>
+
+  <!-- painel de leitura -->
+  <section id="reader" hidden>
+    <header class="reader-head">
+      <div>
+        <p class="kicker">Wikipédia · <span id="reader-lang"></span></p>
+        <h2 id="reader-title"></h2>
+      </div>
+      <div class="reader-tools">
+        <a id="reader-ext" target="_blank" rel="noopener" title="Abrir na Wikipédia">↗</a>
+        <button id="reader-close" class="x" title="Fechar">✕</button>
+      </div>
+    </header>
+    <p id="reader-hint" class="reader-hint"></p>
+    <article id="reader-content" class="reader-content"></article>
+  </section>
+
+  <!-- ═══════════ tela inicial ═══════════ -->
+  <div id="start">
+    <button id="start-close" class="x start-x" hidden>✕</button>
+    <div class="start-inner">
+      <img class="start-logo" src="./stargaze.svg" alt="stargaze" width="58" height="58" />
+      <p id="start-kicker" class="start-kicker">um experimento stargaze</p>
+      <h1>WIKI<em>VERSO</em></h1>
+      <p id="start-sub" class="start-sub"></p>
+
+      <form id="start-form">
+        <input id="start-input" type="text" placeholder="O que você quer explorar?" autocomplete="off" autofocus />
+        <div class="start-row">
+          <div class="lang-switch" role="radiogroup" aria-label="Idioma">
+            <button type="button" class="lang on" data-lang="pt">PT</button>
+            <button type="button" class="lang" data-lang="en">EN</button>
+          </div>
+          <button id="start-go" class="primary" type="submit">Criar universo ✦</button>
+        </div>
+        <label class="lite-toggle">
+          <input type="checkbox" id="lite-toggle" />
+          <span class="track"><span class="dot"></span></span>
+          <span id="lite-label" class="lite-text"></span>
+        </label>
+      </form>
+
+      <div id="chips" class="chips"></div>
+
+      <button id="start-how" class="howlink" type="button"></button>
+      <p id="start-msg" class="start-msg" hidden></p>
+    </div>
+  </div>
+
+  <!-- ═══════════ sobre / introdução ═══════════ -->
+  <div id="about" hidden>
+    <div class="about-panel">
+      <button id="about-close" class="x" title="Fechar">✕</button>
+      <img src="./stargaze.svg" alt="" width="44" height="44" />
+      <h2 id="about-title"></h2>
+      <div id="about-content"></div>
+      <button id="about-go" class="primary"></button>
+    </div>
+  </div>
+
+  <div id="toast" hidden></div>
+
+</body>
+</html>
