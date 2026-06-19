@@ -3,7 +3,7 @@
   "desc": "Afinador cromático para violão e ukulele com detecção de pitch via microfone em tempo real. Visualização de partículas que migram do caos para uma onda estacionária conforme a nota se aproxima da afinação correta.",
   "tools": ["Web Audio API", "Canvas API", "Vite", "Orbitron", "Share Tech Mono"],
   "type": "interactive",
-  "year": "2026",
+  "year": "2026-05-03",
   "card": "wide",
   "thumb": "thumb.png",
   "slug": "string-tuner"
