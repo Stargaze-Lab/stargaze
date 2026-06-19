@@ -3,7 +3,7 @@
   "desc": "Navigate knowledge like a star map — enter any topic and watch Wikipedia expand into an interactive constellation of connected articles. Each node is a concept; each edge, a link between ideas.",
   "tools": ["Three.js", "Wikipedia API", "Force Simulation", "Vite"],
   "type": "dataviz",
-  "date": "2026-06-16",
+  "date": "2026-06-12",
   "card": "wide",
   "color": "blue",
   "thumb": "thumb.png",
