@@ -1,35 +1,64 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Experimentos</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background: #f5f5f5;
-    }
-    h1 {
-      margin-bottom: 20px;
-    }
-    a {
-      display: block;
-      margin: 10px 0;
-      font-size: 18px;
-      color: #0366d6;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <h1>Meus Experimentos</h1>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090a0a" />
+    <meta name="description" content="Stargaze is an independent design studio translating complex information into data stories, 3D and interactive experiences." />
+    <meta property="og:title" content="Stargaze — Data Visualization Lab" />
+    <meta property="og:description" content="Signals, stories and systems made visible." />
+    <meta property="og:type" content="website" />
+    <title>Stargaze — Data Visualization Lab</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Stargaze home"><img class="brand-logo" src="./logo.svg" alt="" /><span>stargaze</span></a>
+      <div class="view-switch" aria-label="Project view"><button class="active" data-view="grid">grid</button><span>/</span><button data-view="index">index</button></div>
+      <div class="nav-links"><a href="#work">work</a><a href="#lab">lab</a><a href="#studio">studio</a></div>
+    </nav>
 
-  <a href="./experimento-01/">Experimento 01</a>
-  <a href="./string-tuner/">String Tuner</a>
+    <header class="hero" id="top">
+      <canvas class="hero-flock" id="hero-flock" aria-hidden="true"></canvas>
+      <p class="kicker"><span></span> Independent design studio · Brazil</p>
+      <h1>Signals, stories<br />and <em>systems</em><br />made visible.</h1>
+      <p class="hero-interaction-note"><span>↗</span> Move through the flock</p>
+      <div class="hero-foot">
+        <p>We translate complex information into visual experiences — through data visualization, 3D and creative code.</p>
+        <div class="hero-services"><span>Data stories</span><span>Interactive systems</span><span>Creative technology</span></div>
+      </div>
+    </header>
 
-</body>
+    <main>
+      <section class="work-section" id="work">
+        <div class="section-head"><p><span>01</span> Selected work</p><p id="project-count"></p></div>
+        <div class="project-grid" id="project-grid"></div>
+        <div class="project-index" id="project-index" hidden></div>
+      </section>
+
+      <section class="lab-section" id="lab">
+        <div class="section-head"><p><span>02</span> Live lab</p><p id="sketch-count"></p></div>
+        <div class="lab-intro"><h2>Small tools,<br /><em>open experiments.</em></h2><p>A growing shelf of browser-native studies. Some are finished enough to play with; others mark what we are building next.</p></div>
+        <div class="lab-grid" id="lab-grid"></div>
+      </section>
+
+      <section class="studio-section" id="studio">
+        <div class="section-head"><p><span>03</span> Studio</p><p>Ideas with a visible form</p></div>
+        <div class="studio-grid">
+          <h2>We make the abstract<br /><em>clear enough to feel.</em></h2>
+          <div class="studio-copy"><p>Stargaze is a small design studio working where information, narrative and technology meet. We partner with teams that need more than a chart — they need a way into the subject.</p><a href="mailto:hello@stargaze.studio">Start a conversation <span aria-hidden="true">→</span></a></div>
+          <div class="services-list"><span><b>01</b> Data visualization</span><span><b>02</b> Editorial storytelling</span><span><b>03</b> Interactive prototypes</span><span><b>04</b> 3D visual systems</span></div>
+        </div>
+      </section>
+    </main>
+
+    <footer><a class="brand" href="#top"><img class="brand-logo" src="./logo.svg" alt="" /><span>stargaze</span></a><p>Vibecoding the cosmos</p><p>© <span id="current-year"></span> · São Paulo / Remote</p></footer>
+
+    <div class="project-overlay" id="project-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Project viewer">
+      <div class="project-stage"><div class="stage-art" id="stage-art"></div><div class="stage-nav"><span id="stage-counter"></span><div><button data-action="previous" aria-label="Previous item">←</button><button data-action="next" aria-label="Next item">→</button><button data-action="close" class="close" aria-label="Close project">×</button></div></div></div>
+      <aside class="project-sheet"><div class="sheet-head"><span id="sheet-eyebrow"></span><button data-action="close" aria-label="Close project">×</button></div><h2 id="sheet-title"></h2><p class="sheet-summary" id="sheet-summary"></p><p class="sheet-description" id="sheet-description"></p><dl><div><dt>Tools</dt><dd id="sheet-tools"></dd></div><div><dt>Year</dt><dd id="sheet-year"></dd></div><div><dt>Format</dt><dd id="sheet-format"></dd></div></dl><div id="sheet-action"></div></aside>
+    </div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
 </html>

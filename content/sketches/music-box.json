@@ -1,0 +1,16 @@
+{
+  "slug": "music-box",
+  "title": "Music Box",
+  "eyebrow": "Sound sketch 05",
+  "summary": "Move musical pieces across a field and let a wandering pulse turn space into rhythm.",
+  "description": "A tactile spatial sequencer for composing directly in the browser. Drop and drag notes across the field, hold a node to choose intervals, change key, scale and instrument, shape the sound, then record and download the result as a WAV file.",
+  "tools": ["Canvas", "Web Audio API", "WAV recording"],
+  "controls": ["Notes", "Scale", "Record"],
+  "instructions": "Tap to place · drag to tune · hold for intervals",
+  "date": "2026-08-09",
+  "accent": "amber",
+  "visual": "sketch",
+  "sketch": "music-box",
+  "status": "live",
+  "order": 5
+}

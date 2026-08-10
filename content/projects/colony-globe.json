@@ -1,0 +1,13 @@
+{
+  "slug": "colony-globe",
+  "title": "Empires & Colonies",
+  "eyebrow": "Historical data experience",
+  "summary": "Six centuries of colonial rule unfold across an interactive globe and timeline.",
+  "description": "A bilingual spatial interface for exploring how colonial territories changed hands, became independent and retained political or cultural ties. Switch between globe and map views, isolate an empire and move through time to reveal overlapping layers of control.",
+  "tools": ["Three.js", "Historical data", "Data storytelling"],
+  "date": "2026-06-30",
+  "accent": "amber",
+  "span": "wide",
+  "visual": "migration-globe",
+  "href": "https://stargaze.glitchme.art/colony/"
+}
