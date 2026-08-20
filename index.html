@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#090a0a" />
     <meta name="description" content="Stargaze is an independent design studio translating complex information into data stories, 3D and interactive experiences." />
     <meta property="og:title" content="Stargaze — Data Visualization Lab" />
-    <meta property="og:description" content="Signals, stories and systems made visible." />
+    <meta property="og:description" content="Journey thru data cosmos." />
     <meta property="og:type" content="website" />
     <title>Stargaze — Data Visualization Lab</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
@@ -15,14 +15,14 @@
   <body>
     <nav class="site-nav" aria-label="Primary navigation">
       <a class="brand" href="#top" aria-label="Stargaze home"><img class="brand-logo" src="./logo.svg" alt="" /><span>stargaze</span></a>
-      <div class="view-switch" aria-label="Project view"><button class="active" data-view="grid">grid</button><span>/</span><button data-view="index">index</button></div>
+      <div class="view-switch" aria-label="Selected work view"><button class="active" data-view="grid" aria-pressed="true">grid</button><span>/</span><button data-view="index" aria-pressed="false">index</button></div>
       <div class="nav-links"><a href="#work">work</a><a href="#lab">lab</a><a href="#studio">studio</a></div>
     </nav>
 
     <header class="hero" id="top">
       <canvas class="hero-flock" id="hero-flock" aria-hidden="true"></canvas>
       <p class="kicker"><span></span> Independent design studio · Brazil</p>
-      <h1>Signals, stories<br />and <em>systems</em><br />made visible.</h1>
+      <h1>journey <em>thru</em><br />data cosmos</h1>
       <p class="hero-interaction-note"><span>↗</span> Move through the flock</p>
       <div class="hero-foot">
         <p>We translate complex information into visual experiences — through data visualization, 3D and creative code.</p>
@@ -32,14 +32,14 @@
 
     <main>
       <section class="work-section" id="work">
-        <div class="section-head"><p><span>01</span> Selected work</p><p id="project-count"></p></div>
+        <div class="section-head"><p><span>01</span> Selected work</p><p id="project-count"></p><div class="view-switch view-switch-local" aria-label="Selected work view"><button class="active" data-view="grid" aria-pressed="true">grid</button><span>/</span><button data-view="index" aria-pressed="false">index</button></div></div>
         <div class="project-grid" id="project-grid"></div>
         <div class="project-index" id="project-index" hidden></div>
       </section>
 
       <section class="lab-section" id="lab">
         <div class="section-head"><p><span>02</span> Live lab</p><p id="sketch-count"></p></div>
-        <div class="lab-intro"><h2>Small tools,<br /><em>open experiments.</em></h2><p>A growing shelf of browser-native studies. Some are finished enough to play with; others mark what we are building next.</p></div>
+        <div class="lab-intro"><h2>Small tools,<br /><em>open experiments.</em></h2><p>A focused shelf of browser-native studies in sound, motion and interaction — small enough to explore, complete enough to play with.</p></div>
         <div class="lab-grid" id="lab-grid"></div>
       </section>
 

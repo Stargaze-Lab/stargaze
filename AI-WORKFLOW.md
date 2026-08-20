@@ -23,6 +23,17 @@ Use this route for a compact exercise that opens inside the portfolio viewer.
 
 The loader discovers matching files automatically. Do not create a separate `index.html`, `meta.json` or folder under `public` for an inline sketch.
 
+## 3. External Live Lab tool
+
+Use this route for a small interactive tool that is already hosted at its own URL but belongs in **Live lab**, rather than **Selected work**.
+
+- Metadata: `content/sketches/<slug>.json`
+- Set `"status":"live"`.
+- Add the complete public `"href":"https://..."`.
+- Do not add `sketch` unless the experiment also has a matching inline module.
+
+String Tuner is the reference implementation for this route.
+
 Every live sketch module must provide one of these interfaces:
 
 ```js

@@ -17,6 +17,7 @@ const previewCleanups = [];
 
 const escapeHtml = (value = "") => String(value).replace(/[&<>'"]/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
 const arrow = `<svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h11M10 4l5 5-5 5"/></svg>`;
+const projectLabel = (project) => project.status === "prototype" ? "research prototype" : "case study";
 
 function visualMarkup(entry, large = false) {
   const coordinate = escapeHtml(entry.slug.replaceAll("-", " / "));
@@ -49,7 +50,7 @@ function visualMarkup(entry, large = false) {
 function projectCardMarkup(project, position) {
   return `<button class="project-card span-${escapeHtml(project.span)}" data-entry="${escapeHtml(project.slug)}" data-accent="${escapeHtml(project.accent)}" style="--card-accent:${colors[project.accent] || colors.amber}" aria-label="Open ${escapeHtml(project.title)}">
     ${visualMarkup(project)}
-    <span class="card-topline"><span>${String(position + 1).padStart(2, "0")}</span><span>↗ case</span></span>
+    <span class="card-topline"><span>${String(position + 1).padStart(2, "0")}</span><span>↗ ${escapeHtml(project.status === "prototype" ? "prototype" : "case")}</span></span>
     <span class="card-copy"><span class="card-eyebrow">${escapeHtml(project.eyebrow)}</span><strong>${escapeHtml(project.title)}</strong><span class="card-summary">${escapeHtml(project.summary)}</span></span>
     <span class="card-open">view ${arrow}</span>
   </button>`;
@@ -68,9 +69,11 @@ function sketchCardMarkup(sketch, position) {
 function render() {
   grid.innerHTML = projects.map(projectCardMarkup).join("") + `<div class="signal-card" aria-hidden="true"><i></i><i></i><i></i><i></i><span>more signals<br>incoming</span></div>`;
   lab.innerHTML = sketches.map(sketchCardMarkup).join("");
-  index.innerHTML = `<div class="index-labels"><span>No.</span><span>Project</span><span>Kind</span><span>Year</span></div>` + projects.map((project, position) => `<button data-entry="${escapeHtml(project.slug)}" data-accent="${escapeHtml(project.accent)}"><span>${String(position + 1).padStart(2, "0")}</span><span><strong>${escapeHtml(project.title)}</strong><small>${project.tools.map(escapeHtml).join(" · ")}</small></span><span>↗ case study</span><span>${project.date.slice(0, 4)}</span></button>`).join("");
-  document.querySelector("#project-count").textContent = `${projects.length} cases · 2025—26`;
-  document.querySelector("#sketch-count").textContent = `${sketches.filter((item) => item.status === "live").length} live · ${sketches.filter((item) => item.status !== "live").length} in development`;
+  index.innerHTML = `<div class="index-labels"><span>No.</span><span>Project</span><span>Kind</span><span>Year</span></div>` + projects.map((project, position) => `<button data-entry="${escapeHtml(project.slug)}" data-accent="${escapeHtml(project.accent)}"><span>${String(position + 1).padStart(2, "0")}</span><span><strong>${escapeHtml(project.title)}</strong><small>${escapeHtml(project.eyebrow)} · ${project.tools.map(escapeHtml).join(" · ")}</small></span><span>↗ ${escapeHtml(projectLabel(project))}</span><span>${project.date.slice(0, 4)}</span></button>`).join("");
+  document.querySelector("#project-count").textContent = `${projects.length} selected works · 2025—26`;
+  const liveSketches = sketches.filter((item) => item.status === "live").length;
+  const plannedSketches = sketches.length - liveSketches;
+  document.querySelector("#sketch-count").textContent = `${liveSketches} live${plannedSketches ? ` · ${plannedSketches} in development` : ""}`;
   bindEntryTriggers();
   document.querySelectorAll('[data-orbit="card"]').forEach((canvas) => mountOrbit(canvas, false));
   mountSketchPreviews();
@@ -166,7 +169,7 @@ function openEntry(slug, trigger = activeTrigger) {
   document.querySelector("#sheet-description").textContent = entry.description;
   document.querySelector("#sheet-tools").innerHTML = entry.tools.map((tool) => `<span>${escapeHtml(tool)}</span>`).join("");
   document.querySelector("#sheet-year").textContent = entry.date.slice(0, 4);
-  document.querySelector("#sheet-format").textContent = entry.kind === "sketch" ? (entry.status === "live" ? "Interactive browser tool" : "Planned live tool") : "Interactive case study";
+  document.querySelector("#sheet-format").textContent = entry.kind === "sketch" ? (entry.status === "live" ? "Interactive browser tool" : "Planned live tool") : (entry.status === "prototype" ? "Research prototype" : "Interactive case study");
   if (entry.href) {
     document.querySelector("#sheet-action").innerHTML = `<a class="project-cta" href="${escapeHtml(entry.href)}" target="_blank" rel="noreferrer">Open project ${arrow}</a>`;
   } else if (entry.status === "planned") {
@@ -304,9 +307,20 @@ function mountOrbit(canvas, expanded) {
   return () => { running = false; cancelAnimationFrame(frame); observer.disconnect(); canvas.removeEventListener("pointermove", move); document.removeEventListener("visibilitychange", visibility); };
 }
 
+function setProjectView(view) {
+  const showGrid = view === "grid";
+  grid.hidden = !showGrid;
+  index.hidden = showGrid;
+  document.querySelectorAll(".view-switch button").forEach((button) => {
+    const isActive = button.dataset.view === view;
+    button.classList.toggle("active", isActive);
+    button.setAttribute("aria-pressed", String(isActive));
+  });
+}
+
 document.querySelectorAll(".view-switch button").forEach((button) => button.addEventListener("click", () => {
-  document.querySelectorAll(".view-switch button").forEach((item) => item.classList.toggle("active", item === button));
-  const showGrid = button.dataset.view === "grid"; grid.hidden = !showGrid; index.hidden = showGrid;
+  setProjectView(button.dataset.view);
+  document.querySelector("#work").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
 }));
 document.querySelectorAll("[data-action]").forEach((button) => button.addEventListener("click", () => { if (button.dataset.action === "close") closeEntry(); if (button.dataset.action === "previous") step(-1); if (button.dataset.action === "next") step(1); }));
 overlay.addEventListener("pointerdown", (event) => { if (event.target === overlay) closeEntry(); });

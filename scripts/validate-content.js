@@ -35,7 +35,7 @@ for (const { file, kind, data } of items) {
 
   if (kind === "sketch") {
     if (!new Set(["live", "planned"]).has(data.status)) errors.push(`${file}: status must be live or planned`);
-    if (data.status === "live" && !data.sketch) errors.push(`${file}: live sketches need a sketch module name`);
+    if (data.status === "live" && !data.sketch && !data.href) errors.push(`${file}: live sketches need a sketch module name or an external href`);
     if (data.status === "live" && data.sketch && !builtInSketches.has(data.sketch)) {
       const modulePath = resolve(root, "src", "sketches", `${data.sketch}.js`);
       try {

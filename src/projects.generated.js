@@ -31,33 +31,15 @@ export const projects = [
     ],
     "date": "2026-06-12",
     "accent": "blue",
-    "span": "wide",
+    "span": "standard",
     "visual": "network",
     "href": "https://stargaze.glitchme.art/wikiverso/",
     "kind": "project"
   },
   {
-    "slug": "string-tuner",
-    "title": "String Tuner",
-    "eyebrow": "Sound interface",
-    "summary": "A chromatic tuner where sound settles particles into a standing wave.",
-    "description": "A visual tuning instrument for guitar and ukulele. Pitch detection turns the distance to a note into motion, allowing a chaotic field to resolve into a stable wave as the instrument reaches tune.",
-    "tools": [
-      "Web Audio API",
-      "Canvas",
-      "Pitch detection"
-    ],
-    "date": "2026-01-15",
-    "accent": "aqua",
-    "span": "standard",
-    "visual": "wave",
-    "href": "https://stargaze.glitchme.art/string-tuner/",
-    "kind": "project"
-  },
-  {
     "slug": "life-threads",
     "title": "Life Threads",
-    "eyebrow": "Narrative timeline",
+    "eyebrow": "Research prototype",
     "summary": "A century of events arranged as a circular, explorable biography.",
     "description": "A three-dimensional timeline that organizes a historical figure’s life by month and theme. The circular view and editorial index stay synchronized, joining overview with the detail of individual stories.",
     "tools": [
@@ -69,6 +51,7 @@ export const projects = [
     "accent": "violet",
     "span": "wide",
     "visual": "threads",
+    "status": "prototype",
     "href": "https://stargaze.glitchme.art/experimento-01/",
     "kind": "project"
   }
@@ -124,72 +107,27 @@ export const sketches = [
     "kind": "sketch"
   },
   {
-    "slug": "pattern-composer",
-    "title": "Pattern Composer",
-    "eyebrow": "Tool sketch 02",
-    "summary": "Build repeat systems from modular shapes, rhythm and controlled variation.",
-    "description": "A compact pattern-making tool for exploring tiles, density, symmetry and color. The finished sketch will export seamless compositions for visual identities, backgrounds and editorial systems.",
+    "slug": "string-tuner",
+    "title": "String Tuner",
+    "eyebrow": "Sound interface",
+    "summary": "A chromatic tuner where sound settles particles into a standing wave.",
+    "description": "A visual tuning instrument for guitar and ukulele. Pitch detection turns the distance to a note into motion, allowing a chaotic field to resolve into a stable wave as the instrument reaches tune.",
     "tools": [
+      "Web Audio API",
       "Canvas",
-      "Generative design",
-      "Export"
+      "Pitch detection"
     ],
     "controls": [
-      "Density",
-      "Repeat",
-      "Palette"
+      "Microphone",
+      "Guitar",
+      "Ukulele"
     ],
-    "date": "2026-05-20",
+    "date": "2026-01-15",
     "accent": "aqua",
-    "visual": "pattern",
-    "status": "planned",
-    "order": 2,
-    "kind": "sketch"
-  },
-  {
-    "slug": "poster-generator",
-    "title": "Poster Generator",
-    "eyebrow": "Tool sketch 03",
-    "summary": "A constrained poster system for type, grids and data-driven composition.",
-    "description": "An interactive layout instrument where typography, hierarchy and graphic marks respond to a small set of deliberate controls. Future versions can export print-ready posters and social formats.",
-    "tools": [
-      "HTML Canvas",
-      "Typography",
-      "Layout systems"
-    ],
-    "controls": [
-      "Type scale",
-      "Grid",
-      "Seed"
-    ],
-    "date": "2026-04-18",
-    "accent": "violet",
-    "visual": "poster",
-    "status": "planned",
+    "visual": "wave",
+    "status": "live",
     "order": 3,
-    "kind": "sketch"
-  },
-  {
-    "slug": "data-glyphs",
-    "title": "Data Glyphs",
-    "eyebrow": "Data sketch 04",
-    "summary": "Turn a tiny dataset into a family of repeatable visual symbols.",
-    "description": "A study in encoding several values inside one compact visual unit. Controls will make it possible to compare mappings, tune legibility and export the resulting glyph system.",
-    "tools": [
-      "D3.js",
-      "SVG",
-      "Data encoding"
-    ],
-    "controls": [
-      "Dataset",
-      "Mapping",
-      "Scale"
-    ],
-    "date": "2026-03-22",
-    "accent": "blue",
-    "visual": "glyph",
-    "status": "planned",
-    "order": 4,
+    "href": "https://stargaze.glitchme.art/string-tuner/",
     "kind": "sketch"
   }
 ];

@@ -13,6 +13,7 @@ npm run dev
 
 - `content/projects/` contains the larger cases shown in **Selected work**.
 - `content/sketches/` contains live tools and planned experiments shown in **Live lab**.
+- `content/backlog/` preserves future ideas without publishing them on the homepage.
 - `public/studies/` can hold a complete self-contained study that should live inside this repository.
 - `src/main.js` contains the shared portfolio interface and the automatic sketch loader.
 - `src/sketches/` contains self-contained inline experiments.
@@ -51,7 +52,9 @@ Supported case visuals: `network`, `wave`, `threads`, `field`, `migration-globe`
 
 The loader discovers the JavaScript file automatically. New sketches no longer require manual edits in `src/main.js`.
 
-The current placeholders demonstrate three useful future directions: pattern construction, poster generation and data glyph design. They can be replaced gradually without restructuring the homepage.
+An existing standalone browser tool may also appear in **Live lab** by using `"status":"live"` with a complete `"href":"https://..."` instead of a local sketch module. String Tuner follows this route.
+
+Pattern Composer, Poster Generator and Data Glyphs are preserved in `content/backlog/` and are not shown publicly until they have a functional prototype.
 
 For the repeatable AI-assisted update and publishing procedure, see [`AI-WORKFLOW.md`](./AI-WORKFLOW.md).
 

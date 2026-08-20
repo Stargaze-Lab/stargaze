@@ -15,6 +15,9 @@
 * {
   box-sizing: border-box;
 }
+[hidden] {
+  display: none !important;
+}
 html {
   scroll-behavior: smooth;
   background: var(--paper);
@@ -130,6 +133,9 @@ svg {
 .view-switch button.active {
   color: var(--ink);
 }
+.view-switch-local {
+  display: none;
+}
 .nav-links {
   justify-self: end;
   display: flex;
@@ -221,8 +227,15 @@ footer {
   letter-spacing: -0.075em;
   font-family: var(--font-display);
   font-weight: 700;
+  text-transform: lowercase;
 }
-.hero h1 em,
+.hero h1 em {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 700;
+  transition: color 0.5s;
+}
 .studio-grid h2 em {
   color: var(--accent);
   font-family: Georgia, serif;
@@ -883,10 +896,12 @@ footer {
   color: var(--muted);
   transition: 0.3s;
 }
-.project-index button:hover {
+.project-index button:hover,
+.project-index button:focus-visible {
   padding-left: 24px;
   background: #101111;
   color: var(--ink);
+  outline: none;
 }
 .project-index button > span:first-child,
 .project-index button > span:nth-child(3),
@@ -1215,6 +1230,13 @@ footer > p:last-child {
   .view-switch {
     display: none;
   }
+  .view-switch-local {
+    display: flex;
+    margin-left: auto;
+  }
+  #project-count {
+    display: none;
+  }
   .nav-links {
     gap: 18px;
   }
@@ -1260,6 +1282,24 @@ footer > p:last-child {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: 54vw;
     gap: 7px;
+  }
+  .index-labels,
+  .project-index button {
+    grid-template-columns: 38px minmax(0, 1fr) 92px;
+    gap: 10px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .index-labels > span:last-child,
+  .project-index button > span:last-child {
+    display: none;
+  }
+  .project-index strong {
+    font-size: 19px;
+  }
+  .project-index button > span:nth-child(3) {
+    font-size: 7px;
+    line-height: 1.4;
   }
   .project-card,
   .project-card.span-wide,
