@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#050914" />
+    <title>Código e créditos · Celeste</title>
+    <style>
+      :root { color-scheme: dark; --ink:#050914; --paper:#f2e8ce; --muted:#aeb9d1; --gold:#d7b669; }
+      * { box-sizing:border-box; }
+      body { min-height:100vh; margin:0; color:var(--paper); background:radial-gradient(circle at 74% 12%,#31407955,transparent 32%),var(--ink); font:14px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace; }
+      main { width:min(760px,calc(100% - 40px)); margin:auto; padding:72px 0 100px; }
+      .star { color:var(--gold); font-size:24px; }
+      h1,h2 { font-family:Georgia,serif; font-weight:400; }
+      h1 { margin:18px 0 12px; font-size:clamp(42px,9vw,78px); letter-spacing:-.055em; }
+      h2 { margin-top:48px; color:#eed99d; font-size:24px; }
+      p,li { color:var(--muted); }
+      a { color:#eed99d; text-underline-offset:4px; }
+      .lead { max-width:620px; color:var(--paper); font-family:Georgia,serif; font-size:19px; }
+      .download { display:inline-block; margin:22px 0 4px; border:1px solid #d7b66988; padding:12px 16px; text-decoration:none; text-transform:uppercase; letter-spacing:.08em; font-size:11px; }
+      .note { margin-top:26px; border-left:1px solid var(--gold); padding-left:18px; font-size:12px; }
+      footer { margin-top:62px; padding-top:20px; border-top:1px solid #becae922; font-size:11px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a href="./">← voltar para Celeste</a>
+      <div class="star">✦</div>
+      <h1>Código e créditos</h1>
+      <p class="lead">Celeste é um estudo aberto sobre duas maneiras de ver o mesmo instante: o céu observado a partir de um lugar e sua tradução astrológica em um mapa natal.</p>
+      <p>O cálculo acontece no navegador. Data, horário e coordenadas não são enviados a um servidor de astrologia.</p>
+      <a class="download" href="./celeste-source.zip" download>baixar código-fonte</a>
+      <p class="note">Licença: GNU Affero General Public License v3.0 ou posterior. Se você modificar Celeste e disponibilizar essa versão por uma rede, deverá oferecer o código-fonte correspondente aos usuários dessa versão.</p>
+
+      <h2>Cálculo natal</h2>
+      <p>Planetas, Nodo Norte verdadeiro, Quíron, cúspides Placidus e eixos ASC/MC são calculados com <a href="https://www.astro.com/swisseph/" rel="noreferrer">Swiss Ephemeris</a>, criado por Dieter Koch e Alois Treindl e publicado pela Astrodienst AG. Celeste usa a opção de licença AGPL do projeto. A integração no navegador utiliza <a href="https://github.com/prolaxu/swisseph-wasm" rel="noreferrer">swisseph-wasm</a>.</p>
+
+      <h2>Céu observado</h2>
+      <p>Os planetas e as casas no horizonte local também usam Swiss Ephemeris, agora em referencial topocêntrico. <a href="https://github.com/cosinekitty/astronomy" rel="noreferrer">Astronomy Engine</a> transforma o catálogo visual de estrelas e constelações, derivado do projeto <a href="https://github.com/ofrohn/d3-celestial" rel="noreferrer">d3-celestial</a>. A cena interativa é renderizada com <a href="https://threejs.org/" rel="noreferrer">Three.js</a>; a busca de lugares usa a API de geocodificação do <a href="https://open-meteo.com/en/docs/geocoding-api" rel="noreferrer">Open-Meteo</a>.</p>
+
+      <h2>Dois referenciais</h2>
+      <p>A abóbada, o disco e a imersão descrevem onde os astros aparecem em relação ao horizonte local. O mapa natal usa longitude eclíptica geocêntrica, zodíaco tropical e casas Placidus. A diferença visual entre eles é parte do estudo: não significa que um dos cálculos esteja “errado”.</p>
+
+      <footer>Celeste · um estudo Stargaze · sem afiliação ou endosso da Astrodienst AG.</footer>
+    </main>
+  </body>
+</html>

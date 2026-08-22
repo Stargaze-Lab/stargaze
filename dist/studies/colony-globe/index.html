@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Impérios &amp; Colônias — uma linha do tempo · Stargaze</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon-B4aR1SJJ.svg" />
+  <script type="module" crossorigin src="./assets/index-BeCK7nCy.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DSvz979Q.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Splash de apresentação -->
+    <div id="splash">
+      <div class="splash-inner">
+        <img class="splash-logo" src="data:image/svg+xml,%3csvg%20width='70'%20height='70'%20viewBox='0%200%2070%2070'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M36.922%2019.775C38.479%2020.813%2037.2463%2018.4262%2036.4827%2020.1655C35.9087%2021.4729%2039.5996%2019.5553%2037.1417%2019.5553'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M21.1061%2038.2263C20.6595%2040.4591%2021.8589%2038.6901%2020.325%2038.6901C18.5934%2038.6901%2019.1302%2040.1595%2020.4471%2040.4229'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M50.9803%2035.3707C52.2854%2035.3707%2050.1091%2035.1629%2050.48%2035.8222C51.0232%2036.788%2053.388%2036.6449%2051.8589%2035.3707'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M32.7493%2039.3244C34.6618%2038.6869%2031.7299%2038.8382%2033.1886%2039.3244'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M39.119%2035.1509C39.4687%2034.4515%2038.805%2034.9535%2038.5943%2035.2485C38.5343%2035.3325%2040.6618%2034.208%2038.8993%2034.7116'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M35.3821%2054.0415C36.0104%2054.6698%2036.2607%2054.2169%2036.2607%2053.5168C36.2607%2053.2437%2036.1975%2054.0854%2036.3095%2054.3344C36.4167%2054.5725%2036.605%2053.6394%2036.6024%2053.5778C36.5825%2053.0992%2036.156%2053.2107%2035.8214%2053.1629'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75317%204.60524V65.4778'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.83911%204.31666H65.8926'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M65.9172%204.61842V65.6835'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.89771%2065.6287L65.3961%2065.6287'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e" alt="Stargaze" width="40" height="40" />
+        <div class="splash-kicker" data-i18n="kicker">um experimento stargaze</div>
+        <h1 class="splash-title"><span data-i18n="titleA">Impérios</span> <em data-i18n="titleB">&amp; Colônias</em></h1>
+        <p class="splash-text" data-i18n="intro">Um globo interativo para explorar a influência dos impérios coloniais ao longo do tempo — quem colonizou quem, quando cada país se tornou independente, e o que dessa influência permanece hoje. Mova a linha do tempo, gire o globo e clique em qualquer território para ler seu artigo na Wikipédia.</p>
+        <div class="splash-lang">
+          <button class="lang-btn active" data-lang="pt">PT</button>
+          <span class="lang-div">·</span>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+        <button id="enter-btn" class="splash-cta"><span data-i18n="cta">ir para o estudo</span> ✦</button>
+        <div class="splash-foot" data-i18n="foot">pesquisa desenvolvida em vibecoding com Claude Opus 4.8</div>
+      </div>
+    </div>
+
+    <!-- Globo -->
+    <div id="globe-wrap">
+      <canvas id="globe"></canvas>
+      <div id="hint" data-i18n="hint">arraste para girar · scroll para zoom · clique num país</div>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header id="topbar">
+      <div class="brand">
+        <img class="brand-logo" src="data:image/svg+xml,%3csvg%20width='70'%20height='70'%20viewBox='0%200%2070%2070'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M36.922%2019.775C38.479%2020.813%2037.2463%2018.4262%2036.4827%2020.1655C35.9087%2021.4729%2039.5996%2019.5553%2037.1417%2019.5553'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M21.1061%2038.2263C20.6595%2040.4591%2021.8589%2038.6901%2020.325%2038.6901C18.5934%2038.6901%2019.1302%2040.1595%2020.4471%2040.4229'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M50.9803%2035.3707C52.2854%2035.3707%2050.1091%2035.1629%2050.48%2035.8222C51.0232%2036.788%2053.388%2036.6449%2051.8589%2035.3707'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M32.7493%2039.3244C34.6618%2038.6869%2031.7299%2038.8382%2033.1886%2039.3244'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M39.119%2035.1509C39.4687%2034.4515%2038.805%2034.9535%2038.5943%2035.2485C38.5343%2035.3325%2040.6618%2034.208%2038.8993%2034.7116'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M35.3821%2054.0415C36.0104%2054.6698%2036.2607%2054.2169%2036.2607%2053.5168C36.2607%2053.2437%2036.1975%2054.0854%2036.3095%2054.3344C36.4167%2054.5725%2036.605%2053.6394%2036.6024%2053.5778C36.5825%2053.0992%2036.156%2053.2107%2035.8214%2053.1629'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.75317%204.60524V65.4778'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.83911%204.31666H65.8926'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M65.9172%204.61842V65.6835'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20d='M3.89771%2065.6287L65.3961%2065.6287'%20stroke='%23E7BD6D'%20stroke-width='1.73009'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e" alt="Stargaze" width="22" height="22" />
+        <span class="brand-name">stargaze</span>
+        <span class="brand-sep">/</span>
+        <span class="brand-exp" data-i18n="brandExp">impérios &amp; colônias</span>
+      </div>
+      <div class="subtitle" data-i18n="subtitle">a influência dos impérios coloniais ao longo do tempo</div>
+    </header>
+
+    <!-- Legenda de impérios -->
+    <aside id="legend">
+      <div class="legend-title" data-i18n="legendTitle">impérios</div>
+      <div id="legend-list"></div>
+    </aside>
+
+    <!-- Linha do tempo -->
+    <div id="timeline">
+      <div class="tl-row">
+        <button id="play" aria-label="play/pause">▶</button>
+        <div class="tl-track" id="tl-track">
+          <input id="year" type="range" min="1415" max="2026" step="1" value="1600" />
+          <div id="bands" class="tl-bands"></div>
+          <div class="tl-ticks" id="ticks"></div>
+          <div id="cursor" class="tl-cursor"></div>
+        </div>
+        <div id="year-label">1600</div>
+      </div>
+      <div class="tl-bottom">
+        <div id="proj-toggle"></div>
+        <div class="tl-stats" id="stats"></div>
+      </div>
+    </div>
+
+    <!-- Painel de detalhes -->
+    <aside id="panel" class="hidden">
+      <button id="panel-close" aria-label="fechar">✕</button>
+      <div id="panel-body"></div>
+    </aside>
+
+    <!-- Créditos -->
+    <button id="credits-btn" aria-label="créditos e fontes" data-i18n="sources">fontes</button>
+    <aside id="credits" class="hidden">
+      <button id="credits-close" aria-label="fechar">✕</button>
+      <div id="credits-body"></div>
+    </aside>
+  </div>
+
+</body>
+</html>

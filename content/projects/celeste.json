@@ -1,0 +1,13 @@
+{
+  "slug": "celeste",
+  "title": "Celeste",
+  "eyebrow": "Personal celestial atlas",
+  "summary": "Birth data becomes two connected portraits: the observed sky and a natal chart.",
+  "description": "A bilingual interactive study that translates a date, local time and geographic position into four complementary views. Explore the observed sky as a dome, ecliptic disc or immersive sphere, then compare it with a Swiss Ephemeris natal chart, houses, aspects and elemental composition.",
+  "tools": ["Three.js", "Swiss Ephemeris", "Astronomy Engine", "WebAssembly"],
+  "date": "2026-08-22",
+  "accent": "blue",
+  "span": "wide",
+  "visual": "field",
+  "href": "./studies/celeste/"
+}
