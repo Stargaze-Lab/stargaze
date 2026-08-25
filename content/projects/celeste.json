@@ -9,5 +9,6 @@
   "accent": "blue",
   "span": "wide",
   "visual": "field",
+  "cover": "./celeste/cover.js",
   "href": "./celeste/"
 }
