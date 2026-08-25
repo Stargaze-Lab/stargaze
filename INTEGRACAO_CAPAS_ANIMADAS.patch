@@ -1,0 +1,43 @@
+diff --git a/src/main.js b/src/main.js
+index 14ac4dd..bef8d56 100644
+--- a/src/main.js
++++ b/src/main.js
+@@ -1,4 +1,5 @@
+ import { projects, sketches } from "./projects.generated.js";
++import { mountProjectCovers, projectCoverMarkup } from "./project-cover-runtime.js";
+ 
+ const sketchModules = import.meta.glob("./sketches/*.js");
+ 
+@@ -20,6 +21,7 @@ const arrow = `<svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h11M10 4
+ 
+ function visualMarkup(entry, large = false) {
+   const coordinate = escapeHtml(entry.slug.replaceAll("-", " / "));
++  if (entry.cover) return projectCoverMarkup(entry, large);
+   if (entry.sketch === "orbit") return `<div class="project-visual visual-orbit ${large ? "is-large" : ""}"><canvas class="orbit-canvas" data-orbit="${large ? "large" : "card"}"></canvas></div>`;
+   if (entry.kind === "sketch" && entry.sketch) {
+     if (large) return `<div class="project-visual visual-live-sketch is-large" data-sketch-stage="${escapeHtml(entry.sketch)}"><p class="sketch-loading">Loading experiment…</p></div>`;
+@@ -63,6 +65,7 @@ function render() {
+   document.querySelector("#project-count").textContent = `${projects.length} cases · 2025—26`;
+   document.querySelector("#sketch-count").textContent = `${sketches.filter((item) => item.status === "live").length} live · ${sketches.filter((item) => item.status !== "live").length} in development`;
+   bindEntryTriggers();
++  previewCleanups.push(mountProjectCovers(document));
+   document.querySelectorAll('[data-orbit="card"]').forEach((canvas) => mountOrbit(canvas, false));
+   mountSketchPreviews();
+ }
+@@ -148,6 +151,7 @@ function openEntry(slug, trigger = activeTrigger) {
+   cleanupSketch?.();
+   cleanupSketch = null;
+   document.querySelector("#stage-art").innerHTML = visualMarkup(entry, true);
++  if (entry.cover) cleanupSketch = mountProjectCovers(document.querySelector("#stage-art"));
+   const collection = entry.kind === "sketch" ? sketches : projects;
+   const position = collection.findIndex((item) => item.slug === slug);
+   document.querySelector("#stage-counter").textContent = `${entry.kind === "sketch" ? "LAB" : "CASE"} · ${String(position + 1).padStart(2, "0")} / ${String(collection.length).padStart(2, "0")}`;
+@@ -169,7 +173,7 @@ function openEntry(slug, trigger = activeTrigger) {
+   overlay.dataset.liveSketch = entry.kind === "sketch" && Boolean(entry.sketch) ? "true" : "false";
+   overlay.setAttribute("aria-hidden", "false");
+   document.body.style.overflow = "hidden";
+-  if (entry.sketch === "orbit") cleanupSketch = mountOrbit(document.querySelector('[data-orbit="large"]'), true);
++  if (!entry.cover && entry.sketch === "orbit") cleanupSketch = mountOrbit(document.querySelector('[data-orbit="large"]'), true);
+   else if (entry.kind === "sketch" && entry.sketch) mountInlineSketch(entry, loadToken);
+   overlay.querySelector('[data-action="close"]').focus();
+ }
