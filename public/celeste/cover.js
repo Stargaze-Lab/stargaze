@@ -1,13 +1,10 @@
 const TAU = Math.PI * 2;
+const INK = "#070b18";
+const GOLD = "231, 189, 109";
 
-const palette = {
-  ink: "#070b18",
-  midnight: "#0b1230",
-  blue: "#6e8ed8",
-  paleBlue: "#b8cdf4",
-  amber: "#e7bd6d",
-  warm: "#f4ddb0",
-};
+function rgba(alpha) {
+  return `rgba(${GOLD}, ${alpha})`;
+}
 
 function seededRandom(seed) {
   let value = seed >>> 0;
@@ -20,47 +17,27 @@ function seededRandom(seed) {
   };
 }
 
-function createField() {
-  const random = seededRandom(170825);
-  return Array.from({ length: 54 }, (_, index) => ({
-    longitude: random() * TAU,
-    latitude: (random() - 0.5) * Math.PI * 0.92,
-    depth: 0.72 + random() * 0.28,
-    radius: index % 11 === 0 ? 1.8 : 0.7 + random() * 0.8,
+function buildStarField() {
+  const random = seededRandom(260825);
+  return Array.from({ length: 72 }, (_, index) => ({
+    x: random(),
+    y: random(),
+    radius: index % 19 === 0 ? 1.75 : 0.45 + random() * 0.8,
+    alpha: 0.18 + random() * 0.42,
     phase: random() * TAU,
-    warm: random() > 0.22,
   }));
 }
 
-const constellation = [
-  [-0.88, -0.04],
-  [-0.58, -0.22],
-  [-0.33, -0.08],
-  [-0.05, -0.3],
-  [0.22, -0.09],
-  [0.5, -0.24],
-  [0.78, -0.02],
-  [0.48, 0.18],
-  [0.2, 0.08],
-  [-0.05, 0.28],
-  [-0.34, 0.1],
-  [-0.62, 0.24],
+const constellations = [
+  [
+    [0.08, 0.61], [0.23, 0.48], [0.35, 0.54], [0.47, 0.38],
+    [0.61, 0.46], [0.75, 0.3], [0.9, 0.39],
+  ],
+  [
+    [0.18, 0.24], [0.31, 0.31], [0.43, 0.21], [0.56, 0.28],
+    [0.67, 0.17], [0.82, 0.22],
+  ],
 ];
-
-function projectStar(star, width, height, rotation, parallax) {
-  const longitude = star.longitude + rotation;
-  const cosLatitude = Math.cos(star.latitude);
-  const x3 = Math.cos(longitude) * cosLatitude;
-  const y3 = Math.sin(star.latitude);
-  const z3 = Math.sin(longitude) * cosLatitude;
-  const scale = 0.72 + z3 * 0.16;
-  return {
-    x: width * 0.56 + x3 * width * 0.45 * scale + parallax.x * star.depth,
-    y: height * 0.46 + y3 * height * 0.67 * scale + parallax.y * star.depth,
-    alpha: Math.max(0.1, 0.3 + z3 * 0.34) * star.depth,
-    radius: star.radius * (0.78 + z3 * 0.22),
-  };
-}
 
 function ellipsePoint(centerX, centerY, radiusX, radiusY, angle, tilt = 0) {
   const x = Math.cos(angle) * radiusX;
@@ -70,19 +47,74 @@ function ellipsePoint(centerX, centerY, radiusX, radiusY, angle, tilt = 0) {
   return { x: centerX + x * cos - y * sin, y: centerY + x * sin + y * cos };
 }
 
-function drawArc(context, centerX, centerY, radiusX, radiusY, tilt, color, alpha, dash = []) {
+function strokeEllipse(context, options) {
+  const {
+    centerX, centerY, radiusX, radiusY, tilt = 0,
+    alpha = 0.2, width = 1, dash = [], start = 0, end = TAU,
+  } = options;
   context.save();
-  context.strokeStyle = color;
-  context.globalAlpha = alpha;
-  context.lineWidth = 1;
+  context.strokeStyle = rgba(alpha);
+  context.lineWidth = width;
   context.setLineDash(dash);
   context.beginPath();
-  for (let index = 0; index <= 160; index += 1) {
-    const point = ellipsePoint(centerX, centerY, radiusX, radiusY, (index / 160) * TAU, tilt);
+  const steps = Math.max(48, Math.ceil(Math.abs(end - start) * 30));
+  for (let index = 0; index <= steps; index += 1) {
+    const angle = start + ((end - start) * index) / steps;
+    const point = ellipsePoint(centerX, centerY, radiusX, radiusY, angle, tilt);
     if (index === 0) context.moveTo(point.x, point.y);
     else context.lineTo(point.x, point.y);
   }
   context.stroke();
+  context.restore();
+}
+
+function drawFourPointStar(context, x, y, radius, alpha) {
+  context.save();
+  context.translate(x, y);
+  context.fillStyle = rgba(alpha);
+  context.beginPath();
+  for (let index = 0; index < 8; index += 1) {
+    const angle = -Math.PI / 2 + (index * Math.PI) / 4;
+    const pointRadius = index % 2 === 0 ? radius : radius * 0.18;
+    const px = Math.cos(angle) * pointRadius;
+    const py = Math.sin(angle) * pointRadius;
+    if (index === 0) context.moveTo(px, py);
+    else context.lineTo(px, py);
+  }
+  context.closePath();
+  context.fill();
+  context.restore();
+}
+
+function drawConstellation(context, points, bounds, phase, still) {
+  const projected = points.map(([x, y], index) => ({
+    x: bounds.x + x * bounds.width,
+    y: bounds.y + y * bounds.height + Math.sin(phase * 0.34 + index) * bounds.height * 0.008,
+  }));
+
+  context.save();
+  context.lineCap = "round";
+  context.lineJoin = "round";
+  context.strokeStyle = rgba(0.42);
+  context.lineWidth = Math.max(0.8, bounds.width / 680);
+  context.beginPath();
+  projected.forEach((point, index) => {
+    if (index === 0) context.moveTo(point.x, point.y);
+    else context.lineTo(point.x, point.y);
+  });
+  context.stroke();
+
+  projected.forEach((point, index) => {
+    const pulse = still ? 1 : 0.88 + Math.sin(phase * 0.7 + index * 0.91) * 0.12;
+    if (index % 3 === 0) {
+      drawFourPointStar(context, point.x, point.y, (2.8 + (index % 2)) * pulse, 0.82);
+    } else {
+      context.beginPath();
+      context.fillStyle = rgba(0.74);
+      context.arc(point.x, point.y, 1.25 * pulse, 0, TAU);
+      context.fill();
+    }
+  });
   context.restore();
 }
 
@@ -95,7 +127,7 @@ export function mountCover(container) {
   container.replaceChildren(canvas);
 
   const context = canvas.getContext("2d", { alpha: true });
-  const field = createField();
+  const stars = buildStarField();
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const pointer = { x: 0, y: 0, targetX: 0, targetY: 0 };
   let width = 1;
@@ -106,7 +138,7 @@ export function mountCover(container) {
 
   function resize() {
     const bounds = container.getBoundingClientRect();
-    const density = Math.min(window.devicePixelRatio || 1, 1.75);
+    const density = Math.min(window.devicePixelRatio || 1, 2);
     width = Math.max(1, bounds.width);
     height = Math.max(1, bounds.height);
     canvas.width = Math.round(width * density);
@@ -119,95 +151,137 @@ export function mountCover(container) {
     if (destroyed) return;
     context.clearRect(0, 0, width, height);
 
-    pointer.x += (pointer.targetX - pointer.x) * 0.035;
-    pointer.y += (pointer.targetY - pointer.y) * 0.035;
+    pointer.x += (pointer.targetX - pointer.x) * 0.028;
+    pointer.y += (pointer.targetY - pointer.y) * 0.028;
     const still = reducedMotion.matches;
     const seconds = still ? 0 : time * 0.001;
-    const rotation = seconds * 0.018;
-    const parallax = { x: pointer.x * width * 0.028, y: pointer.y * height * 0.028 };
-    const centerX = width * 0.57 + parallax.x * 0.2;
-    const centerY = height * 0.44 + parallax.y * 0.2;
-    const radiusX = Math.max(width * 0.47, height * 0.72);
-    const radiusY = Math.max(height * 0.62, width * 0.3);
+    const parallaxX = pointer.x * width * 0.022;
+    const parallaxY = pointer.y * height * 0.022;
+    const centerX = width * 0.58 + parallaxX * 0.28;
+    const centerY = height * 0.51 + parallaxY * 0.28;
+    const sphereRadius = Math.max(width * 0.53, height * 0.77);
 
-    const background = context.createRadialGradient(centerX, centerY, 0, centerX, centerY, radiusX * 1.1);
-    background.addColorStop(0, "rgba(33, 52, 105, 0.58)");
-    background.addColorStop(0.52, "rgba(15, 25, 62, 0.42)");
-    background.addColorStop(1, "rgba(7, 11, 24, 0)");
-    context.fillStyle = background;
+    context.fillStyle = INK;
     context.fillRect(0, 0, width, height);
 
-    for (let index = 0; index < 5; index += 1) {
-      const latitude = (index - 2) / 2;
-      drawArc(
-        context,
-        centerX,
-        centerY + latitude * radiusY * 0.26,
-        radiusX * Math.sqrt(Math.max(0.22, 1 - latitude * latitude * 0.58)),
-        radiusY * (0.14 + (1 - Math.abs(latitude)) * 0.04),
-        -0.035,
-        palette.paleBlue,
-        index === 2 ? 0.22 : 0.12,
-      );
-    }
+    const aura = context.createRadialGradient(centerX, centerY, 0, centerX, centerY, sphereRadius);
+    aura.addColorStop(0, rgba(0.075));
+    aura.addColorStop(0.64, rgba(0.032));
+    aura.addColorStop(1, rgba(0));
+    context.fillStyle = aura;
+    context.fillRect(0, 0, width, height);
 
-    for (let index = 0; index < 7; index += 1) {
-      drawArc(
-        context,
+    // Celestial sphere: one gold ink, articulated only by alpha and line weight.
+    strokeEllipse(context, {
+      centerX, centerY, radiusX: sphereRadius, radiusY: sphereRadius * 0.78,
+      tilt: -0.05, alpha: 0.34, width: 1.15,
+    });
+
+    [-0.68, -0.36, 0, 0.36, 0.68].forEach((latitude, index) => {
+      const latitudeScale = Math.sqrt(1 - latitude * latitude);
+      strokeEllipse(context, {
+        centerX,
+        centerY: centerY + latitude * sphereRadius * 0.61,
+        radiusX: sphereRadius * latitudeScale,
+        radiusY: sphereRadius * (0.105 + latitudeScale * 0.03),
+        tilt: -0.05,
+        alpha: index === 2 ? 0.24 : 0.13,
+        width: index === 2 ? 1.05 : 0.75,
+      });
+    });
+
+    for (let index = 0; index < 9; index += 1) {
+      strokeEllipse(context, {
         centerX,
         centerY,
-        radiusX * (0.12 + index * 0.02),
-        radiusY,
-        (index / 7) * Math.PI + 0.12,
-        palette.blue,
-        0.1,
-      );
+        radiusX: sphereRadius * (0.1 + index * 0.003),
+        radiusY: sphereRadius * 0.78,
+        tilt: (index / 9) * Math.PI - 0.05,
+        alpha: index % 3 === 0 ? 0.15 : 0.095,
+        width: 0.75,
+      });
     }
 
-    drawArc(context, centerX, centerY, radiusX * 0.98, radiusY * 0.42, -0.19, palette.amber, 0.52);
-    drawArc(context, centerX, centerY, radiusX * 0.89, radiusY * 0.36, -0.19, palette.amber, 0.18, [2, 8]);
+    // Ecliptic and two slowly drifting observational trajectories.
+    strokeEllipse(context, {
+      centerX,
+      centerY,
+      radiusX: sphereRadius * 0.96,
+      radiusY: sphereRadius * 0.31,
+      tilt: -0.23,
+      alpha: 0.55,
+      width: 1.25,
+    });
+    strokeEllipse(context, {
+      centerX,
+      centerY,
+      radiusX: sphereRadius * 0.9,
+      radiusY: sphereRadius * 0.255,
+      tilt: -0.23,
+      alpha: 0.22,
+      width: 0.9,
+      dash: [2, 7],
+    });
 
+    [0, Math.PI].forEach((offset, index) => {
+      const progress = (seconds * (0.035 + index * 0.008) + offset) % TAU;
+      strokeEllipse(context, {
+        centerX,
+        centerY,
+        radiusX: sphereRadius * (0.7 + index * 0.12),
+        radiusY: sphereRadius * (0.2 + index * 0.035),
+        tilt: -0.5 + index * 0.7,
+        alpha: 0.44,
+        width: 1,
+        start: progress,
+        end: progress + Math.PI * 0.58,
+      });
+      const marker = ellipsePoint(
+        centerX,
+        centerY,
+        sphereRadius * (0.7 + index * 0.12),
+        sphereRadius * (0.2 + index * 0.035),
+        progress + Math.PI * 0.58,
+        -0.5 + index * 0.7,
+      );
+      drawFourPointStar(context, marker.x, marker.y, 3.2, 0.74);
+    });
+
+    stars.forEach((star, index) => {
+      const drift = still ? 0 : seconds * (0.0014 + (index % 5) * 0.00018);
+      const x = ((star.x + drift) % 1.04) * width - width * 0.02 + parallaxX * (0.22 + star.radius * 0.08);
+      const y = star.y * height + parallaxY * (0.18 + star.radius * 0.08);
+      const pulse = still ? 1 : 0.82 + Math.sin(seconds * 0.42 + star.phase) * 0.18;
+      if (star.radius > 1.55) {
+        drawFourPointStar(context, x, y, star.radius * 2.4 * pulse, star.alpha + 0.12);
+      } else {
+        context.beginPath();
+        context.fillStyle = rgba(star.alpha * pulse);
+        context.arc(x, y, star.radius, 0, TAU);
+        context.fill();
+      }
+    });
+
+    const constellationBounds = {
+      x: centerX - sphereRadius * 0.78,
+      y: centerY - sphereRadius * 0.57,
+      width: sphereRadius * 1.56,
+      height: sphereRadius * 1.08,
+    };
     context.save();
-    context.translate(centerX + Math.sin(seconds * 0.08) * width * 0.018, centerY);
-    context.rotate(-0.17 + Math.sin(seconds * 0.045) * 0.025);
-    context.lineCap = "round";
-    context.lineJoin = "round";
-    context.strokeStyle = palette.amber;
-    context.globalAlpha = 0.5;
-    context.lineWidth = 1.2;
-    context.beginPath();
-    constellation.forEach(([x, y], index) => {
-      const px = x * radiusX * 0.72;
-      const py = y * radiusY * 0.72;
-      if (index === 0) context.moveTo(px, py);
-      else context.lineTo(px, py);
-    });
-    context.stroke();
-    constellation.forEach(([x, y], index) => {
-      const pulse = still ? 1 : 0.86 + Math.sin(seconds * 0.72 + index * 0.83) * 0.14;
-      context.beginPath();
-      context.fillStyle = index % 4 === 0 ? palette.paleBlue : palette.warm;
-      context.globalAlpha = 0.68 + (index % 3) * 0.08;
-      context.arc(x * radiusX * 0.72, y * radiusY * 0.72, (index % 4 === 0 ? 2.2 : 1.45) * pulse, 0, TAU);
-      context.fill();
-    });
+    context.translate(Math.sin(seconds * 0.027) * width * 0.012, 0);
+    drawConstellation(context, constellations[0], constellationBounds, seconds, still);
+    context.globalAlpha = 0.62;
+    context.translate(width * 0.08, height * 0.02);
+    context.rotate(-0.16);
+    drawConstellation(context, constellations[1], constellationBounds, seconds + 2.4, still);
     context.restore();
 
-    field.forEach((star) => {
-      const point = projectStar(star, width, height, rotation, parallax);
-      context.beginPath();
-      context.fillStyle = star.warm ? palette.warm : palette.paleBlue;
-      context.globalAlpha = point.alpha * (still ? 1 : 0.86 + Math.sin(seconds * 0.46 + star.phase) * 0.14);
-      context.arc(point.x, point.y, Math.max(0.45, point.radius), 0, TAU);
-      context.fill();
-    });
-
-    const glow = context.createRadialGradient(centerX, centerY, 0, centerX, centerY, radiusX * 0.82);
-    glow.addColorStop(0, "rgba(184, 205, 244, 0.025)");
-    glow.addColorStop(0.78, "rgba(110, 142, 216, 0.035)");
-    glow.addColorStop(1, "rgba(7, 11, 24, 0)");
-    context.globalAlpha = 1;
-    context.fillStyle = glow;
+    const vignette = context.createLinearGradient(0, 0, 0, height);
+    vignette.addColorStop(0, "rgba(7, 11, 24, 0.12)");
+    vignette.addColorStop(0.58, "rgba(7, 11, 24, 0)");
+    vignette.addColorStop(1, "rgba(7, 11, 24, 0.58)");
+    context.fillStyle = vignette;
     context.fillRect(0, 0, width, height);
 
     if (schedule && visible && !still) frame = requestAnimationFrame(draw);
@@ -257,6 +331,3 @@ export function mountCover(container) {
 }
 
 export default mountCover;
-
-const standalone = document.querySelector("[data-celeste-cover]");
-if (standalone) mountCover(standalone);

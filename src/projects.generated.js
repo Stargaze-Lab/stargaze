@@ -12,11 +12,12 @@ export const projects = [
       "Astronomy Engine",
       "WebAssembly"
     ],
-    "date": "2026-08-22",
+    "date": "2026-08-25",
     "accent": "blue",
     "span": "wide",
     "visual": "field",
-    "href": "./studies/celeste/",
+    "cover": "./celeste/cover.js",
+    "href": "./celeste/",
     "kind": "project"
   },
   {
@@ -68,7 +69,7 @@ export const projects = [
     ],
     "date": "2025-03-05",
     "accent": "violet",
-    "span": "wide",
+    "span": "standard",
     "visual": "threads",
     "status": "prototype",
     "href": "https://stargaze.glitchme.art/experimento-01/",

@@ -1,4 +1,5 @@
 import { projects, sketches } from "./projects.generated.js";
+import { mountProjectCovers, projectCoverMarkup } from "./project-cover-runtime.js";
 
 const sketchModules = import.meta.glob("./sketches/*.js");
 
@@ -20,6 +21,7 @@ const arrow = `<svg viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h11M10 4
 const projectLabel = (project) => project.status === "prototype" ? "research prototype" : "case study";
 
 function visualMarkup(entry, large = false) {
+  if (entry.cover) return projectCoverMarkup(entry, large);
   const coordinate = escapeHtml(entry.slug.replaceAll("-", " / "));
   if (entry.sketch === "orbit") return `<div class="project-visual visual-orbit ${large ? "is-large" : ""}"><canvas class="orbit-canvas" data-orbit="${large ? "large" : "card"}"></canvas></div>`;
   if (entry.kind === "sketch" && entry.sketch) {
@@ -75,6 +77,7 @@ function render() {
   const plannedSketches = sketches.length - liveSketches;
   document.querySelector("#sketch-count").textContent = `${liveSketches} live${plannedSketches ? ` · ${plannedSketches} in development` : ""}`;
   bindEntryTriggers();
+  previewCleanups.push(mountProjectCovers(document));
   document.querySelectorAll('[data-orbit="card"]').forEach((canvas) => mountOrbit(canvas, false));
   mountSketchPreviews();
 }
@@ -160,6 +163,7 @@ function openEntry(slug, trigger = activeTrigger) {
   cleanupSketch?.();
   cleanupSketch = null;
   document.querySelector("#stage-art").innerHTML = visualMarkup(entry, true);
+  if (entry.cover) cleanupSketch = mountProjectCovers(document.querySelector("#stage-art"));
   const collection = entry.kind === "sketch" ? sketches : projects;
   const position = collection.findIndex((item) => item.slug === slug);
   document.querySelector("#stage-counter").textContent = `${entry.kind === "sketch" ? "LAB" : "CASE"} · ${String(position + 1).padStart(2, "0")} / ${String(collection.length).padStart(2, "0")}`;
@@ -181,7 +185,7 @@ function openEntry(slug, trigger = activeTrigger) {
   overlay.dataset.liveSketch = entry.kind === "sketch" && Boolean(entry.sketch) ? "true" : "false";
   overlay.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
-  if (entry.sketch === "orbit") cleanupSketch = mountOrbit(document.querySelector('[data-orbit="large"]'), true);
+  if (!entry.cover && entry.sketch === "orbit") cleanupSketch = mountOrbit(document.querySelector('[data-orbit="large"]'), true);
   else if (entry.kind === "sketch" && entry.sketch) mountInlineSketch(entry, loadToken);
   overlay.querySelector('[data-action="close"]').focus();
 }

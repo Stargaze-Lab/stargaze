@@ -15,12 +15,15 @@
         position: absolute;
         inset: 0;
         pointer-events: none;
-        background: linear-gradient(to top, rgba(7, 11, 24, .88), transparent 66%, rgba(7, 11, 24, .2));
+        background: linear-gradient(to top, rgba(7, 11, 24, .62), transparent 58%, rgba(7, 11, 24, .08));
       }
     </style>
   </head>
   <body>
     <div data-celeste-cover></div>
-    <script type="module" src="./cover.js"></script>
+    <script type="module">
+      import { mountCover } from "./cover.js";
+      mountCover(document.querySelector("[data-celeste-cover]"));
+    </script>
   </body>
 </html>
