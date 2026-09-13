@@ -1,13 +1,14 @@
 {
-  "name": "stargaze-portfolio-test",
+  "name": "stargaze-homolog",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "editor": "node tools/editor/server.mjs",
     "validate": "node scripts/validate-content.js",
     "sync": "npm run validate && node scripts/build-projects.js",
     "dev": "npm run sync && vite",
-    "build": "npm run sync && vite build",
+    "build": "npm run sync && vite build && node scripts/finalize-site.mjs",
     "preview": "vite preview"
   },
   "devDependencies": {

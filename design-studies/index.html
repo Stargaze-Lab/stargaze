@@ -1,24 +1,25 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-site-root="../">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a0b0c" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
     <meta name="description" content="Stargaze. Um laboratório independente de dados, narrativas e experimentação visual." />
     <title>Stargaze — laboratório visual</title>
-    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./src/equilibrium.css" />
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../src/equilibrium.css" />
   </head>
   <body>
     <a class="skip-link" href="#main">Pular para os estudos</a>
     <header class="site-header">
-      <a class="brand" href="#top" aria-label="Stargaze, início"><img src="./logo.svg" alt="" width="30" height="30" /><span>stargaze</span></a>
+      <a class="brand" href="#top" aria-label="Stargaze, início"><img src="../logo.svg" alt="" width="30" height="30" /><span>stargaze</span></a>
       <span class="header-edition">Laboratório independente <span aria-hidden="true">/</span> Brasil</span>
       <nav aria-label="Navegação principal"><a href="#universes">Estudos</a><a href="#field-notes">Field Notes</a><a href="#about">Sobre</a></nav>
     </header>
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-art" id="hero-art" aria-hidden="true"></div><div class="hero-shade" aria-hidden="true"></div>
-      <div class="hero-eyebrow"><span>Dados. Histórias. Possibilidades.</span></div>
+      <div class="hero-eyebrow"><span>Dados. Histórias. Possibilidades.</span><span class="revision-label">Equilíbrio / estudo 02</span></div>
       <h1 id="hero-title">Novas formas<br />de <em>ver uma ideia.</em></h1>
       <div class="hero-footer"><p>Um espaço para explorar universos novos —<br class="desktop-break" /> com dados, narrativas e código criativo.</p><a class="quiet-link" href="#universes">Explorar os estudos <span aria-hidden="true">↓</span></a></div>
       <div class="scene-console"><div class="scene-selectors" id="scene-selectors" role="group" aria-label="Escolher cena do hero"></div><button class="pause-button" id="motion-toggle" type="button" aria-pressed="false"><span aria-hidden="true">Ⅱ</span></button><div class="scene-progress" aria-hidden="true"><span id="scene-progress"></span></div></div>
@@ -30,9 +31,9 @@
       <section class="research section-wrap" aria-labelledby="research-title"><details><summary><span class="section-id">NA ESTANTE</span><span id="research-title">Pesquisas em pausa</span><span aria-hidden="true">+</span></summary><div class="shelf-content" id="shelf-projects"></div></details></section>
       <section class="about section-wrap" id="about" aria-labelledby="about-title"><span class="section-id">04 / STARGAZE</span><div class="about-content"><h2 id="about-title">Um laboratório.<br /><em>Muitas perguntas.</em></h2><p>A Stargaze nasceu da vontade de fazer projetos que dificilmente encontram espaço no dia a dia do mercado de design. É uma iniciativa independente de exercício, inovação e experimentação.</p></div></section>
     </main>
-    <footer class="site-footer"><a class="brand" href="#top"><img src="./logo.svg" alt="" width="30" height="30" /><span>stargaze</span></a><span>Um campo sempre em formação.</span><div class="language-switch" role="group" aria-label="Idioma / Language"><button type="button" data-language="pt" lang="pt-BR" aria-label="Português — Brasil" title="Português"><svg viewBox="0 0 36 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="1" y="1" width="34" height="22" rx="1"/><path d="m18 4 13 8-13 8L5 12Z"/><circle cx="18" cy="12" r="4"/><path d="M14.2 10.7q4-1 7.5 2.2"/></svg></button><button type="button" data-language="en" lang="en" aria-label="English — England" title="English"><svg viewBox="0 0 36 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="1" y="1" width="34" height="22" rx="1"/><path d="M15 1v8H1m20-8v8h14M1 15h14v8m20-8H21v8"/></svg></button></div></footer>
+    <footer class="site-footer"><a class="brand" href="#top"><img src="../logo.svg" alt="" width="30" height="30" /><span>stargaze</span></a><span>Um campo sempre em formação.</span><a class="archive-link" href="./archive.html?direction=balanced">Ver estudos anteriores</a><div class="language-switch" role="group" aria-label="Idioma / Language"><button type="button" data-language="pt" lang="pt-BR" aria-label="Português — Brasil" title="Português"><svg viewBox="0 0 36 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="1" y="1" width="34" height="22" rx="1"/><path d="m18 4 13 8-13 8L5 12Z"/><circle cx="18" cy="12" r="4"/><path d="M14.2 10.7q4-1 7.5 2.2"/></svg></button><button type="button" data-language="en" lang="en" aria-label="English — England" title="English"><svg viewBox="0 0 36 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="1" y="1" width="34" height="22" rx="1"/><path d="M15 1v8H1m20-8v8h14M1 15h14v8m20-8H21v8"/></svg></button></div></footer>
     <dialog id="project-dialog" class="project-dialog" aria-labelledby="project-dialog-title"><div class="dialog-toolbar"><span id="project-dialog-label" class="eyebrow"></span><button class="icon-button" type="button" data-close-project aria-label="Fechar projeto">×</button></div><div class="project-dialog-body"><div class="project-dialog-art" id="project-dialog-art" data-cursor="drag"></div><div class="project-dialog-copy"><h2 id="project-dialog-title"></h2><p id="project-dialog-summary"></p><div id="project-dialog-tags" class="project-tags"></div><p id="project-dialog-hint"></p><div id="project-dialog-action"></div><p class="dialog-caption">Estudo de capa generativa.</p></div></div><div class="dialog-navigation"><button type="button" id="previous-project">← Anterior</button><button type="button" id="next-project">Próximo →</button></div></dialog>
     <dialog id="note-dialog" class="note-dialog" aria-labelledby="note-reader-title"><div class="dialog-toolbar"><span class="eyebrow">Field Notes</span><button class="icon-button" type="button" data-close-note aria-label="Fechar leitura">×</button></div><article id="note-reader" class="note-reader"></article></dialog>
-    <script type="module" src="./src/equilibrium.js"></script>
+    <script type="module" src="../src/equilibrium.js"></script>
   </body>
 </html>

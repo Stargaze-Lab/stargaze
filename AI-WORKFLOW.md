@@ -1,5 +1,7 @@
 # Stargaze — procedure for new work and sketches
 
+Field Notes: use `npm run editor` and `CADERNO-LOCAL.md`. Authoring assets live exclusively in `tools/editor/`; never add them to Vite inputs or `public/`. Drafts and uploads stay in the gitignored `.stargaze-editor/`. A publication ZIP contains the author's approved text under `content/notes/` and a portable page/media under `public/notes/<slug>/`. Keep the slug stable for revisions. Build imports only `published` notes and regenerates their pages. Never rewrite an author's text automatically.
+
 This portfolio has two publication routes. Choosing the correct one is the main decision.
 
 ## 1. Larger study or case
@@ -64,6 +66,14 @@ export function mountPreview(canvas) {
 ```
 
 ## Standard AI handoff
+
+### Field Notes: preserve authorship
+
+For the evolved home, an author can export a note from the local editor as JSON. Integrate it in `content/notes/` only with permission. Preserve title, author, summary, body and captions verbatim: do not expand, rewrite, translate or invent an essay to fill a layout. Use `status: "published"` only after editorial approval. See `content/notes/README.md` for the schema and safety boundary. The local draft editor is not an authenticated publishing service.
+
+### Redesign curation
+
+Keep the original home intact during direction review. The evolved home lives in `/design-studies/`; early alternatives live in `/design-studies/archive.html`. Configure curation in `content/home.json`, not a new inline-sketch registry. Cover animations are conceptual and must not be presented as historical or astronomical data. Life Threads stays on the paused shelf. Do not mark Lissajous or Chromascope live before their actual modules are available.
 
 For future changes, send the assistant:
 

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#090a0a" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="description" content="Três estudos de direção para a nova home da Stargaze." />
+    <title>Stargaze — estudos de direção</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../src/design-studies.css" />
+  </head>
+  <body data-direction="balanced">
+    <header class="study-toolbar">
+      <a class="study-brand" href="../" aria-label="Voltar para a Stargaze">
+        <img src="../logo.svg" alt="" />
+        <span>stargaze</span>
+      </a>
+      <div class="study-label">
+        <span>estudo de direção</span>
+        <strong id="direction-name">03 — equilíbrio</strong>
+      </div>
+      <div class="direction-tabs" role="tablist" aria-label="Direções visuais">
+        <button type="button" role="tab" data-direction-button="exhibition" aria-selected="false"><span>01</span> exposição</button>
+        <button type="button" role="tab" data-direction-button="instrument" aria-selected="false"><span>02</span> instrumento</button>
+        <button type="button" role="tab" data-direction-button="balanced" aria-selected="true"><span>03</span> equilíbrio</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="direction-view exhibition-view" data-direction-view="exhibition" aria-labelledby="exhibition-title" hidden>
+        <header class="exhibition-hero reactive-stage" data-signal-field>
+          <canvas aria-hidden="true"></canvas>
+          <p class="micro-label"><span>Stargaze / public experiment</span><span>São Paulo · 2026</span></p>
+          <h1 id="exhibition-title">A living archive<br />of <em>visual thought.</em></h1>
+          <div class="hero-bottom">
+            <p>Independent practice for data visualization, visual narratives and creative code.</p>
+            <p class="interaction-hint">Move to disturb the field <i>↗</i></p>
+          </div>
+        </header>
+
+        <section class="exhibition-intro">
+          <p class="section-number">01 / Selected work</p>
+          <p class="statement">Each project begins with the desire to enter an unfamiliar universe — then make its hidden relationships visible.</p>
+        </section>
+
+        <article class="exhibition-feature project-link" data-entry="wikiverso">
+          <div class="art art-network" aria-hidden="true"><span class="network-core"></span></div>
+          <div class="feature-caption">
+            <p><span>Knowledge atlas</span><span>2026</span></p>
+            <h2>Wikiverso</h2>
+            <p>Wikipedia becomes an expanding constellation of connected ideas.</p>
+            <a href="https://stargaze.glitchme.art/wikiverso/" target="_blank" rel="noreferrer">enter universe ↗</a>
+          </div>
+        </article>
+
+        <section class="exhibition-sequence" aria-label="Outros trabalhos selecionados">
+          <article class="sequence-card project-link" data-entry="celeste">
+            <div class="art art-celeste" aria-hidden="true"><span></span></div>
+            <p><span>02 / celestial atlas</span><span>2026</span></p><h3>Celeste</h3>
+          </article>
+          <article class="sequence-card project-link" data-entry="colony-globe">
+            <div class="art art-empire" aria-hidden="true"><span></span></div>
+            <p><span>03 / data narrative</span><span>2026</span></p><h3>Empires &amp; Colonies</h3>
+          </article>
+          <article class="sequence-card project-link" data-entry="music-box">
+            <div class="art art-sequencer" aria-hidden="true"></div>
+            <p><span>04 / browser instrument</span><span>live</span></p><h3>Music Box</h3>
+          </article>
+        </section>
+
+        <section class="exhibition-notes">
+          <p class="section-number">02 / Field notes</p>
+          <div><span>Process log · 06 min</span><h2>How a project finds its own visual rules</h2><p>Fragments, references and decisions from an unfinished system.</p></div>
+          <div><span>Research shelf · 12 items</span><h2>Drawing with data before opening the browser</h2><p>Notes on authorship, evidence and the useful friction of manual work.</p></div>
+        </section>
+      </section>
+
+      <section class="direction-view instrument-view" data-direction-view="instrument" aria-labelledby="instrument-title" hidden>
+        <div class="instrument-shell">
+          <aside class="instrument-index">
+            <div>
+              <p class="micro-label">SGZ / visual systems lab</p>
+              <h1 id="instrument-title">Choose a signal.<br /><em>Enter the system.</em></h1>
+            </div>
+            <div class="instrument-list" role="list" aria-label="Projetos disponíveis">
+              <button type="button" class="active" data-instrument-entry="wikiverso"><span>01</span><strong>Wikiverso</strong><i>knowledge graph</i></button>
+              <button type="button" data-instrument-entry="celeste"><span>02</span><strong>Celeste</strong><i>celestial atlas</i></button>
+              <button type="button" data-instrument-entry="colony-globe"><span>03</span><strong>Empires</strong><i>data narrative</i></button>
+              <button type="button" data-instrument-entry="music-box"><span>04</span><strong>Music Box</strong><i>sound instrument</i></button>
+            </div>
+            <p class="instrument-manifesto">Stargaze is an independent lab for ideas that need a visible, explorable form.</p>
+          </aside>
+
+          <section class="instrument-workbench" data-active-entry="wikiverso">
+            <header>
+              <p><span>LIVE SIGNAL</span><span id="instrument-counter">01 / 04</span></p>
+              <div class="instrument-readout"><span>x 23.5505</span><span>y −46.6333</span><span>active / ready</span></div>
+            </header>
+            <div class="instrument-canvas reactive-stage" data-signal-field>
+              <canvas aria-hidden="true"></canvas>
+              <div class="instrument-object" aria-hidden="true"><span></span><i></i><b></b></div>
+              <p class="axis axis-x">subject → relation → path</p>
+              <p class="axis axis-y">scale / distance</p>
+            </div>
+            <footer>
+              <div><p id="instrument-eyebrow">Knowledge atlas</p><h2 id="instrument-project-title">Wikiverso</h2></div>
+              <p id="instrument-summary">Wikipedia becomes an expanding constellation of connected ideas.</p>
+              <a id="instrument-link" href="https://stargaze.glitchme.art/wikiverso/" target="_blank" rel="noreferrer">launch ↗</a>
+            </footer>
+          </section>
+
+          <aside class="instrument-controls">
+            <p class="micro-label">Public instruments</p>
+            <div class="control-row"><span>density</span><i><b style="--value:62%"></b></i><strong>62</strong></div>
+            <div class="control-row"><span>motion</span><i><b style="--value:38%"></b></i><strong>38</strong></div>
+            <div class="control-row"><span>depth</span><i><b style="--value:81%"></b></i><strong>81</strong></div>
+            <div class="instrument-mode"><span>view</span><button type="button" class="active">field</button><button type="button">index</button></div>
+            <p class="control-note">The interface exposes how the work behaves. Every project can invent a different set of controls.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="direction-view balanced-view" data-direction-view="balanced" aria-labelledby="balanced-title">
+        <header class="balanced-hero reactive-stage" data-signal-field>
+          <canvas aria-hidden="true"></canvas>
+          <div class="balanced-kicker"><span>Independent visual lab</span><span>Data · story · code</span></div>
+          <h1 id="balanced-title">New ways to<br /><em>see an idea.</em></h1>
+          <div class="balanced-foot">
+            <p>Stargaze is a space for visual experiments, data stories and interactive systems — made to reveal, question and invite exploration.</p>
+            <p class="interaction-hint">Move through the field <i>↗</i></p>
+          </div>
+        </header>
+
+        <section class="balanced-work">
+          <header class="section-header"><p><span>01</span> Selected universes</p><p>Exhibition / interaction / narrative</p></header>
+          <div class="balanced-grid">
+            <article class="balanced-feature project-link" data-entry="wikiverso">
+              <div class="art art-network" aria-hidden="true"><span class="network-core"></span></div>
+              <div class="balanced-card-copy"><p>Knowledge atlas · 2026</p><h2>Wikiverso</h2><span>Open an idea and watch a miniature universe form around it.</span><a href="https://stargaze.glitchme.art/wikiverso/" target="_blank" rel="noreferrer">explore ↗</a></div>
+            </article>
+            <div class="balanced-index">
+              <article class="mini-project project-link" data-entry="colony-globe"><span>02</span><div><p>Historical data experience</p><h3>Empires &amp; Colonies</h3></div><i>↗</i></article>
+              <article class="mini-project project-link" data-entry="celeste"><span>03</span><div><p>Personal celestial atlas</p><h3>Celeste</h3></div><i>↗</i></article>
+              <article class="mini-project paused"><span>—</span><div><p>Research shelf</p><h3>Life Threads</h3></div><i>paused</i></article>
+              <p class="curation-note">A selective home: finished universes are exhibited; unfinished questions remain visible only when there is something meaningful to share.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="balanced-lab">
+          <header class="section-header"><p><span>02</span> Instruments in public</p><p>Playable studies / works in progress</p></header>
+          <div class="lab-rack">
+            <article class="rack-card rack-music"><div class="art art-sequencer" aria-hidden="true"></div><p><span>01 · live instrument</span><span>tempo / pitch</span></p><h3>Music Box</h3><small>A spatial sequencer where position becomes rhythm.</small></article>
+            <article class="rack-card rack-lissajous"><div class="art art-lissajous" aria-hidden="true"><span></span></div><p><span>02 · finishing</span><span>frequency / phase</span></p><h3>Lissajous</h3><small>Harmonic relationships drawn as moving figures.</small></article>
+            <article class="rack-card rack-chroma"><div class="art art-chroma" aria-hidden="true"><span></span></div><p><span>03 · research</span><span>lens / symmetry</span></p><h3>Chromascope</h3><small>A circular kaleidoscope for drawing forms into life.</small></article>
+          </div>
+        </section>
+
+        <section class="balanced-notes">
+          <header class="section-header"><p><span>03</span> Field notes</p><p>Process / essays / references</p></header>
+          <div class="notes-grid">
+            <article><p>Process log · Apollo study</p><h2>Drawing a path between Earth and Moon</h2><span>An orbital mission reduced to its essential gestures, events and uncertainties.</span><a href="#notes">read note ↗</a></article>
+            <article><p>Studio note · 04 min</p><h2>When an interface becomes part of the argument</h2><span>Why the way we touch data changes the story it can tell.</span><a href="#notes">read note ↗</a></article>
+            <aside><p>On the desk / 09.04.26</p><ol><li>Node graphs as landscapes</li><li>Sequential pulse, not random</li><li>One visual rule per project</li></ol></aside>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="study-footer">
+      <a class="study-brand" href="../"><img src="../logo.svg" alt="" /><span>stargaze</span></a>
+      <p>Three studies, one living identity.</p>
+      <p>Prototype / not public</p>
+    </footer>
+
+    <script type="module" src="../src/design-studies.js"></script>
+  </body>
+</html>

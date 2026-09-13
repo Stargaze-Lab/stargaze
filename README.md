@@ -1,6 +1,10 @@
-# Stargaze portfolio — test version
+# Stargaze — publicação
 
-A static, GitHub Pages-ready portfolio for data visualization, 3D, live browser tools and creative-code work.
+Versão Equilíbrio preparada para publicar na raiz de `stargaze.glitchme.art`. Veja **PUBLICAR.md** para atualizar o repositório existente e **TEXTOS-DO-SITE.md** para a edição dos textos.
+
+O arquivo `public/CNAME` contém o domínio de produção. A home principal permite indexação; `/design-studies/` conserva os estudos de layout com `noindex`.
+
+The site is a static, GitHub Pages-ready portfolio for data visualization, 3D, live browser tools and creative-code work.
 
 ## Run locally
 
@@ -17,6 +21,21 @@ npm run dev
 - `public/studies/` can hold a complete self-contained study that should live inside this repository.
 - `src/main.js` contains the shared portfolio interface and the automatic sketch loader.
 - `src/sketches/` contains self-contained inline experiments.
+
+## Nova direção — Equilíbrio
+
+A evolução aprovada abre em `/`. A home anterior está preservada como fonte em `archive/home-before-equilibrium.html`. Os estudos de layout continuam em `/design-studies/`.
+
+A exposição usa um destaque à esquerda e dois estudos à direita; a área inteira de cada card abre seu popup. O cursor contextual aparece somente com mouse. A nova home e os popups têm PT/EN, com bandeiras no rodapé e escolha manual persistente. Sem escolha salva, a consulta de país por IP usa `https://get.geojs.io/v1/ip/country.json` (GeoJS, sem chave), com timeout de 2,5 s e fallback ao idioma do navegador. Nenhum GPS é solicitado. O país fica em cache só na sessão; a escolha manual sempre prevalece, inclusive se a consulta responder depois. Não são reescritos textos autorais nem traduzidos automaticamente os experimentos externos ou o arquivo histórico de layouts.
+
+- `content/home.json`: seleção editorial, capas e estado das pesquisas na nova home.
+- `src/visual-fields.js`: motor único para capas monocromáticas e quatro cenas interativas do hero, com pausa, redução de movimento e suspensão fora da área visível. A abóbada aparece somente na capa de Celeste. Os nós usam molas amortecidas para retornar à formação depois de soltos.
+- `content/notes/`: textos autorais aprovados, em JSON. Veja o contrato no README dessa pasta.
+- Caderno local: `npm run editor` abre o editor separado em `http://127.0.0.1:4318`, com rascunhos no disco, texto, imagens e vídeos. Gera um ZIP com página HTML, mídias e metadados para a home. Veja **CADERNO-LOCAL.md**. O editor não faz parte do site público e não publica online.
+
+O build inclui somente notas `published`. `draft` e `ready` ficam fora do bundle. Nenhum ensaio é gerado para preencher a seção. A autoria e o corpo dos textos devem permanecer intactos na integração.
+
+Life Threads permanece pausado; Lissajous e Chromascope têm capas, mas seus módulos completos ainda precisam ser enviados para integração. Music Box abre o módulo já existente; a capa sequencial é um estudo para a evolução visual, não uma alteração do sequenciador original.
 
 The site regenerates its content list whenever `npm run dev` or `npm run build` runs. Do not edit `src/projects.generated.js` directly.
 
@@ -58,6 +77,10 @@ Pattern Composer, Poster Generator and Data Glyphs are preserved in `content/bac
 
 For the repeatable AI-assisted update and publishing procedure, see [`AI-WORKFLOW.md`](./AI-WORKFLOW.md).
 
-## Publish
+## Publish homologation
 
-The included GitHub Actions workflow builds and publishes the site whenever the `main` branch is updated. In the repository settings, set Pages source to **GitHub Actions**.
+Create a separate repository named `stargaze-homolog`. The included GitHub Actions workflow builds and publishes this test environment whenever its `main` branch is updated. In that repository's settings, set Pages source to **GitHub Actions**.
+
+Do not connect a custom domain. The expected address is the repository's own GitHub Pages URL, such as `https://USERNAME.github.io/stargaze-homolog/`.
+
+Only port an approved direction back to the production repository after review.
