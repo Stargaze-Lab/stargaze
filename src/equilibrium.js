@@ -5,6 +5,8 @@ import {createFieldEngine,nextSceneIndex} from './visual-fields.js';
 import {escapeHTML} from './note-format.js';
 import {mountNotes} from './note-reader.js';
 import {t,language,mountLanguage,projectEnglish} from './site-language.js';
+import {mountProjectNavigation} from './project-navigation.js';
+import {renderLissajousContext} from './lissajous-context.js';
 import {mountCursor} from './blob-cursor.js';
 
 const scenes=[
@@ -13,6 +15,7 @@ const scenes=[
   {id:'lissajous',name:'Lissajous · uma relação 4:5',short:'Pulso',color:'#b3a7dc'},
   {id:'kaleidoscope',name:'Caleidoscópio · matéria em simetria',short:'Lente',color:'#a8c8bc'},
 ];
+const sketchModules=import.meta.glob('./sketches/*.js');
 const sourceEntries=new Map([...projects,...sketches].map(entry=>[entry.slug,entry]));
 const groups={selection:home.selection,instruments:home.instruments,shelf:home.shelf};
 const collection=Object.values(groups).flat().map(item=>({...sourceEntries.get(item.slug),...item}));
@@ -22,7 +25,7 @@ const abort=new AbortController();
 const on=(el,event,fn)=>el.addEventListener(event,fn,{signal:abort.signal});
 const hero=document.querySelector('.hero'),art=document.querySelector('#hero-art');
 let currentScene=0,selectedSlug=null,heroVisible=true,cycleElapsed=0,lastCycle=performance.now(),interactionAt=0;
-let heroField,transitionTimer=0,transitionClassTimer=0,dialogField,cleanupMusic=null,loadToken=0,dialogIndex=0;
+let heroField,transitionTimer=0,transitionClassTimer=0,dialogField,cleanupSketch=null,loadToken=0,dialogIndex=0;
 const fieldMounts=[];
 const motionQuery=matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -81,7 +84,7 @@ renderGroup(groups.selection,'#selected-projects');renderGroup(groups.instrument
 
 const dialog=document.querySelector('#project-dialog');
 const dialogArt=document.querySelector('#project-dialog-art');
-function cleanupStage(){loadToken++;cleanupMusic?.();cleanupMusic=null;dialogField?.destroy();dialogField=null;dialogArt.classList.remove('music-mounted');dialogArt.replaceChildren();}
+function cleanupStage(){loadToken++;cleanupSketch?.();cleanupSketch=null;dialogField?.destroy();dialogField=null;dialogArt.classList.remove('music-mounted','lissajous-mounted');dialogArt.replaceChildren();}
 function projectHref(entry){
   if(!entry.href)return null;
   const url=new URL(entry.href,new URL(document.documentElement.dataset.siteRoot||'./',location.href));
@@ -94,40 +97,45 @@ function openProject(slug){
   document.querySelector('#project-dialog-label').textContent=t(entry.category,translated[0]);
   document.querySelector('#project-dialog-title').textContent=entry.title;
   document.querySelector('#project-dialog-summary').textContent=t(entry.summary,translated[1]);
+  const context=document.querySelector('#project-dialog-context');context.hidden=entry.slug!=='lissajous';
+  context.open=false;context.querySelector('summary').textContent=t('Contexto e referências','Context and references');
+  document.querySelector('#project-dialog-references').innerHTML=entry.slug==='lissajous'?renderLissajousContext(language):'';
   document.querySelector('#project-dialog-tags').innerHTML=(entry.tools||[]).map(tag=>`<span>${escapeHTML(tag)}</span>`).join('');
   document.querySelector('#project-dialog-hint').textContent=entry.scene==='network'?t('Arraste um nó para puxar a rede. Arraste o vazio para girar.','Drag a node to pull the network. Drag empty space to rotate.'):entry.scene==='kaleidoscope'?t('Arraste para reorganizar os fragmentos.','Drag to rearrange the fragments.'):entry.scene==='lissajous'?t('Clique para mudar a fase. Arraste para explorar a curva.','Click to shift the phase. Drag to explore the curve.'):t('Explore a capa com o mouse ou o toque.','Explore the cover with your pointer or touch.');
   const action=document.querySelector('#project-dialog-action');action.replaceChildren();
   const href=projectHref(entry);
-  if(href && entry.slug!=='life-threads') {
-    const link=document.createElement('a');link.href=href;link.target='_blank';link.rel='noopener noreferrer';link.className='outline-button';link.textContent=t('Abrir projeto completo ↗','Open full project ↗');action.append(link);
-  }else if(entry.slug==='music-box'){
-    const button=document.createElement('button');button.type='button';button.className='outline-button';button.textContent=t('Abrir Music Box aqui ↗','Play Music Box here ↗');
-    on(button,'click',()=>startMusic(button));action.append(button);
+  if(entry.status==='live' && entry.sketch && sketchModules['./sketches/'+entry.sketch+'.js']){
+    const button=document.createElement('button');button.type='button';button.className='outline-button';button.textContent=t('Abrir '+entry.title+' aqui','Open '+entry.title+' here');
+    on(button,'click',()=>startSketch(entry,button));action.append(button);
+  }else if(href && entry.slug!=='life-threads') {
+    const link=document.createElement('a');link.href=href;if(entry.slug==='lissajous'){const url=new URL(href);url.searchParams.set('lang',language);link.href=url.href;}link.target='_blank';link.rel='noopener noreferrer';link.className='outline-button';link.textContent=t('Abrir projeto completo ↗','Open full project ↗');action.append(link);
   }else{
     const note=document.createElement('p');note.textContent=entry.slug==='life-threads'?t('Pesquisa pausada.','Research on hold.'):t('Capa animada. Experimento completo em integração.','Animated cover. Full experiment awaiting integration.');action.append(note);
   }
   if(!dialog.open)dialog.showModal();dialog.scrollTop=0;
   dialogField=engine.mount(dialogArt,entry.scene);
 }
-async function startMusic(button){
+async function startSketch(entry,button){
   cleanupStage();const token=loadToken;button.disabled=true;button.textContent=t('Abrindo instrumento…','Opening instrument…');
   try{
-    const module=await import('./sketches/music-box.js');
+    const module=await sketchModules['./sketches/'+entry.sketch+'.js']();
     if(token!==loadToken||!dialog.open)return;
-    dialogArt.classList.add('music-mounted');
-    const cleanup=await module.default(dialogArt);
+    dialogArt.classList.add(entry.sketch==='lissajous'?'lissajous-mounted':'music-mounted');
+    const stage=document.createElement('div');stage.className='inline-stage';dialogArt.append(stage);
+    const mounted=module.default?module.default(stage,{language}):module.mount(stage,{language});
+    const cleanup=mounted instanceof Promise?await mounted:mounted;
+    if(token===loadToken)dialog.scrollTop=0;
     if(token!==loadToken||!dialog.open){cleanup?.();return;}
-    cleanupMusic=cleanup;button.textContent=t('Instrumento aberto','Instrument open');
+    cleanupSketch=typeof cleanup==='function'?cleanup:module.cleanup;button.textContent=t('Instrumento aberto','Instrument open');
   }catch(error){
     if(token!==loadToken)return;
-    button.disabled=false;button.textContent=t('Tentar abrir novamente','Try again');
+    dialogArt.classList.remove('music-mounted','lissajous-mounted');button.disabled=false;button.textContent=t('Tentar abrir novamente','Try again');
     const p=document.createElement('p');p.textContent=t('O instrumento não pôde iniciar. Tente novamente.','The instrument could not start. Please try again.');dialogArt.replaceChildren(p);console.error(error);
   }
 }
 on(document.querySelector('[data-close-project]'),'click',()=>dialog.close());
 on(dialog,'close',cleanupStage);
-on(document.querySelector('#previous-project'),'click',()=>openProject(collection[(dialogIndex-1+collection.length)%collection.length].slug));
-on(document.querySelector('#next-project'),'click',()=>openProject(collection[(dialogIndex+1)%collection.length].slug));
+const cleanupNavigation=mountProjectNavigation({dialog,previous:document.querySelector('#previous-project'),next:document.querySelector('#next-project'),count:collection.length,index:()=>dialogIndex,open:index=>openProject(collection[index].slug)});
 on(document.querySelector('#reset-field'),'click',()=>chooseScene(currentScene));
 
 function updatePauseButton(){
@@ -161,6 +169,6 @@ const cleanupLanguage=mountLanguage(updateLanguage);updateLanguage();const clean
 on(window,'pagehide',event=>{
   if(event.persisted)return;
   clearInterval(cycle);clearTimeout(transitionTimer);clearTimeout(transitionClassTimer);heroObserver.disconnect();
-  cleanupStage();cleanupNotes();cleanupLanguage();cleanupCursor();fieldMounts.forEach(f=>f.destroy());heroField?.destroy();engine.destroy();
+  cleanupNavigation();cleanupStage();cleanupNotes();cleanupLanguage();cleanupCursor();fieldMounts.forEach(f=>f.destroy());heroField?.destroy();engine.destroy();
   motionQuery.removeEventListener('change',onReducedMotion);abort.abort();
 });

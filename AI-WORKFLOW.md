@@ -81,6 +81,8 @@ For future changes, send the assistant:
 2. A short brief saying whether the item is a **larger study** or an **inline sketch**.
 3. Text, images/data and interaction requirements.
 
+Name every delivery `stargaze-YYYY-MM-DD-vNN.zip`, incrementing the delivery number and preserving earlier ZIPs as separate files. The first Chat 2.0 delivery without a suffix counts as v01. Record the current filename in `CONTINUAR-STARGAZE.md`.
+
 The assistant should return one complete updated ZIP after:
 
 1. Preserving all current content and styles.

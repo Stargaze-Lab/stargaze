@@ -25,7 +25,6 @@ const staticCopy={
   '#about-title':'One laboratory.<br /><em>Many questions.</em>',
   '.about-content p':'Stargaze grew from a desire to make projects that rarely find space in everyday design work. An independent practice of exploration, innovation and experimentation.',
   '.site-footer>span':'A field always in the making.','.archive-link':'View earlier studies',
-  '#previous-project':'← Previous','#next-project':'Next →',
   '.dialog-caption':'Generative cover study.',
 };
 const originals=new Map();
@@ -35,6 +34,7 @@ export function applyLanguage(){
   for(const [selector,en] of Object.entries(staticCopy))for(const el of document.querySelectorAll(selector)){if(!originals.has(el))originals.set(el,el.innerHTML);el.innerHTML=language==='en'?en:originals.get(el);}
   document.querySelectorAll('[data-language]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.language===language)));
   document.querySelector('[data-close-project]').ariaLabel=t('Fechar projeto','Close project');document.querySelector('[data-close-note]').ariaLabel=t('Fechar leitura','Close reading');
+  for(const [id,pt,en,key] of [['previous-project','Projeto anterior','Previous project','←'],['next-project','Próximo projeto','Next project','→']]){const button=document.getElementById(id);button.ariaLabel=t(pt,en);button.title=t(pt,en)+' ('+key+')';}
   document.querySelector('.site-header nav').ariaLabel=t('Navegação principal','Main navigation');
   document.querySelector('#scene-selectors').ariaLabel=t('Escolher cena do hero','Choose hero scene');
   document.querySelectorAll('.brand').forEach(el=>el.ariaLabel=t('Stargaze, início','Stargaze, home'));
@@ -64,7 +64,7 @@ export const projectEnglish={
   'colony-globe':['Data · territory · power','Six centuries of colonial rule, explored across space and time.',''],
   'celeste':['Personal celestial atlas','A place, a moment and a sky to explore.',''],
   'music-box':['Sound instrument','Musical pieces arranged in space. The cover previews the sequential pulse of the next version.','Experiment available'],
-  'lissajous':['Frequency · phase · form','A pulse draws a 4:5 relationship: a tonic and a just major third.','Cover study · integration pending'],
+  'lissajous':['Frequency · phase · form','Two notes. One living curve.','Experiment available'],
   'chromascope':['Lens · symmetry · matter','Fragments transform into a field of reflections.','Cover study · integration pending'],
   'life-threads':['Interwoven biographies','Research on hold until a broader event dataset is available.','On hold'],
 };

@@ -78,6 +78,23 @@ export const projects = [
 ];
 export const sketches = [
   {
+    "slug": "lissajous",
+    "title": "Lissajous",
+    "summary": "Duas notas se tornam um desenho em movimento.",
+    "description": "Um instrumento para explorar a relação entre som e forma: duas frequências, trava harmônica ou afinação livre, fase, persistência, velocidade e volume.",
+    "tools": [
+      "Canvas",
+      "Web Audio"
+    ],
+    "date": "2026-09-13",
+    "accent": "violet",
+    "order": 6,
+    "status": "live",
+    "sketch": "lissajous",
+    "visual": "sketch",
+    "kind": "sketch"
+  },
+  {
     "slug": "music-box",
     "title": "Music Box",
     "eyebrow": "Sound sketch 05",

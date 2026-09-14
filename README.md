@@ -84,3 +84,10 @@ Create a separate repository named `stargaze-homolog`. The included GitHub Actio
 Do not connect a custom domain. The expected address is the repository's own GitHub Pages URL, such as `https://USERNAME.github.io/stargaze-homolog/`.
 
 Only port an approved direction back to the production repository after review.
+### Lissajous
+
+O instrumento abre dentro do popup, como a Music Box, pelo módulo `src/sketches/lissajous.js` e pelos metadados `content/sketches/lissajous.json`. A versão integrada usa campo monocromático e controles compactos. Seu código está em `src/instruments/lissajous/`: portado do Lissajous Observatory (revisão `08dcb20`), preservando desenho, áudio, volume e controles. React e os componentes são carregados sob demanda ao abrir o instrumento; a home continua em JavaScript nativo. O componente é isolado em Shadow DOM e desmontado ao fechar ou navegar entre estudos, liberando áudio, animação e eventos. `instrument.css` é o estilo compilado preservado dessa versão; a aparência interna fica em `inline.css`. A rota independente anterior é preservada para links existentes.
+
+O contexto e as referências, em PT/EN, são editáveis em `content/lissajous-context.json`. A referência original é *Mémoire sur l’étude optique des mouvements vibratoires*, Jules Lissajous, 1857, Annales de Chimie et de Physique, série 3, tomo 51, pp. 147–231 (Gallica/BnF). A ficha usa a mesma fonte editorial da página do instrumento.
+
+Nos popups, as setas próximas ao fechar e ←/→ percorrem a coleção em ciclo. Inputs, seletores e controles de instrumentos preservam as próprias teclas.

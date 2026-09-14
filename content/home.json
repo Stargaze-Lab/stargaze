@@ -1,15 +1,70 @@
 {
   "selection": [
-    { "slug": "wikiverso", "scene": "network", "color": "#94bde5", "category": "Atlas de conhecimento", "summary": "Uma ideia puxa outra. Pequenos universos emergem das conexões entre assuntos.", "size": "lead" },
-    { "slug": "colony-globe", "scene": "globe", "color": "#e7bd6d", "category": "Dados · território · poder", "summary": "Seis séculos de domínio colonial, explorados no espaço e no tempo.", "size": "wide" },
-    { "slug": "celeste", "scene": "dome", "color": "#a6b7e4", "category": "Atlas celeste pessoal", "summary": "Um lugar, um instante e um céu para explorar.", "size": "small" }
+    {
+      "slug": "wikiverso",
+      "scene": "network",
+      "color": "#94bde5",
+      "category": "Atlas de conhecimento",
+      "summary": "Uma ideia puxa outra. Pequenos universos emergem das conexões entre assuntos.",
+      "size": "lead"
+    },
+    {
+      "slug": "colony-globe",
+      "scene": "globe",
+      "color": "#e7bd6d",
+      "category": "Dados · território · poder",
+      "summary": "Seis séculos de domínio colonial, explorados no espaço e no tempo.",
+      "size": "wide"
+    },
+    {
+      "slug": "celeste",
+      "scene": "dome",
+      "color": "#a6b7e4",
+      "category": "Atlas celeste pessoal",
+      "summary": "Um lugar, um instante e um céu para explorar.",
+      "size": "small"
+    }
   ],
   "instruments": [
-    { "slug": "music-box", "scene": "music", "color": "#e7bd6d", "category": "Instrumento sonoro", "summary": "Peças musicais distribuídas no espaço. A capa antecipa o pulso sequencial da próxima versão.", "state": "Experimento disponível", "size": "wide" },
-    { "slug": "lissajous", "title": "Lissajous", "scene": "lissajous", "color": "#b3a7dc", "category": "Frequência · fase · forma", "summary": "Um pulso desenha a relação 4:5: tônica e terça maior justa.", "state": "Capa em estudo · integração pendente", "size": "small" },
-    { "slug": "chromascope", "title": "Chromascope", "scene": "kaleidoscope", "color": "#a8c8bc", "category": "Lente · simetria · matéria", "summary": "Fragmentos se transformam em um campo de reflexos.", "state": "Capa em estudo · integração pendente", "size": "small" }
+    {
+      "slug": "music-box",
+      "scene": "music",
+      "color": "#e7bd6d",
+      "category": "Instrumento sonoro",
+      "summary": "Peças musicais distribuídas no espaço. A capa antecipa o pulso sequencial da próxima versão.",
+      "state": "Experimento disponível",
+      "size": "wide"
+    },
+    {
+      "slug": "lissajous",
+      "title": "Lissajous",
+      "scene": "lissajous",
+      "color": "#b3a7dc",
+      "category": "Frequência · fase · forma",
+      "summary": "Duas notas. Uma curva viva.",
+      "state": "Experimento disponível",
+      "size": "small"
+    },
+    {
+      "slug": "chromascope",
+      "title": "Chromascope",
+      "scene": "kaleidoscope",
+      "color": "#a8c8bc",
+      "category": "Lente · simetria · matéria",
+      "summary": "Fragmentos se transformam em um campo de reflexos.",
+      "state": "Capa em estudo · integração pendente",
+      "size": "small"
+    }
   ],
   "shelf": [
-    { "slug": "life-threads", "scene": "threads", "color": "#c2abc5", "category": "Biografias entrelaçadas", "summary": "Pesquisa pausada até existir uma base de eventos mais ampla.", "state": "Pausado", "size": "small" }
+    {
+      "slug": "life-threads",
+      "scene": "threads",
+      "color": "#c2abc5",
+      "category": "Biografias entrelaçadas",
+      "summary": "Pesquisa pausada até existir uma base de eventos mais ampla.",
+      "state": "Pausado",
+      "size": "small"
+    }
   ]
 }
