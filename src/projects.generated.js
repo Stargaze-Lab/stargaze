@@ -78,6 +78,23 @@ export const projects = [
 ];
 export const sketches = [
   {
+    "slug": "chromascope",
+    "title": "Chromascope",
+    "summary": "Desenhe a matéria. Gire os reflexos.",
+    "description": "Luneta circular com peças desenhadas à mão, materiais, física e simetrias.",
+    "tools": [
+      "Canvas",
+      "React"
+    ],
+    "date": "2026-09-14",
+    "accent": "sage",
+    "order": 7,
+    "status": "live",
+    "sketch": "chromascope",
+    "visual": "sketch",
+    "kind": "sketch"
+  },
+  {
     "slug": "lissajous",
     "title": "Lissajous",
     "summary": "Duas notas se tornam um desenho em movimento.",

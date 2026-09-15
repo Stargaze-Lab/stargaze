@@ -65,6 +65,6 @@ export const projectEnglish={
   'celeste':['Personal celestial atlas','A place, a moment and a sky to explore.',''],
   'music-box':['Sound instrument','Musical pieces arranged in space. The cover previews the sequential pulse of the next version.','Experiment available'],
   'lissajous':['Frequency · phase · form','Two notes. One living curve.','Experiment available'],
-  'chromascope':['Lens · symmetry · matter','Fragments transform into a field of reflections.','Cover study · integration pending'],
+  'chromascope':['Lens · symmetry · matter','Fragments transform into a field of reflections.','Experiment available'],
   'life-threads':['Interwoven biographies','Research on hold until a broader event dataset is available.','On hold'],
 };

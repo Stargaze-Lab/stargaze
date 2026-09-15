@@ -23,3 +23,11 @@ dialog{color:var(--ink);background:var(--bg);border:1px solid var(--line);paddin
 #project-dialog-action{margin:18px 0 20px;position:sticky;top:0;z-index:2;background:var(--bg)}.project-context>summary{font-size:14px;cursor:pointer;padding:12px 0;color:var(--muted)}.project-context[open]>summary{margin-bottom:10px}.project-context p{font-size:14px;line-height:1.6}.project-dialog:has(.lissajous-mounted) .project-dialog-body{display:block}.project-dialog-art.lissajous-mounted{height:auto;aspect-ratio:auto;min-height:0}.project-dialog:has(.lissajous-mounted) .project-dialog-copy{display:none}.project-dialog-art.lissajous-mounted .lissajous-inline{width:100%}.music-mounted>.inline-stage{height:100%;width:100%}.project-dialog-copy .project-tags{margin:16px 0}.project-dialog-copy .dialog-caption{margin-top:16px}@media(max-width:800px){.project-dialog-body:not(:has(.music-mounted,.lissajous-mounted)) .project-dialog-copy{order:-1}.project-dialog-body:not(:has(.music-mounted,.lissajous-mounted)) .project-dialog-copy{padding:20px}.project-dialog-copy h2{margin-bottom:12px}#project-dialog-action{margin:14px 0}.project-dialog-copy .dialog-caption{display:none}}
 
 @media(max-width:600px){.project-dialog .dialog-toolbar{grid-template-columns:1fr;gap:4px}.project-dialog .dialog-toolbar>.eyebrow{grid-column:1;grid-row:1;text-align:center}.dialog-controls{grid-column:1;grid-row:2;justify-self:center}}
+
+/* Inline instruments occupy the same stable square. */
+.project-dialog:has(.music-mounted,.chromascope-mounted) .project-dialog-body{display:block}
+.project-dialog:has(.music-mounted,.chromascope-mounted) .project-dialog-copy{display:none}
+.project-dialog-art.music-mounted,.project-dialog-art.chromascope-mounted{width:100%;height:auto;min-height:0;max-width:none;aspect-ratio:1}
+.project-dialog-art.music-mounted>.inline-stage,.project-dialog-art.chromascope-mounted>.inline-stage{position:absolute;inset:0;width:100%;height:100%}
+.project-dialog-art.music-mounted .sg-music-box{min-height:0;height:100%;width:100%;aspect-ratio:1}
+.chromascope-inline{display:block;width:100%;height:100%}

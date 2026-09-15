@@ -12,7 +12,7 @@ Todo card abre um popup. Controles `< × >` com botões circulares, centralizado
 
 ## Estado nesta entrega
 
-Lissajous é estudo interno, como Music Box: abre no popup, sem sair da home. Campo monocromático com pulso luminoso e rastro que desvanece; inicial 4:5 (tônica/terça maior justa). Preserva notas, frequências livres, trava harmônica, fase, persistência, velocidade até 10×, áudio suave e volume. React é carregado sob demanda; estilos isolados em Shadow DOM. Fechar/navegar desmonta animação, observadores e áudio. A rota independente anterior permanece apenas para compatibilidade com links antigos.
+Lissajous é estudo interno, como Music Box: abre no popup, sem sair da home. Campo monocromático com pulso luminoso e rastro que desvanece; inicial 4:5 (tônica/terça maior justa). Preserva notas, frequências livres, trava harmônica, fase, persistência, velocidade inicial 2× e ajuste até 10×, áudio suave e volume. React é carregado sob demanda; estilos isolados em Shadow DOM. Fechar/navegar desmonta animação, observadores e áudio. A rota independente anterior permanece apenas para compatibilidade com links antigos.
 
 PT/EN na home e nos controles. A preferência salva tem prioridade; país estimado por IP tem fallback ao idioma do navegador. Conteúdo autoral não é traduzido automaticamente.
 
@@ -27,7 +27,7 @@ Field Notes recebe registros curtos, ensaios, desenhos, dados e referências. O 
 - Life Threads: pausado até haver banco de eventos maior; não fabricar biografias com LLM.
 - Orbit: futura missão Apollo real simplificada; não priorizar versão atual.
 - String Tuner: fora da seleção principal.
-- Chromascope: próximo instrumento 2D, lente circular e controles em volta; desenhar peças é central. Física e reflexos, formas preenchidas/translúcidas, sem contorno quebrando a ilusão. A capa pode ser monocromática com linhas.
+- Chromascope: agora integrado e live. Quadrado com lente circular, interface radial, modos editar/explorar, desenho com troca automática de cor, seleção e edição de vértices/redesenho, exclusão individual/total, quatro paletas, materiais sólido/vidro/brilho, shake, densidade e 2–12 eixos (4–24 setores). Física preservada do protótipo; colisões aproximadas por círculos. As peças permanecem durante a sessão do instrumento.
 
 ## Arquivos e continuidade técnica
 
@@ -50,8 +50,21 @@ Navegação atualizada na home e em design-studies: `< × >`, com botões circul
 
 ## Versionamento das entregas
 
-A partir do Chat 2.0, entregar cada ZIP como arquivo separado no formato `stargaze-AAAA-MM-DD-vNN.zip`, incrementando a versão a cada entrega e preservando as anteriores. A primeira entrega deste chat (sem sufixo) equivale à v01. Entrega atual: `stargaze-2026-09-14-v02.zip` — restaura os círculos dos botões e mantém `< × >` centralizados.
+A partir do Chat 2.0, entregar cada ZIP como arquivo separado no formato `stargaze-AAAA-MM-DD-vNN.zip`, incrementando a versão a cada entrega e preservando as anteriores. A primeira entrega deste chat (sem sufixo) equivale à v01. Entrega atual: `stargaze-2026-09-15-v04.zip` — refinamento visual do Chromascope. v03 e v02 preservadas.
+
+## v03 — instrumentos inline
+
+- Lissajous: fase reposiciona o rastro existente sem reiniciar seu progresso. Arraste contínuo e teclado; velocidade inicial 2×, limite 10× preservado.
+- Music Box: quadrado estável com controles internos; texto de apresentação desaparece enquanto o instrumento está aberto. Controles respondem à largura do instrumento.
+- Chromascope: `src/instruments/chromascope/{instrument.tsx,inline.css}`, `src/sketches/chromascope.js`, `content/sketches/chromascope.json`. React sob demanda em Shadow DOM, independente do Site privado.
+- Fonte original e versão standalone: Site Chromascope existente `appgprj_6a90a6c574948191b92ccffe332d3e07`, https://chromascope.stargazeyuri.chatgpt.site . Checkout `/workspace/sites/chromascope`, arquivos `app/chromascope.tsx` e `app/scope.css`. Sincronizar as duas cópias ao editar.
+- Verificações: build, check-project-navigation, check-lissajous, check-review e check-inline-instruments. O último exercita desenho, cores, edição, exclusão, modos, eixos, densidade, física finita, limpeza e continuidade da fase. Testes sem navegador; revisão visual e reprodução de áudio permanecem pendentes.
+- GitHub Pages não foi publicado por este chat.
 
 ## Mensagem para abrir o próximo chat
 
 “Vamos continuar a Stargaze a partir deste ZIP. Leia CONTINUAR-STARGAZE.md e AGENTS.md. A home Equilíbrio está aprovada; vamos trabalhar apenas no próximo estudo ou texto que eu indicar.”
+
+## Refinamento visual — 15/09/2026
+
+DM Mono regular incorporada localmente (licença OFL), textos menores em arco, limpar como ícone com nome acessível, escalas finas e anéis duplos inspirados em astrolábios. O marcador de rotação acompanha o giro; guias discretas auxiliam o desenho. Área de clique dos controles preservada. Referência: https://www.rmg.co.uk/collections/objects/rmgc-object-10740 .

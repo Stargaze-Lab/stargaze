@@ -91,3 +91,11 @@ O instrumento abre dentro do popup, como a Music Box, pelo módulo `src/sketches
 O contexto e as referências, em PT/EN, são editáveis em `content/lissajous-context.json`. A referência original é *Mémoire sur l’étude optique des mouvements vibratoires*, Jules Lissajous, 1857, Annales de Chimie et de Physique, série 3, tomo 51, pp. 147–231 (Gallica/BnF). A ficha usa a mesma fonte editorial da página do instrumento.
 
 Nos popups, as setas próximas ao fechar e ←/→ percorrem a coleção em ciclo. Inputs, seletores e controles de instrumentos preservam as próprias teclas.
+
+## Instrumentos — v03 (14/09/2026)
+
+Chromascope agora é um sketch live local: edite `src/instruments/chromascope/instrument.tsx` e `inline.css`; o adaptador `src/sketches/chromascope.js` monta e desmonta React em Shadow DOM. O Site original continua em https://chromascope.stargazeyuri.chatgpt.site, com a mesma implementação em `app/chromascope.tsx` e `app/scope.css`. Sincronize essas cópias; o portfólio não depende desse endereço privado.
+
+O Music Box ocupa um quadrado e mantém seus controles dentro dele. No Lissajous, mudar a fase reposiciona o rastro já percorrido; velocidade inicial inline de 2×.
+
+Verificação adicional: `node scripts/check-inline-instruments.mjs` (handlers, estado e Canvas simulado; não substitui revisão visual/sonora).

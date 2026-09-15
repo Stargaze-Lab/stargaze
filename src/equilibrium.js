@@ -84,7 +84,7 @@ renderGroup(groups.selection,'#selected-projects');renderGroup(groups.instrument
 
 const dialog=document.querySelector('#project-dialog');
 const dialogArt=document.querySelector('#project-dialog-art');
-function cleanupStage(){loadToken++;cleanupSketch?.();cleanupSketch=null;dialogField?.destroy();dialogField=null;dialogArt.classList.remove('music-mounted','lissajous-mounted');dialogArt.replaceChildren();}
+function cleanupStage(){loadToken++;cleanupSketch?.();cleanupSketch=null;dialogField?.destroy();dialogField=null;dialogArt.classList.remove('music-mounted','lissajous-mounted','chromascope-mounted');dialogArt.replaceChildren();}
 function projectHref(entry){
   if(!entry.href)return null;
   const url=new URL(entry.href,new URL(document.documentElement.dataset.siteRoot||'./',location.href));
@@ -120,7 +120,7 @@ async function startSketch(entry,button){
   try{
     const module=await sketchModules['./sketches/'+entry.sketch+'.js']();
     if(token!==loadToken||!dialog.open)return;
-    dialogArt.classList.add(entry.sketch==='lissajous'?'lissajous-mounted':'music-mounted');
+    dialogArt.classList.add(entry.sketch==='lissajous'?'lissajous-mounted':entry.sketch==='chromascope'?'chromascope-mounted':'music-mounted');
     const stage=document.createElement('div');stage.className='inline-stage';dialogArt.append(stage);
     const mounted=module.default?module.default(stage,{language}):module.mount(stage,{language});
     const cleanup=mounted instanceof Promise?await mounted:mounted;
@@ -129,7 +129,7 @@ async function startSketch(entry,button){
     cleanupSketch=typeof cleanup==='function'?cleanup:module.cleanup;button.textContent=t('Instrumento aberto','Instrument open');
   }catch(error){
     if(token!==loadToken)return;
-    dialogArt.classList.remove('music-mounted','lissajous-mounted');button.disabled=false;button.textContent=t('Tentar abrir novamente','Try again');
+    dialogArt.classList.remove('music-mounted','lissajous-mounted','chromascope-mounted');button.disabled=false;button.textContent=t('Tentar abrir novamente','Try again');
     const p=document.createElement('p');p.textContent=t('O instrumento não pôde iniciar. Tente novamente.','The instrument could not start. Please try again.');dialogArt.replaceChildren(p);console.error(error);
   }
 }

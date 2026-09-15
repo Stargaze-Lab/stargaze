@@ -50,6 +50,7 @@ const styles = `
       linear-gradient(#080808, #080808);
     font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
     isolation: isolate;
+    container-type: inline-size;
   }
 
   .sg-music-box__canvas {
@@ -108,7 +109,7 @@ const styles = `
     flex-wrap: wrap;
     justify-content: flex-end;
     gap: 7px;
-    max-width: min(850px, 78vw);
+    max-width: calc(100% - 100px);
     pointer-events: auto;
   }
 
@@ -172,25 +173,25 @@ const styles = `
 
   @media (max-width: 900px) {
     .sg-music-box { min-height: 100%; }
-    .sg-music-box__controls { max-width: 76vw; }
+    .sg-music-box__controls { max-width: calc(100% - 100px); }
   }
 
-  @media (max-width: 650px) {
-    .sg-music-box__header { left: 12px; right: 12px; top: 10px; gap: 10px; }
+  @container (max-width: 650px) {
+    .sg-music-box__header { left: 12px; right: 12px; top: 10px; gap: 8px; flex-direction:column; }
     .sg-music-box__footer { left: 12px; right: 12px; bottom: 10px; }
     .sg-music-box__title { font-size: 16px; }
     .sg-music-box__mark { width: 9px; height: 9px; }
-    .sg-music-box__controls { gap: 5px; max-width: 78vw; }
+    .sg-music-box__controls { gap: 5px; max-width: 100%; }
     .sg-music-box__field { min-height: 32px; padding: 0 6px; }
     .sg-music-box__field span { display: none; }
     .sg-music-box__field select { max-width: 116px; }
     .sg-music-box__button { min-height: 32px; padding: 0 8px; }
-    .sg-music-box__settings { top: 150px; right: 12px; }
+    .sg-music-box__settings { top: 42px; right: 12px; bottom:42px; overflow:auto; }
     .sg-music-box__status { display: none; }
     .sg-music-box__hint { max-width: 42ch; }
   }
 
-  @media (max-width: 420px) {
+  @container (max-width: 420px) {
     .sg-music-box__identity { padding-top: 8px; }
     .sg-music-box__button[data-control='download'] { font-size: 0; }
     .sg-music-box__button[data-control='download']::after { content: 'WAV'; font-size: 9px; }

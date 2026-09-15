@@ -147,6 +147,7 @@ function LissajousScope({ monochrome = false, xValue, yValue, locked, persistenc
   setPhase: (value: number) => void; powered: boolean; pulse: number;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const dragRef = useRef<{id:number;x:number;y:number;phase:number}|null>(null);
   const stateRef = useRef({ xValue, yValue, locked, persistence, speed, phase, powered, pulse });
 
   useEffect(() => { stateRef.current = { xValue, yValue, locked, persistence, speed, phase, powered, pulse }; },
@@ -163,6 +164,9 @@ function LissajousScope({ monochrome = false, xValue, yValue, locked, persistenc
     let frame = 0, width = 0, height = 0;
     let density = 1;
     let lastSignature = "";
+    let lastPhase = NaN;
+    let history: {values:number[];time:number}[] = [];
+    let historyPoints = 0;
     let lastPulse = -1;
     let lastFrameTime = 0;
     let currentT = 0;
@@ -171,6 +175,7 @@ function LissajousScope({ monochrome = false, xValue, yValue, locked, persistenc
     const clearTrail = () => {
       trailContext.clearRect(0, 0, width, height);
       currentT = 0;
+      history = []; historyPoints = 0; lastPhase = NaN;
       previousPoint = null;
     };
 
@@ -217,7 +222,7 @@ function LissajousScope({ monochrome = false, xValue, yValue, locked, persistenc
             y: centerY + Math.sin(waveY * t) * radiusY,
           };
         };
-        const signature = `${width}:${height}:${state.locked}:${waveX}:${waveY}:${state.phase.toFixed(3)}`;
+        const signature = `${width}:${height}:${state.locked}:${waveX}:${waveY}`;
 
         if (signature !== lastSignature) {
           lastFrameTime = time;
@@ -234,7 +239,10 @@ function LissajousScope({ monochrome = false, xValue, yValue, locked, persistenc
         lastFrameTime = time;
         const decaySeconds = 0.45 + 12 * (state.persistence / 100) ** 1.6;
         const fadeAlpha = 1 - Math.exp(-elapsed / decaySeconds);
-        if (fadeAlpha > 0) {
+        const phaseChanged = state.phase !== lastPhase;
+        lastPhase = state.phase;
+        if (phaseChanged) {trailContext.clearRect(0,0,width,height);previousPoint=pointAt(currentT);}
+        if (!phaseChanged && fadeAlpha > 0) {
           trailContext.save();
           trailContext.globalCompositeOperation = "destination-out";
           trailContext.fillStyle = `rgba(0, 0, 0, ${fadeAlpha})`;
@@ -246,6 +254,7 @@ function LissajousScope({ monochrome = false, xValue, yValue, locked, persistenc
         const pixelsPerSecond = Math.min(width, height) * 0.68 * (state.speed / 100);
         let remainingDistance = elapsed * pixelsPerSecond;
         const points = [previousPoint];
+        const values = [currentT];
         while (remainingDistance > 0.01 && points.length < 600) {
           const stepDistance = Math.min(3, remainingDistance);
           const dx = Math.cos(waveX * currentT + state.phase) * waveX * radiusX;
@@ -258,12 +267,14 @@ function LissajousScope({ monochrome = false, xValue, yValue, locked, persistenc
           }
           currentT += stepT;
           points.push(pointAt(currentT));
+          values.push(currentT);
           remainingDistance -= stepDistance;
         }
 
-        const drawTrail = (stroke: string, lineWidth: number, blur: number) => {
-          if (points.length < 2) return;
+        const drawTrail = (stroke: string, lineWidth: number, blur: number, path = points, alpha = 1) => {
+          if (path.length < 2) return;
           trailContext.save();
+          trailContext.globalAlpha = alpha;
           trailContext.strokeStyle = stroke;
           trailContext.lineWidth = lineWidth;
           trailContext.lineCap = "round";
@@ -271,11 +282,20 @@ function LissajousScope({ monochrome = false, xValue, yValue, locked, persistenc
           trailContext.shadowColor = monochrome ? "#eeefeb" : "#f0ad47";
           trailContext.shadowBlur = blur;
           trailContext.beginPath();
-          trailContext.moveTo(points[0].x, points[0].y);
-          for (let i = 1; i < points.length; i += 1) trailContext.lineTo(points[i].x, points[i].y);
+          trailContext.moveTo(path[0].x, path[0].y);
+          for (let i = 1; i < path.length; i += 1) trailContext.lineTo(path[i].x, path[i].y);
           trailContext.stroke();
           trailContext.restore();
         };
+        while(history.length && (time-history[0].time>decaySeconds*5000 || historyPoints>40000)) {
+          historyPoints-=history.shift()!.values.length;
+        }
+        if(phaseChanged)for(const segment of history){
+          const path=segment.values.map(pointAt),alpha=Math.exp(-(time-segment.time)/1000/decaySeconds);
+          drawTrail(monochrome ? "rgba(238,239,235,0.08)" : "rgba(239,166,68,0.18)",monochrome?3:6*glowScale,monochrome?8:18*glowScale,path,alpha);
+          drawTrail(monochrome ? "rgba(238,239,235,0.8)" : "rgba(255,205,115,0.9)",1.15,monochrome?2:7*glowScale,path,alpha);
+        }
+        if(values.length>1){history.push({values,time});historyPoints+=values.length;}
         drawTrail(monochrome ? "rgba(238,239,235,0.08)" : "rgba(239, 166, 68, 0.18)", monochrome ? 3 : 6 * glowScale, monochrome ? 8 : 18 * glowScale);
         drawTrail(monochrome ? "rgba(238,239,235,0.8)" : "rgba(255, 205, 115, 0.9)", 1.15, monochrome ? 2 : 7 * glowScale);
         previousPoint = points[points.length - 1];
@@ -303,16 +323,17 @@ function LissajousScope({ monochrome = false, xValue, yValue, locked, persistenc
     return () => { cancelAnimationFrame(frame); observer.disconnect(); };
   }, []);
 
-  const updatePhase = useCallback((event: React.PointerEvent<HTMLCanvasElement>) => {
-    if (!powered) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    setPhase(Math.max(0, Math.min(Math.PI * 2, ((event.clientX - rect.left) / rect.width) * Math.PI * 2)));
-  }, [powered, setPhase]);
-
-  return <canvas ref={canvasRef} className="scope-canvas" role="img"
-    aria-label={tr("Curva de Lissajous animada a partir dos sinais X e Y","Lissajous curve animated from the X and Y signals")}
-    onPointerDown={(event) => { event.currentTarget.setPointerCapture(event.pointerId); updatePhase(event); }}
-    onPointerMove={(event) => { if (event.buttons === 1) updatePhase(event); }} />;
+  const updatePhase = (event: React.PointerEvent<HTMLCanvasElement>) => {
+    const drag=dragRef.current;if(!powered||!drag||drag.id!==event.pointerId)return;
+    const rect=event.currentTarget.getBoundingClientRect();
+    const value=drag.phase+((event.clientX-drag.x)+(event.clientY-drag.y))/Math.max(1,rect.width)*Math.PI*2;
+    setPhase((value%(Math.PI*2)+Math.PI*2)%(Math.PI*2));
+  };
+  return <canvas ref={canvasRef} className="scope-canvas" role="img" tabIndex={0}
+    aria-label={tr("Curva de Lissajous. Arraste ou use as setas para alterar a fase sem reiniciar o rastro.","Lissajous curve. Drag or use arrow keys to change phase without restarting the trail.")}
+    onPointerDown={event=>{if(!powered||event.button!==0||dragRef.current)return;event.currentTarget.setPointerCapture(event.pointerId);dragRef.current={id:event.pointerId,x:event.clientX,y:event.clientY,phase};}}
+    onPointerMove={updatePhase} onPointerUp={()=>{dragRef.current=null;}} onPointerCancel={()=>{dragRef.current=null;}}
+    onKeyDown={event=>{if(!powered)return;if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(event.key)){event.preventDefault();event.stopPropagation();const delta=(event.key==="ArrowLeft"||event.key==="ArrowDown")?-.08:.08;setPhase((phase+delta+Math.PI*2)%(Math.PI*2));}}}/>;
 }
 
 export function LissajousInstrument({embedded=false}:{embedded?:boolean}={}) {
@@ -320,7 +341,7 @@ export function LissajousInstrument({embedded=false}:{embedded?:boolean}={}) {
   const [yValue, setYValue] = useState(embedded ? 4 : 7);
   const [locked, setLocked] = useState(true);
   const [persistence, setPersistence] = useState(58);
-  const [speed, setSpeed] = useState(100);
+  const [speed, setSpeed] = useState(embedded ? 200 : 100);
   const [phase, setPhase] = useState(embedded ? Math.PI/2 : 0);
   const [powered, setPowered] = useState(true);
   const [pulse, setPulse] = useState(0);
