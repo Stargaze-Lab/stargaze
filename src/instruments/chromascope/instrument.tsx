@@ -1,331 +1,189 @@
 "use client";
 
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import {useCallback,useEffect,useId,useRef,useState} from 'react';
+import {Trash2,Undo2,MousePointer2,Minus,Plus,X,RotateCcw} from 'lucide-react';
+import {type DrawingAssist,assistDrawing,coastRotation} from './drawing';
+import {type Point,type Shape,type Material,type Plate,TAU,palettes,examplePlate,copyPlate,bound,moved,hitShape,area,renderPlate,driftingShapes} from './optics';
 
-type Material = "solid" | "glass" | "glow";
-type Point = { x: number; y: number };
-type Shape = { id: number; points: Point[]; color: string; material: Material };
-type Piece = {
-  shapeId: number; x: number; y: number; vx: number; vy: number;
-  angle: number; angular: number; radius: number; scale: number;
-};
-
-const palettes = [
-  { name: "Solar", colors: ["#ffb000", "#ff5e3a", "#f7d66d", "#7c274c"] },
-  { name: "Tidal", colors: ["#47c6c0", "#2b6cb0", "#9ee6cf", "#7050c8"] },
-  { name: "Mineral", colors: ["#b6ff6b", "#3dcf8e", "#4b55d4", "#d65db1"] },
-  { name: "Ember", colors: ["#ffcf70", "#fe7f2d", "#d6285f", "#6b2d5c"] },
-];
-
-function hexToRgba(hex: string, alpha: number) {
-  const value = hex.replace("#", "");
-  const [r, g, b] = [0, 2, 4].map((i) => parseInt(value.slice(i, i + 2), 16));
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
-
-function normalizePoints(points: Point[]) {
-  const xs = points.map((p) => p.x);
-  const ys = points.map((p) => p.y);
-  const minX = Math.min(...xs), maxX = Math.max(...xs);
-  const minY = Math.min(...ys), maxY = Math.max(...ys);
-  const size = Math.max(maxX - minX, maxY - minY, 10);
-  return points.map((p) => ({
-    x: (p.x - (minX + maxX) / 2) / size,
-    y: (p.y - (minY + maxY) / 2) / size,
-  }));
-}
-
-function shapePath(context: CanvasRenderingContext2D, points: Point[]) {
-  if (points.length < 3) return;
-  context.beginPath();
-  context.moveTo(points[0].x, points[0].y);
-  points.slice(1).forEach((point) => context.lineTo(point.x, point.y));
-  context.closePath();
-}
-
-function DrawPad({ color, material, shape, onComplete, onEdit, label }: {
-  color: string; material: Material; shape?: Shape; onComplete: (points: Point[]) => void;
-  onEdit: (points: Point[]) => void; label: string;
-}) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const pointsRef = useRef<Point[]>([]);
-  const gesture = useRef<{id: number; vertex: number} | null>(null);
-  const render = useCallback(() => {
-    const canvas=canvasRef.current;if(!canvas)return;
-    const rect=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);
-    canvas.width=Math.round(rect.width*dpr);canvas.height=Math.round(rect.height*dpr);
-    const ctx=canvas.getContext("2d");if(!ctx)return;ctx.scale(dpr,dpr);
-    const size=rect.width*.72;
-    const points=pointsRef.current.length?pointsRef.current:shape?.points.map(p=>({x:rect.width/2+p.x*size,y:rect.height/2+p.y*size}))||[];
-    if(points.length>2){shapePath(ctx,points);ctx.fillStyle=material==="glass"?hexToRgba(color,.58):color;
-      if(material==="glow"){ctx.shadowColor=color;ctx.shadowBlur=22;}ctx.fill();ctx.shadowBlur=0;
-      if(shape&&!pointsRef.current.length)points.forEach((p,i)=>{if(i%Math.max(1,Math.floor(points.length/18))===0){ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fillStyle="#f4f0e8";ctx.fill();}});
-    }
-  },[color,material,shape]);
-  useEffect(()=>{render();const observer=new ResizeObserver(render);if(canvasRef.current)observer.observe(canvasRef.current);return()=>observer.disconnect();},[render]);
-  const point=(e:React.PointerEvent<HTMLCanvasElement>)=>{const r=e.currentTarget.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top};};
-  return <canvas ref={canvasRef} className="draw-pad" aria-label={label}
-    onPointerDown={e=>{if(e.button!==0||gesture.current)return;e.currentTarget.setPointerCapture(e.pointerId);const pt=point(e),r=e.currentTarget.getBoundingClientRect();let vertex=-1,dist=18;
-      shape?.points.forEach((p,i)=>{const d=Math.hypot(pt.x-r.width/2-p.x*r.width*.72,pt.y-r.height/2-p.y*r.width*.72);if(d<dist){vertex=i;dist=d;}});
-      gesture.current={id:e.pointerId,vertex};if(vertex<0)pointsRef.current=[pt];render();}}
-    onPointerMove={e=>{const g=gesture.current;if(!g||g.id!==e.pointerId)return;const pt=point(e);
-      if(g.vertex>=0&&shape){const r=e.currentTarget.getBoundingClientRect(),points=shape.points.map(p=>({...p}));points[g.vertex]={x:Math.max(-.62,Math.min(.62,(pt.x-r.width/2)/(r.width*.72))),y:Math.max(-.62,Math.min(.62,(pt.y-r.height/2)/(r.width*.72)))};onEdit(points);}
-      else{const prev=pointsRef.current.at(-1);if(!prev||Math.hypot(pt.x-prev.x,pt.y-prev.y)>3){pointsRef.current.push(pt);render();}}}}
-    onPointerUp={e=>{const g=gesture.current;if(!g||g.id!==e.pointerId)return;gesture.current=null;
-      if(g.vertex<0&&pointsRef.current.length>5){const points=pointsRef.current;onComplete(points.filter((_,i)=>i%Math.max(1,Math.ceil(points.length/90))===0));}pointsRef.current=[];render();}}
-    onPointerCancel={()=>{gesture.current=null;pointsRef.current=[];render();}} />;
-}
-
-function polar(radius:number,degrees:number){const a=degrees*Math.PI/180;return{x:360+radius*Math.cos(a),y:360+radius*Math.sin(a)};}
-function arc(radius:number,start:number,end:number){const a=polar(radius,start),b=polar(radius,end);return `M ${a.x} ${a.y} A ${radius} ${radius} 0 ${end-start>180?1:0} 1 ${b.x} ${b.y}`;}
-function ArcButton({angle,label,onClick,disabled=false,active=false,icon=false}:{angle:number;label:string;onClick:()=>void;disabled?:boolean;active?:boolean;icon?:boolean}){
-  const id=useId().replace(/:/g,"");const start=angle-20,end=angle+20;
-  const a=polar(323,start),b=polar(323,end),c=polar(263,end),d=polar(263,start);
-  const bottom=Math.sin(angle*Math.PI/180)>.1;
-  const pa=polar(288,bottom?end:start),pb=polar(288,bottom?start:end);
-  return <g className={`arc-button${active?" active":""}`} role="button" tabIndex={disabled?-1:0} aria-label={label} aria-disabled={disabled} aria-pressed={active}
-    onClick={()=>{if(!disabled)onClick();}} onKeyDown={e=>{if(["Enter"," "].includes(e.key)){e.preventDefault();e.stopPropagation();if(!disabled)onClick();}}}>
-    <title>{label}</title>
-    <path className="arc-indicator" d={arc(267,angle-4,angle+4)}/>
-    <path className="arc-hit" d={`M${a.x} ${a.y} A323 323 0 0 1 ${b.x} ${b.y} L${c.x} ${c.y} A263 263 0 0 0 ${d.x} ${d.y} Z`}/>
-    <defs><path id={id} d={`M${pa.x} ${pa.y} A288 288 0 0 ${bottom?0:1} ${pb.x} ${pb.y}`}/></defs>
-    {icon?<g className="clear-icon" transform={`translate(${polar(288,angle).x},${polar(288,angle).y})`} aria-hidden="true">
-      <path d="M-11 -8 H11 M-4 -8 V-12 H4 V-8 M-8 -8 L-7 12 H7 L8 -8 M-3 -3 V7 M3 -3 V7"/>
-    </g>:<text dy={bottom?4:4}><textPath href={`#${id}`} startOffset="50%" textAnchor="middle">{label}</textPath></text>}
+type Gesture={id:number;kind:'draw'|'move'|'vertex'|'rotate';start:Point;last:Point;before:Plate;shapeId?:number;vertex?:number;changed:boolean;time?:number;velocity?:number};
+const pointOnRing=(r:number,a:number)=>({x:360+r*Math.cos(a*Math.PI/180),y:360+r*Math.sin(a*Math.PI/180)});
+function arc(r:number,start:number,end:number,reverse=false){const a=pointOnRing(r,reverse?end:start),b=pointOnRing(r,reverse?start:end);return`M${a.x} ${a.y} A${r} ${r} 0 ${end-start>180?1:0} ${reverse?0:1} ${b.x} ${b.y}`;}
+function CurvedControl({angle,label,textLabel,onClick,active=false,disabled=false,pressed,variant='',halfSpan=22}:{angle:number;label:string;textLabel?:string;onClick:()=>void;active?:boolean;disabled?:boolean;pressed?:boolean;variant?:string;halfSpan?:number}){
+  const id=useId().replace(/:/g,'');const bottom=Math.sin(angle*Math.PI/180)>.2;
+  const a=pointOnRing(323,angle-halfSpan),b=pointOnRing(323,angle+halfSpan),c=pointOnRing(272,angle+halfSpan),d=pointOnRing(272,angle-halfSpan);
+  return <g className={`optical-action ${variant}${active?' is-primary':''}`} role="button" aria-pressed={pressed} tabIndex={disabled?-1:0} aria-label={label} aria-disabled={disabled} onClick={()=>{if(!disabled)onClick();}} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();if(!disabled)onClick();}}}>
+    <title>{label}</title><path className="action-hit" d={`M${a.x} ${a.y} A323 323 0 0 1 ${b.x} ${b.y} L${c.x} ${c.y} A272 272 0 0 0 ${d.x} ${d.y} Z`}/>
+    <path className="action-rule" d={arc(280,angle-9,angle+9)}/><defs><path id={id} d={arc(298,angle-25,angle+25,bottom)}/></defs>
+    <text dy="4"><textPath href={`#${id}`} startOffset="50%" textAnchor="middle">{textLabel??label}</textPath></text>
   </g>;
 }
+function IconButton({angle,label,children,onClick,disabled=false,active=false,radius=299}:{angle:number;label:string;children:React.ReactNode;onClick:()=>void;disabled?:boolean;active?:boolean;radius?:number}){
+  const p=pointOnRing(radius,angle);
+  return <foreignObject x={p.x-25} y={p.y-25} width="50" height="50" className="icon-object"><button className={`optical-icon${active?' active':''}`} type="button" title={label} aria-label={label} disabled={disabled} onClick={onClick}>{children}</button></foreignObject>;
+}
 
-export default function Chromascope({language="pt"}:{language?:"pt"|"en"}) {
-  const tr=(pt:string,en:string)=>language==="pt"?pt:en;
-  const uid=useId().replace(/:/g,"");
-  const [mode,setMode]=useState<"edit"|"view">("edit");
-  const [selectedId,setSelectedId]=useState<number|null>(null);
-  const [notice,setNotice]=useState("");
-  const modeRef=useRef(mode);
-  useEffect(()=>{modeRef.current=mode;},[mode]);
-  const displayRef = useRef<HTMLCanvasElement>(null);
-  const sourceRef = useRef<HTMLCanvasElement | null>(null);
-  const shapesRef = useRef<Shape[]>([]);
-  const piecesRef = useRef<Piece[]>([]);
-  const rotationRef = useRef(0);
-  const rotationMarkRef = useRef<SVGGElement>(null);
-  const draggingRef = useRef<{ angle: number; pointerId: number } | null>(null);
-  const nextIdRef = useRef(1);
-  const facetsRef = useRef(12);
-  const densityRef = useRef(5);
-  const [shapes, setShapes] = useState<Shape[]>([]);
-  const [paletteIndex, setPaletteIndex] = useState(0);
-  const [colorIndex, setColorIndex] = useState(0);
-  const [material, setMaterial] = useState<Material>("glass");
-  const [facets, setFacets] = useState(12);
-  const [density, setDensity] = useState(5);
-  const [isDragging, setIsDragging] = useState(false);
-  const palette = palettes[paletteIndex];
-  const selected=shapes.find(s=>s.id===selectedId);
-  const activeColor = selected?.color || palette.colors[colorIndex % palette.colors.length];
-
-  const spawnPiece = useCallback((shapeId: number, index = 0): Piece => {
-    const angle = Math.random() * Math.PI * 2;
-    const distance = 0.08 + Math.random() * 0.34;
-    return {
-      shapeId, x: Math.cos(angle) * distance + (index % 2 ? 0.05 : -0.05),
-      y: Math.sin(angle) * distance - 0.24, vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.2, angle: Math.random() * Math.PI * 2,
-      angular: (Math.random() - 0.5) * 2.2, radius: 0.055 + Math.random() * 0.028,
-      scale: 0.75 + Math.random() * 0.48,
+export default function Chromascope({language='pt'}:{language?:'pt'|'en'}){
+  const tr=(pt:string,en:string)=>language==='pt'?pt:en;
+  const uid=useId().replace(/:/g,'');
+  const plateRef=useRef<Plate>(examplePlate());
+  const canvasRef=useRef<HTMLCanvasElement>(null),markerRef=useRef<SVGGElement>(null);
+  const rendererRef=useRef<()=>void>(()=>{}),gestureRef=useRef<Gesture|null>(null),draftRef=useRef<Shape|null>(null);
+  const spinRef=useRef({velocity:0,last:0});
+  const driftRef=useRef({playing:false,elapsed:0,last:0,base:[] as Shape[]});
+  const [flowing,setFlowing]=useState(false);
+  const stopDrift=(update=true)=>{driftRef.current.playing=false;driftRef.current.last=0;if(update)setFlowing(false);};
+  const stopSpin=()=>{spinRef.current.velocity=0;spinRef.current.last=0;};
+  const historyRef=useRef<{plate:Plate;palette:number}[]>([]),nextId=useRef(4),urlsRef=useRef(new Set<string>()),mountedRef=useRef(true);
+  const [revision,setRevision]=useState(0),[mode,setMode]=useState<'view'|'edit'>('view'),[tool,setTool]=useState<'draw'|'select'>('draw');
+  const [selected,setSelected]=useState<number|null>(null),[palette,setPalette]=useState(0),[color,setColor]=useState(0),[material,setMaterial]=useState<Material>('glass');
+  const [assist,setAssist]=useState<DrawingAssist>('auto');
+  const [notice,setNotice]=useState(''),[saving,setSaving]=useState(false);
+  const uiRef=useRef({mode,tool,selected,palette,color,material});uiRef.current={mode,tool,selected,palette,color,material};
+  const shape=plateRef.current.shapes.find(s=>s.id===selected),colors=palettes[palette].colors;
+  const change=useCallback(()=>{setRevision(n=>n+1);rendererRef.current();},[]);
+  const remember=(before:Plate)=>{historyRef.current.push({plate:before,palette:uiRef.current.palette});if(historyRef.current.length>40)historyRef.current.shift();};
+  const edit=(fn:(plate:Plate)=>void)=>{stopSpin();stopDrift();remember(copyPlate(plateRef.current));fn(plateRef.current);setNotice('');change();};
+  useEffect(()=>{
+    mountedRef.current=true;const canvas=canvasRef.current;if(!canvas)return;const ctx=canvas.getContext('2d');if(!ctx)return;
+    let frame=0,disposed=false;
+    const draw=(time:number)=>{frame=0;if(disposed)return;
+      const spin=spinRef.current;if(spin.velocity){
+        if(uiRef.current.mode!=='view'||document.hidden)stopSpin();
+        else{const dt=spin.last?Math.min(.064,Math.max(0,(time-spin.last)/1000)):1/60;const next=coastRotation(spin.velocity,dt);plateRef.current.angle=(plateRef.current.angle+next.delta+TAU)%TAU;spin.velocity=next.velocity;spin.last=time;}
+      }
+      const drift=driftRef.current;if(drift.playing){
+        if(uiRef.current.mode!=='view'||document.hidden){stopDrift();}
+        else{drift.elapsed+=drift.last?Math.min(.064,Math.max(0,(time-drift.last)/1000)):0;drift.last=time;plateRef.current.shapes=driftingShapes(drift.base,drift.elapsed);}
+      }
+      const rect=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2);if(rect.width<1||rect.height<1)return;
+      const w=Math.round(rect.width*dpr),h=Math.round(rect.height*dpr);if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+      ctx.setTransform(dpr,0,0,dpr,0,0);renderPlate(ctx,rect.width,rect.height,plateRef.current,{edit:uiRef.current.mode==='edit',selected:uiRef.current.tool==='select'?uiRef.current.selected:null,draft:draftRef.current});
+      markerRef.current?.setAttribute('transform',`rotate(${plateRef.current.angle*180/Math.PI} 360 360)`);
+      if(spinRef.current.velocity||driftRef.current.playing)invalidate();
     };
-  }, []);
-
-  const rebuildPieces = useCallback((nextShapes: Shape[], nextDensity: number) => {
-    piecesRef.current = nextShapes.flatMap((shape) =>
-      Array.from({ length: nextDensity }, (_, i) => spawnPiece(shape.id, i)),
-    );
-  }, [spawnPiece]);
-
-  const editShape=useCallback((patch:Partial<Shape>)=>{
-    const next=shapesRef.current.map(s=>s.id===selectedId?{...s,...patch}:s);shapesRef.current=next;setShapes(next);
-  },[selectedId]);
-  const addShape = useCallback((rawPoints:Point[])=>{
-    if(selectedId!==null){editShape({points:normalizePoints(rawPoints)});return;}
-    if(shapesRef.current.length>=6){setNotice(tr("6 peças · selecione para editar","6 pieces · select to edit"));return;}
-    const shape:Shape={id:nextIdRef.current++,points:normalizePoints(rawPoints),color:activeColor,material};
-    const next=[...shapesRef.current,shape];shapesRef.current=next;setShapes(next);
-    piecesRef.current.push(...Array.from({length:densityRef.current},(_,i)=>spawnPiece(shape.id,i)));
-    setColorIndex(i=>(i+1)%palette.colors.length);setNotice("");
-  },[activeColor,material,selectedId,editShape,spawnPiece,palette.colors.length,language]);
-  const removeSelected=()=>{
-    const next=shapesRef.current.filter(s=>s.id!==selectedId);shapesRef.current=next;setShapes(next);
-    piecesRef.current=piecesRef.current.filter(p=>p.shapeId!==selectedId);setSelectedId(null);setNotice("");
+    const invalidate=()=>{if(!disposed&&!frame)frame=requestAnimationFrame(draw);};rendererRef.current=invalidate;
+    const observer=new ResizeObserver(invalidate);observer.observe(canvas);invalidate();
+    const visibility=()=>{if(document.hidden){stopSpin();stopDrift();}};document.addEventListener('visibilitychange',visibility);
+    return()=>{disposed=true;mountedRef.current=false;stopSpin();stopDrift(false);document.removeEventListener('visibilitychange',visibility);cancelAnimationFrame(frame);observer.disconnect();rendererRef.current=()=>{};for(const url of urlsRef.current)URL.revokeObjectURL(url);urlsRef.current.clear();};
+  },[]);
+  useEffect(()=>rendererRef.current(),[mode,tool,selected,revision]);
+  const point=(e:React.PointerEvent<HTMLCanvasElement>):Point=>{const r=e.currentTarget.getBoundingClientRect(),scale=Math.min(r.width,r.height)*.485;return{x:(e.clientX-r.left-r.width/2)/scale,y:(e.clientY-r.top-r.height/2)/scale};};
+  const pick=(id:number|null)=>{setSelected(id);if(id!==null){setTool('select');const s=plateRef.current.shapes.find(s=>s.id===id);if(s)setMaterial(s.material);}setNotice('');};
+  const begin=(e:React.PointerEvent<HTMLCanvasElement>)=>{
+    if(e.button!==0||gestureRef.current)return;const p=point(e);if(Math.hypot(p.x,p.y)>.99)return;
+    stopSpin();stopDrift();setNotice('');e.currentTarget.setPointerCapture(e.pointerId);const before=copyPlate(plateRef.current);
+    if(mode==='view'){gestureRef.current={id:e.pointerId,kind:'rotate',start:p,last:p,before,changed:false,time:e.timeStamp,velocity:0};return;}
+    if(tool==='draw'){
+      if(plateRef.current.shapes.length>=6){setNotice(tr('Seis peças. Apague uma ou ajuste as existentes.','Six pieces. Delete one or edit the existing ones.'));return;}
+      draftRef.current={id:nextId.current,points:[bound(p)],color:colors[color],material};gestureRef.current={id:e.pointerId,kind:'draw',start:p,last:p,before,changed:false};rendererRef.current();return;
+    }
+    let vertex=-1,nearest=.055;shape?.points.forEach((q,i)=>{const distance=Math.hypot(q.x-p.x,q.y-p.y);if(distance<nearest){vertex=i;nearest=distance;}});
+    const id=vertex>=0?selected:hitShape(plateRef.current.shapes,p);pick(id);
+    if(id!==null)gestureRef.current={id:e.pointerId,kind:vertex>=0?'vertex':'move',start:p,last:p,before,shapeId:id,vertex,changed:false};
   };
-  const clearAll=()=>{shapesRef.current=[];piecesRef.current=[];setShapes([]);setSelectedId(null);setMode("edit");setNotice("");};
-  const chooseColor=(i:number)=>{setColorIndex(i);if(selectedId!==null)editShape({color:palette.colors[i]});};
-  const chooseShape=(shape:Shape)=>{setSelectedId(shape.id);setMaterial(shape.material);setMode("edit");setNotice("");};
-  const cycleMaterial=()=>{const list:Material[]=["solid","glass","glow"];const next=list[(list.indexOf(material)+1)%3];setMaterial(next);if(selectedId!==null)editShape({material:next});};
-  const shake = useCallback(() => {
-    piecesRef.current.forEach((piece) => {
-      piece.vx += (Math.random() - 0.5) * 1.4;
-      piece.vy += (Math.random() - 0.5) * 1.4;
-      piece.angular += (Math.random() - 0.5) * 8;
-    });
-  }, []);
-
-  useEffect(() => { facetsRef.current = facets; }, [facets]);
-  useEffect(() => {
-    densityRef.current = density; rebuildPieces(shapesRef.current, density);
-  }, [density, rebuildPieces]);
-
-  useEffect(() => {
-    const canvas = displayRef.current;
-    if (!canvas) return;
-    sourceRef.current = document.createElement("canvas");
-    let frame = 0;
-    let previous = performance.now();
-
-    const render = (time: number) => {
-      if(modeRef.current!=="view"||document.hidden){previous=time;frame=requestAnimationFrame(render);return;}
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const width = Math.max(1, Math.round(rect.width));
-      const height = Math.max(1, Math.round(rect.height));
-      const pixelWidth = Math.round(width * dpr), pixelHeight = Math.round(height * dpr);
-      if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) { canvas.width = pixelWidth; canvas.height = pixelHeight; }
-      const source = sourceRef.current;
-      if (!source) return;
-      if (source.width !== pixelWidth || source.height !== pixelHeight) { source.width = pixelWidth; source.height = pixelHeight; }
-      const dt = Math.min((time - previous) / 1000, 0.032);
-      previous = time;
-      const gx = Math.sin(rotationRef.current) * 0.7;
-      const gy = Math.cos(rotationRef.current) * 0.7;
-      const pieces = piecesRef.current;
-
-      pieces.forEach((piece) => {
-        piece.vx += gx * dt; piece.vy += gy * dt;
-        piece.x += piece.vx * dt; piece.y += piece.vy * dt; piece.angle += piece.angular * dt;
-        piece.vx *= Math.pow(0.995,dt*60); piece.vy *= Math.pow(0.995,dt*60); piece.angular *= Math.pow(0.994,dt*60);
-        const boundary = 0.82 - piece.radius;
-        const distance = Math.hypot(piece.x, piece.y);
-        if (distance > boundary) {
-          const nx = piece.x / distance, ny = piece.y / distance;
-          piece.x = nx * boundary; piece.y = ny * boundary;
-          const velocity = piece.vx * nx + piece.vy * ny;
-          if (velocity > 0) {
-            piece.vx -= velocity * nx * 1.55; piece.vy -= velocity * ny * 1.55;
-            piece.angular += (piece.vx * ny - piece.vy * nx) * 1.8;
-          }
-        }
-      });
-
-      for (let aIndex = 0; aIndex < pieces.length; aIndex++) {
-        for (let bIndex = aIndex + 1; bIndex < pieces.length; bIndex++) {
-          const a = pieces[aIndex], b = pieces[bIndex];
-          const dx = b.x - a.x, dy = b.y - a.y;
-          const distance = Math.hypot(dx, dy) || 0.001;
-          const minimum = (a.radius + b.radius) * 0.82;
-          if (distance < minimum) {
-            const nx = dx / distance, ny = dy / distance, overlap = (minimum - distance) * 0.5;
-            a.x -= nx * overlap; a.y -= ny * overlap; b.x += nx * overlap; b.y += ny * overlap;
-            const relative = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny;
-            if (relative < 0) {
-              const impulse = -relative * 0.58;
-              a.vx -= nx * impulse; a.vy -= ny * impulse; b.vx += nx * impulse; b.vy += ny * impulse;
-            }
-          }
-        }
+  const move=(e:React.PointerEvent<HTMLCanvasElement>)=>{
+    const g=gestureRef.current;if(!g||g.id!==e.pointerId)return;const p=bound(point(e));
+    if(g.kind==='rotate'){
+      let delta=Math.hypot(p.x,p.y)<.15||Math.hypot(g.last.x,g.last.y)<.15?(p.x-g.last.x)*2:Math.atan2(p.y,p.x)-Math.atan2(g.last.y,g.last.x);
+      if(delta>Math.PI)delta-=TAU;if(delta< -Math.PI)delta+=TAU;plateRef.current.angle=(plateRef.current.angle+delta+TAU)%TAU;g.changed ||= Math.abs(delta)>.0001;
+      const dt=Math.max(8,e.timeStamp-(g.time??e.timeStamp))/1000;
+      const velocity=Math.max(-2.2,Math.min(2.2,delta/dt));g.velocity=(g.velocity??0)*.35+velocity*.65;g.time=e.timeStamp;
+    }else if(g.kind==='draw'){
+      const points=draftRef.current?.points;if(points&&Math.hypot(p.x-g.last.x,p.y-g.last.y)>.009){points.push(p);g.changed=true;}else return;
+    }else{
+      const current=plateRef.current.shapes.find(s=>s.id===g.shapeId),original=g.before.shapes.find(s=>s.id===g.shapeId);if(!current||!original)return;
+      if(g.kind==='move')current.points=moved(original.points,p.x-g.start.x,p.y-g.start.y);
+      else{current.points=original.points.map(q=>({...q}));current.points[g.vertex!]=bound(p);}
+      g.changed ||= Math.hypot(p.x-g.start.x,p.y-g.start.y)>.004;
+    }
+    g.last=p;rendererRef.current();
+  };
+  const finish=(e:React.PointerEvent<HTMLCanvasElement>,cancel=false)=>{
+    const g=gestureRef.current;if(!g||g.id!==e.pointerId)return;gestureRef.current=null;
+    if(cancel){plateRef.current=g.before;draftRef.current=null;change();return;}
+    if(g.kind==='draw'){
+      const draft=draftRef.current;draftRef.current=null;
+      if(draft&&draft.points.length>=3&&area(draft.points)>.002){const result=assistDrawing(draft.points,assist);draft.points=result.points;remember(g.before);plateRef.current.shapes.push(draft);nextId.current++;setColor(i=>(i+1)%4);setNotice(result.kind==='circle'?tr('Círculo ajustado.','Circle refined.'):result.kind==='polygon'?tr('Retas ajustadas.','Edges refined.'):tr('Traço suavizado.','Contour smoothed.'));}
+      else setNotice(tr('Trace uma pequena área, não apenas uma linha.','Draw a small area, not only a line.'));
+    }else if(g.changed){remember(g.before);
+      if(g.kind==='rotate'&&!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches){
+        const velocity=(g.velocity??0)*Math.exp(-Math.max(0,e.timeStamp-(g.time??e.timeStamp))/80);
+        if(Math.abs(velocity)>.04){spinRef.current={velocity,last:0};}
       }
-
-      const sourceContext = source.getContext("2d"), context = canvas.getContext("2d");
-      if (!sourceContext || !context) return;
-      const cx = width / 2, cy = height / 2, radius = Math.min(width, height) * 0.495;
-      sourceContext.setTransform(dpr, 0, 0, dpr, 0, 0);
-      sourceContext.clearRect(0, 0, width, height);
-      pieces.forEach((piece) => {
-        const shape = shapesRef.current.find((item) => item.id === piece.shapeId);
-        if (!shape) return;
-        sourceContext.save();
-        sourceContext.translate(cx + piece.x * radius, cy + piece.y * radius);
-        sourceContext.rotate(piece.angle);
-        const size = radius * piece.radius * 4.1 * piece.scale;
-        sourceContext.scale(size, size);
-        shapePath(sourceContext, shape.points);
-        sourceContext.fillStyle = shape.color;
-        sourceContext.globalAlpha = shape.material === "solid" ? 0.94 : shape.material === "glass" ? 0.48 : 0.82;
-        sourceContext.globalCompositeOperation = shape.material === "solid" ? "source-over" : "screen";
-        if (shape.material === "glow") { sourceContext.shadowColor = shape.color; sourceContext.shadowBlur = 0.22; }
-        sourceContext.fill(); sourceContext.restore();
-      });
-
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const background = context.createRadialGradient(cx, cy, radius * 0.04, cx, cy, radius * 1.12);
-      background.addColorStop(0, "#172329"); background.addColorStop(0.68, "#0a1013"); background.addColorStop(1, "#050708");
-      context.fillStyle = background; context.fillRect(0, 0, width, height);
-      const count = facetsRef.current, sector = (Math.PI * 2) / count;
-      context.save(); context.translate(cx, cy); context.rotate(-Math.PI / 2 + rotationRef.current * 0.05);
-      for (let index = 0; index < count; index++) {
-        context.save(); context.rotate(index * sector); if (index % 2 === 1) context.scale(1, -1);
-        context.beginPath(); context.moveTo(0, 0); context.arc(0, 0, radius, -sector / 2 - 0.004, sector / 2 + 0.004); context.closePath(); context.clip();
-        context.rotate(-Math.PI/2); context.drawImage(source, -cx, -cy, width, height); context.restore();
-      }
-      context.restore();
-      frame = requestAnimationFrame(render);
-    };
-    frame = requestAnimationFrame(render);
-    return () => {cancelAnimationFrame(frame);sourceRef.current=null;};
-  }, []);
-
-  const pointerAngle=(event:React.PointerEvent<HTMLCanvasElement>)=>{const r=event.currentTarget.getBoundingClientRect();return Math.atan2(event.clientY-r.top-r.height/2,event.clientX-r.left-r.width/2);};
-  const rotate=(delta:number)=>{rotationRef.current+=delta;rotationMarkRef.current?.setAttribute("transform",`rotate(${rotationRef.current*180/Math.PI} 360 360)`);piecesRef.current.forEach(p=>{p.vx+=delta*.10;p.angular+=delta*.8;});};
-  const beginTurn=(event:React.PointerEvent<HTMLCanvasElement>)=>{if(event.button!==0||draggingRef.current)return;event.currentTarget.setPointerCapture(event.pointerId);draggingRef.current={angle:pointerAngle(event),pointerId:event.pointerId};setIsDragging(true);};
-  const turn=(event:React.PointerEvent<HTMLCanvasElement>)=>{const drag=draggingRef.current;if(!drag||drag.pointerId!==event.pointerId)return;const angle=pointerAngle(event);let delta=angle-drag.angle;if(delta>Math.PI)delta-=2*Math.PI;if(delta< -Math.PI)delta+=2*Math.PI;rotate(delta);drag.angle=angle;};
-  const endTurn=()=>{draggingRef.current=null;setIsDragging(false);};
-  const materialLabel={solid:tr("Sólido","Solid"),glass:tr("Vidro","Glass"),glow:tr("Brilho","Glow")}[material];
-  const hint=notice||(mode==="edit"?(selected?tr("Arraste os pontos · ou redesenhe","Drag points · or redraw"):tr("Desenhe uma peça · solte para criar","Draw a piece · release to create")):tr("Arraste em círculo para misturar","Drag in a circle to mix"));
+    }
+    change();
+  };
+  const undo=()=>{stopSpin();stopDrift();const previous=historyRef.current.pop();if(previous){plateRef.current=previous.plate;setPalette(previous.palette);setColor(0);setSelected(null);setNotice('');change();}};
+  const clear=()=>{if(!plateRef.current.shapes.length)return;edit(p=>{p.shapes=[];});setSelected(null);setMode('edit');setTool('draw');};
+  const remove=()=>{if(selected===null)return;edit(p=>{p.shapes=p.shapes.filter(s=>s.id!==selected);});setSelected(null);};
+  const rotate=(delta:number)=>edit(p=>{p.angle=(p.angle+delta+TAU)%TAU;});
+  const setAxes=(delta:number)=>{const n=Math.max(2,Math.min(12,plateRef.current.axes+delta));if(n!==plateRef.current.axes)edit(p=>{p.axes=n;});};
+  const choosePalette=()=>{const next=(palette+1)%palettes.length;edit(p=>{p.shapes.forEach((s,i)=>s.color=palettes[next].colors[i%4]);});setPalette(next);setColor(0);};
+  const chooseColor=(i:number)=>{setColor(i);if(shape&&tool==='select')edit(()=>{shape.color=colors[i];});};
+  const cycleMaterial=()=>{const kinds:Material[]=['glass','solid','glow'];const next=kinds[(kinds.indexOf(material)+1)%3];setMaterial(next);if(shape&&tool==='select')edit(()=>{shape.material=next;});};
+  const resizeSelected=(factor:number)=>{if(!shape)return;edit(()=>{const center=shape.points.reduce((a,p)=>({x:a.x+p.x/shape.points.length,y:a.y+p.y/shape.points.length}),{x:0,y:0});const points=shape.points.map(p=>({x:center.x+(p.x-center.x)*factor,y:center.y+(p.y-center.y)*factor}));if(points.every(p=>Math.hypot(p.x,p.y)<.97))shape.points=points;});};
+  const save=()=>{
+    if(saving||!plateRef.current.shapes.length)return;stopSpin();stopDrift();setSaving(true);setNotice('');
+    try{const output=document.createElement('canvas');output.width=2048;output.height=2048;const ctx=output.getContext('2d');if(!ctx)throw Error('Canvas');renderPlate(ctx,2048,2048,copyPlate(plateRef.current),{guides:false});
+      output.toBlob(blob=>{if(!mountedRef.current)return;setSaving(false);if(!blob){setNotice(tr('Não foi possível salvar. Tente novamente.','Could not save. Please try again.'));return;}for(const previous of urlsRef.current)URL.revokeObjectURL(previous);urlsRef.current.clear();const url=URL.createObjectURL(blob);urlsRef.current.add(url);const link=document.createElement('a');link.href=url;link.download='chromascope.png';document.body.append(link);link.click();link.remove();},'image/png');
+    }catch{setSaving(false);setNotice(tr('Não foi possível salvar. Tente novamente.','Could not save. Please try again.'));}
+  };
+  const switchMode=(next:'edit'|'view')=>{if(next===mode)return;stopSpin();stopDrift();setMode(next);setNotice('');};
+  const toggleDrift=()=>{
+    stopSpin();if(driftRef.current.playing){stopDrift();change();return;}
+    if(!plateRef.current.shapes.length)return;
+    remember(copyPlate(plateRef.current));setNotice('');
+    const base=copyPlate(plateRef.current).shapes;
+    if(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches){plateRef.current.shapes=driftingShapes(base,1.4);change();return;}
+    driftRef.current={playing:true,elapsed:0,last:0,base};setFlowing(true);change();
+  };
+  const hint=notice||(mode==='view'?(flowing?tr('Peças em movimento suave. Toque para pausar.','Pieces drift gently. Touch to pause.'):tr('Gire e solte. Toque para parar.','Turn and release. Touch to stop.')):(tool==='draw'?(assist==='auto'?tr('Desenhe. Círculos, retas e curvas se ajustam.','Draw. Circles, edges and curves are refined.'):assist==='lines'?tr('Desenhe cantos. O traço vira um polígono.','Draw corners. Your contour becomes a polygon.'):tr('Desenhe livremente. O traço será suavizado.','Draw freely. Your contour will be smoothed.')):tr('Mova as peças ou arraste seus pontos.','Move the pieces or drag their points.')));
+  const materialName={glass:tr('Vidro','Glass'),solid:tr('Sólido','Solid'),glow:tr('Luz','Glow')}[material];
   return <main className="chromascope-shell" aria-label="Chromascope">
-    <section className="cosmic-scope" data-mode={mode}>
-      <div className="scope-lens">
-        <canvas ref={displayRef} className={`scope-canvas${isDragging?" is-dragging":""}`} hidden={mode!=="view"} tabIndex={mode==="view"?0:-1}
-          aria-label={tr("Caleidoscópio. Arraste em círculo ou use as setas para girar.","Kaleidoscope. Drag in a circle or use arrow keys to turn.")}
-          onPointerDown={beginTurn} onPointerMove={turn} onPointerUp={endTurn} onPointerCancel={endTurn}
-          onKeyDown={e=>{if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown"].includes(e.key)){e.preventDefault();e.stopPropagation();rotate(e.key==="ArrowLeft"||e.key==="ArrowDown"?-.15:.15);}}}/>
-        {mode==="edit"&&<DrawPad color={activeColor} material={selected?.material||material} shape={selected} onComplete={addShape} onEdit={points=>editShape({points})} label={hint}/>}
-        <div className="scope-glass" aria-hidden="true"/>
-      </div>
-      <svg className="scope-rings" viewBox="0 0 720 720" aria-label={tr("Controles do Chromascope","Chromascope controls")}>
-        <defs><path id={`${uid}-title`} d={arc(342,210,330)}/><path id={`${uid}-hint`} d="M18 360 A342 342 0 0 0 702 360"/></defs>
-        <g aria-hidden="true" className="astrolabe-graduation">
-          <circle className="outer-rim" cx="360" cy="360" r="326"/>
-          <circle className="rim-engraving" cx="360" cy="360" r="323"/>
-          <circle className="inner-rim" cx="360" cy="360" r="259"/>
-          <circle className="rim-engraving" cx="360" cy="360" r="256"/>
-          <circle className="lens-rim" cx="360" cy="360" r="223"/>
-          <circle className="lens-hairline" cx="360" cy="360" r="219"/>
-          {Array.from({length:180},(_,i)=>{const a=polar(320,i*2),b=polar(i%15===0?310:i%5===0?314:317,i*2);return <line key={i} x1={a.x} y1={a.y} x2={b.x} y2={b.y} className={i%15===0?"rim-tick major":"rim-tick"}/>;})}
-          {Array.from({length:12},(_,i)=>{const p=polar(304,i*30-90);return <text className="degree-mark" key={i} x={p.x} y={p.y} textAnchor="middle" dominantBaseline="middle" transform={`rotate(${i*30} ${p.x} ${p.y})`}>{String(i*30).padStart(3,"0")}</text>;})}
-          {Array.from({length:8},(_,i)=><path key={i} className="rim-divider" d={arc(276,i*45-22.5,i*45-21.5)}/>)}
-          <g ref={rotationMarkRef} className="rotation-mark" transform={`rotate(${rotationRef.current*180/Math.PI} 360 360)`}>
-            <path d="M360 31 L357 24 L363 24 Z"/>
-            <path className="rotation-line" d="M360 35 V46"/>
-          </g>
+    <section className="cosmic-scope" data-mode={mode} data-tool={tool}>
+      <div className="scope-lens"><canvas ref={canvasRef} className="scope-canvas" tabIndex={0} aria-label={mode==='view'?tr('Reflexos. Arraste para girar, setas para ajustar.','Reflections. Drag to turn, arrow keys to adjust.'):hint}
+        onPointerDown={begin} onPointerMove={move} onPointerUp={e=>finish(e)} onPointerCancel={e=>finish(e,true)}
+        onKeyDown={e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.stopPropagation();undo();return;}
+          if(e.key==='Delete'||e.key==='Backspace'){if(mode==='edit'){e.preventDefault();remove();}return;}
+          if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){e.preventDefault();e.stopPropagation();if(mode==='view')rotate(e.key==='ArrowLeft'||e.key==='ArrowDown'?-.04:.04);else if(shape){const dx=e.key==='ArrowLeft'?-.02:e.key==='ArrowRight'?.02:0,dy=e.key==='ArrowUp'?-.02:e.key==='ArrowDown'?.02:0;edit(()=>{shape.points=moved(shape.points,dx,dy);});}}}}/></div>
+      <svg className="scope-rings" viewBox="0 0 720 720" aria-label={tr('Controles da lente','Lens controls')}>
+        <defs><path id={`${uid}-title`} d={arc(343,215,325)}/><path id={`${uid}-hint`} d={arc(343,15,165,true)}/></defs>
+        <g className="rim" aria-hidden="true"><circle cx="360" cy="360" r="329"/><circle cx="360" cy="360" r="324"/><circle className="aperture-edge" cx="360" cy="360" r="244"/>
+          {Array.from({length:120},(_,i)=>{const a=pointOnRing(322,i*3),b=pointOnRing(i%10===0?314:i%5===0?317:320,i*3);return <line key={i} x1={a.x} y1={a.y} x2={b.x} y2={b.y}/>;})}
+          <g ref={markerRef} transform={`rotate(${plateRef.current.angle*180/Math.PI} 360 360)`}><path className="turn-marker" d="M360 26 V38"/></g>
         </g>
-        {mode==="edit"&&<g className="drawing-guides" aria-hidden="true">
-          <circle cx="360" cy="360" r="72"/><circle cx="360" cy="360" r="144"/>
-          <path d="M360 151 V569 M151 360 H569"/>
-          <path className="origin" d="M356 360 H364 M360 356 V364"/>
-        </g>}
         <text className="scope-title"><textPath href={`#${uid}-title`} startOffset="50%" textAnchor="middle">CHROMASCOPE</textPath></text>
         <text className="scope-hint"><textPath href={`#${uid}-hint`} startOffset="50%" textAnchor="middle">{hint}</textPath></text>
-        <ArcButton angle={-90} label={mode==="edit"?tr("Explorar","Explore"):tr("Desenhar","Draw")} active onClick={()=>{setMode(mode==="edit"?"view":"edit");setNotice("");}}/>
-        <ArcButton angle={-45} label={mode==="edit"?tr("Nova peça","New piece"):tr("Misturar","Shake")} onClick={()=>{if(mode==="edit"){setSelectedId(null);setNotice("");}else shake();}} disabled={mode==="edit"&&shapes.length>=6&&selectedId===null}/>
-        <ArcButton angle={0} label={mode==="edit"?materialLabel:`− ${tr("Eixos","Axes")}`} onClick={()=>mode==="edit"?cycleMaterial():setFacets(n=>Math.max(4,n-2))} disabled={mode==="view"&&facets===4}/>
-        <ArcButton angle={45} label={mode==="edit"?palette.name:`${facets/2} ${tr("eixos","axes")} +`} onClick={()=>mode==="edit"?(setPaletteIndex(i=>(i+1)%palettes.length),setColorIndex(0)):setFacets(n=>Math.min(24,n+2))} disabled={mode==="view"&&facets===24}/>
-        <ArcButton angle={90} icon label={tr("Limpar","Clear")} onClick={clearAll} disabled={!shapes.length}/>
-        <ArcButton angle={135} label={mode==="edit"?tr("Apagar","Delete"):`${tr("Cópias","Copies")} ${density}`} onClick={()=>mode==="edit"?removeSelected():setDensity(n=>n>=8?2:n+1)} disabled={mode==="edit"&&selectedId===null}/>
-        <ArcButton angle={180} label={mode==="edit"?`${shapes.length}/6 ${tr("peças","pieces")}`:tr("Girar ↶","Turn ↶")} onClick={()=>{if(mode==="edit"){const i=shapes.findIndex(s=>s.id===selectedId);if(shapes.length)chooseShape(shapes[(i+1)%shapes.length]);}else rotate(-.35);}} disabled={mode==="edit"&&!shapes.length}/>
-        <ArcButton angle={225} label={mode==="edit"?tr("Desfazer","Undo"):tr("Girar ↷","Turn ↷")} onClick={()=>{if(mode==="edit"){const last=shapesRef.current.at(-1);if(last){const next=shapesRef.current.slice(0,-1);shapesRef.current=next;setShapes(next);piecesRef.current=piecesRef.current.filter(p=>p.shapeId!==last.id);setSelectedId(null);}}else rotate(.35);}} disabled={mode==="edit"&&!shapes.length}/>
-        {shapes.map((shape,i)=>{const pos=polar(240,210+i*24);return <g key={shape.id} className={`piece-choice${selectedId===shape.id?" selected":""}`} role="button" tabIndex={0} aria-label={tr(`Editar peça ${i+1}`,`Edit piece ${i+1}`)} aria-pressed={selectedId===shape.id} onClick={()=>chooseShape(shape)} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();chooseShape(shape);}}}>
-          <circle cx={pos.x} cy={pos.y} r="22"/><polygon points={shape.points.map(p=>`${pos.x+p.x*30},${pos.y+p.y*30}`).join(" ")} fill={shape.color}/></g>;})}
-        {mode==="edit"&&palette.colors.map((color,i)=>{const pos=polar(240,55+i*23);return <g key={color} role="button" tabIndex={0} className={`color-choice${activeColor===color?" selected":""}`} aria-label={tr(`Cor ${i+1}`,`Color ${i+1}`)} aria-pressed={activeColor===color} onClick={()=>chooseColor(i)} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();chooseColor(i);}}}><circle className="color-hit" cx={pos.x} cy={pos.y} r="22"/><circle cx={pos.x} cy={pos.y} r="12" fill={color}/></g>;})}
+        <g role="group" aria-label={tr('Modo do instrumento','Instrument mode')}>
+          <CurvedControl angle={-110} halfSpan={17} variant="mode-control" label={tr('Compor','Compose')} pressed={mode==='edit'} onClick={()=>switchMode('edit')}/>
+          <CurvedControl angle={-70} halfSpan={17} variant="mode-control" label={tr('Visualizar','View')} pressed={mode==='view'} onClick={()=>switchMode('view')}/>
+        </g>
+        <CurvedControl angle={180} label={palettes[palette].name} onClick={choosePalette}/>
+        <CurvedControl angle={0} label={`${plateRef.current.axes} ${tr('eixos','axes')}`} onClick={()=>setAxes(plateRef.current.axes===12?-10:1)}/>
+        <CurvedControl angle={90} disabled={saving||!plateRef.current.shapes.length} label={saving?tr('Salvando','Saving'):tr('Salvar imagem','Save image')} onClick={save}/>
+        <IconButton angle={-15} label={tr('Menos eixos','Fewer axes')} onClick={()=>setAxes(-1)} disabled={plateRef.current.axes===2}><Minus/></IconButton>
+        <IconButton angle={15} label={tr('Mais eixos','More axes')} onClick={()=>setAxes(1)} disabled={plateRef.current.axes===12}><Plus/></IconButton>
+        <IconButton angle={-135} label={tr('Desfazer','Undo')} onClick={undo} disabled={!historyRef.current.length}><Undo2/></IconButton>
+        <IconButton angle={135} label={tr('Limpar peças','Clear pieces')} onClick={clear} disabled={!plateRef.current.shapes.length}><Trash2/></IconButton>
+        {mode==='view'?<>
+          <CurvedControl angle={-35} halfSpan={12} variant="motion-control" label={tr('Movimento suave','Gentle motion')} textLabel={flowing?tr('Pausar','Pause'):tr('Mover','Move')} pressed={flowing} active={flowing} disabled={!plateRef.current.shapes.length} onClick={toggleDrift}/>
+          <IconButton angle={45} label={tr('Girar um passo','Turn one step')} onClick={()=>rotate(.12)}><RotateCcw/></IconButton>
+          <g className="palette-dots" aria-hidden="true">{colors.map((c,i)=>{const p=pointOnRing(263,168+i*8);return <circle key={c} cx={p.x} cy={p.y} r="3" fill={c}/>;})}</g>
+        </>:<>
+          <CurvedControl angle={-35} halfSpan={12} textLabel={{auto:'Auto',lines:tr('Retas','Lines'),free:tr('Livre','Free')}[assist]} label={tr('Traço: ','Draw: ')+({auto:tr('auto','auto'),lines:tr('retas','lines'),free:tr('livre','free')}[assist])} active={tool==='draw'} onClick={()=>{if(tool==='draw')setAssist(a=>a==='auto'?'lines':a==='lines'?'free':'auto');setTool('draw');setSelected(null);setNotice('');}}/>
+          <IconButton angle={45} label={tr('Ajustar peças','Adjust pieces')} active={tool==='select'} onClick={()=>{setTool('select');setNotice('');}}><MousePointer2/></IconButton>
+          {plateRef.current.shapes.map((s,i)=>{const p=pointOnRing(260,232+i*15);return <foreignObject key={s.id} x={p.x-20} y={p.y-20} width="40" height="40" className="piece-object"><button type="button" className={`piece-choice${selected===s.id?' selected':''}`} onClick={()=>pick(s.id)} aria-label={tr(`Editar peça ${i+1}`,`Edit piece ${i+1}`)} aria-pressed={selected===s.id}><svg viewBox="-1 -1 2 2" aria-hidden="true"><polygon points={s.points.map(p=>`${p.x},${p.y}`).join(' ')} fill={s.color}/></svg></button></foreignObject>;})}
+          {colors.map((c,i)=>{const p=pointOnRing(260,160+i*12);return <foreignObject key={c} x={p.x-20} y={p.y-20} width="40" height="40" className="piece-object"><button type="button" className={`color-choice${(shape&&tool==='select'?shape.color:colors[color])===c?' selected':''}`} aria-label={tr(`Cor ${i+1}`,`Color ${i+1}`)} onClick={()=>chooseColor(i)}><span style={{background:c}}/></button></foreignObject>;})}
+          <g className="material-control" role="button" tabIndex={0} aria-label={tr(`Material: ${materialName}`,`Material: ${materialName}`)} onClick={cycleMaterial} onKeyDown={e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();cycleMaterial();}}}><path className="material-hit" d="M606 434 A257 257 0 0 1 578 496 L558 484 A234 234 0 0 0 584 428 Z"/><defs><path id={`${uid}-material`} d={arc(260,12,42)}/></defs><text><textPath href={`#${uid}-material`} startOffset="50%" textAnchor="middle">{materialName}</textPath></text></g>
+          {selected!==null&&tool==='select'&&<>
+            <IconButton angle={70} radius={260} label={tr('Diminuir peça','Shrink piece')} onClick={()=>resizeSelected(.9)}><Minus/></IconButton>
+            <IconButton angle={90} radius={260} label={tr('Apagar peça selecionada','Delete selected piece')} onClick={remove}><X/></IconButton>
+            <IconButton angle={110} radius={260} label={tr('Ampliar peça','Enlarge piece')} onClick={()=>resizeSelected(1.1)}><Plus/></IconButton>
+          </>}
+        </>}
+        {!plateRef.current.shapes.length&&<text className="empty-prompt" x="360" y="366" textAnchor="middle">{tr('Uma forma já é um começo.','One shape is a beginning.')}</text>}
       </svg>
-      <span className="scope-sr" role="status" aria-live="polite">{hint}</span>
+      <span className="scope-sr" role="status" aria-live="polite">{mode==='edit'?tr('Modo compor. ','Compose mode. '):tr('Modo visualizar. ','View mode. ')}{notice}</span>
     </section>
   </main>;
 }

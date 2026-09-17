@@ -25,3 +25,7 @@ Preserve the existing Vite architecture and visual identity. Do not replace the 
 - Preserve unrelated user changes.
 - Deliver source without `node_modules`, `dist`, `.DS_Store` or `__MACOSX`.
 - Update `README.md` or `AI-WORKFLOW.md` when the publication contract changes.
+
+## Autoria e aprovações — novos cases de dados
+
+O usuário solicitou um fluxo para preservar autoria e controlar esforço. Consulte `PLANO-PORTFOLIO-STARGAZE-v01.md`. Antes de pesquisa extensa ou código de um novo case, aprovar a pergunta/recorte, a etapa de dados e a direção visual produzida pelo usuário. Cada etapa precisa de entrega concreta e aprovação antes da seguinte; não iniciar o projeto suíço automaticamente. Recomendar o modelo e limitar fontes, gráficos e telas antes de executar a rodada. Correções rotineiras dentro de trabalho já aprovado continuam autorizadas. Pedidos explícitos posteriores do usuário têm precedência. Não gerar ou publicar ensaios em nome do usuário sem sua revisão.

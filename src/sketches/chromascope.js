@@ -12,9 +12,9 @@ export default function mount(container,{language='pt'}={}){
     document.head.append(font);
   }
   const host=document.createElement('div');host.className='chromascope-inline';host.tabIndex=-1;
-  host.setAttribute('aria-label','Chromascope');
+  host.setAttribute('aria-label','Chromascope');host.style.cssText='display:block;width:100%;height:100%;min-width:0';
   const shadow=host.attachShadow({mode:'open'}),sheet=document.createElement('style'),surface=document.createElement('div');
-  sheet.textContent=styles;shadow.append(sheet,surface);container.append(host);
+  surface.style.width='100%';sheet.textContent=styles;shadow.append(sheet,surface);container.append(host);
   const root=createRoot(surface);root.render(React.createElement(Chromascope,{language}));host.focus({preventScroll:true});
   let disposed=false;return()=>{if(disposed)return;disposed=true;root.unmount();host.remove();};
 }

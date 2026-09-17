@@ -35,7 +35,7 @@ A exposição usa um destaque à esquerda e dois estudos à direita; a área int
 
 O build inclui somente notas `published`. `draft` e `ready` ficam fora do bundle. Nenhum ensaio é gerado para preencher a seção. A autoria e o corpo dos textos devem permanecer intactos na integração.
 
-Life Threads permanece pausado; Lissajous e Chromascope têm capas, mas seus módulos completos ainda precisam ser enviados para integração. Music Box abre o módulo já existente; a capa sequencial é um estudo para a evolução visual, não uma alteração do sequenciador original.
+Life Threads permanece pausado; Lissajous e Chromascope estão integrados como instrumentos inline. Music Box abre o módulo já existente; a capa sequencial é um estudo para a evolução visual, não uma alteração do sequenciador original.
 
 The site regenerates its content list whenever `npm run dev` or `npm run build` runs. Do not edit `src/projects.generated.js` directly.
 
@@ -99,3 +99,21 @@ Chromascope agora é um sketch live local: edite `src/instruments/chromascope/in
 O Music Box ocupa um quadrado e mantém seus controles dentro dele. No Lissajous, mudar a fase reposiciona o rastro já percorrido; velocidade inicial inline de 2×.
 
 Verificação adicional: `node scripts/check-inline-instruments.mjs` (handlers, estado e Canvas simulado; não substitui revisão visual/sonora).
+
+## Chromascope — v05 (16/09/2026)
+
+A interação usa uma placa de desenhos e simetrias, sem giro físico contínuo. Arrastar transforma a imagem e soltar fixa o resultado. Compor permite desenhar, selecionar, mover, editar pontos, mudar cor/material/tamanho e apagar; Ver reflexos mostra a composição. Inclui exemplo editável, cores automáticas, 2–12 eixos, desfazer e exportação PNG 2048 × 2048.
+
+Sincronizar `src/instruments/chromascope/optics.ts` com `app/optics.ts` do Site original, além do componente e CSS. O renderizador só agenda frames ao mudar algo e o cleanup libera observadores, frames e URLs temporárias. As formas não são salvas entre sessões. Entrega completa: `stargaze-2026-09-16-v05.zip`.
+
+## Chromascope — v06 (16/09/2026)
+
+Giro com inércia suave e desaceleração até parar. Toque na lente para interromper; edição, desfazer e salvar também param o movimento. O controle radial Traço alterna Auto (reconhecimento de círculos/polígonos), Retas (segmentos) e Livre (suavização de contornos orgânicos). O ajuste ocorre ao soltar o desenho.
+
+Novo módulo `src/instruments/chromascope/drawing.ts`, espelhado em `app/drawing.ts` do Site. Verificação geométrica e de amortecimento: `node scripts/check-drawing-assist.mjs`. Entrega completa: `stargaze-2026-09-16-v06.zip`.
+
+## Chromascope e portfólio — v07 (17/09/2026)
+
+Compor / Visualizar agora são modos permanentes com seleção destacada. Mover / Pausar oferece deslocamento e giro sutis das peças menores; respeita redução de movimento, pausa, exportação e desfazer. O popup limita o quadrado pela altura disponível e mantém navegação visível. O código segue espelhado no Site independente.
+
+O plano do próximo ciclo, com escrita autoral, etapas de aprovação e roteiro Swiss Viz, está em `PLANO-PORTFOLIO-STARGAZE-v01.md`. O documento é privado de trabalho; não foi adicionado às publicações do site. Pacote completo: `stargaze-2026-09-17-v07.zip`.

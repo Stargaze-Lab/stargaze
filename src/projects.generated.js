@@ -81,12 +81,12 @@ export const sketches = [
     "slug": "chromascope",
     "title": "Chromascope",
     "summary": "Desenhe a matéria. Gire os reflexos.",
-    "description": "Luneta circular com peças desenhadas à mão, materiais, física e simetrias.",
+    "description": "Desenhe formas, componha simetrias e salve sua imagem em uma luneta circular.",
     "tools": [
       "Canvas",
       "React"
     ],
-    "date": "2026-09-14",
+    "date": "2026-09-16",
     "accent": "sage",
     "order": 7,
     "status": "live",

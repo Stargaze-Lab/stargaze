@@ -1,6 +1,6 @@
 # Stargaze — contexto para continuar
 
-Atualizado em 14/09/2026. Comece por este arquivo e por AGENTS.md; leia somente os arquivos relevantes à próxima tarefa. O objetivo agora é publicar textos autorais e desenvolver estudos, sem reabrir o redesign geral da home.
+Atualizado em 17/09/2026. Comece por este arquivo e por AGENTS.md; leia somente os arquivos relevantes à próxima tarefa. O objetivo agora é publicar textos autorais e desenvolver estudos, sem reabrir o redesign geral da home.
 
 ## Identidade e decisões aprovadas
 
@@ -27,7 +27,7 @@ Field Notes recebe registros curtos, ensaios, desenhos, dados e referências. O 
 - Life Threads: pausado até haver banco de eventos maior; não fabricar biografias com LLM.
 - Orbit: futura missão Apollo real simplificada; não priorizar versão atual.
 - String Tuner: fora da seleção principal.
-- Chromascope: agora integrado e live. Quadrado com lente circular, interface radial, modos editar/explorar, desenho com troca automática de cor, seleção e edição de vértices/redesenho, exclusão individual/total, quatro paletas, materiais sólido/vidro/brilho, shake, densidade e 2–12 eixos (4–24 setores). Física preservada do protótipo; colisões aproximadas por círculos. As peças permanecem durante a sessão do instrumento.
+- Chromascope: integrado e live. Placa de desenhos com simetrias determinísticas; rotação com inércia amortecida, sem física individual nas peças. Modos compor/ver, desenho com cor automática, edição de vértices/movimento/tamanho, paletas, materiais, 2–12 eixos, limpar, desfazer e PNG 2048 × 2048. Abre com três peças editáveis; as peças duram a sessão.
 
 ## Arquivos e continuidade técnica
 
@@ -50,15 +50,15 @@ Navegação atualizada na home e em design-studies: `< × >`, com botões circul
 
 ## Versionamento das entregas
 
-A partir do Chat 2.0, entregar cada ZIP como arquivo separado no formato `stargaze-AAAA-MM-DD-vNN.zip`, incrementando a versão a cada entrega e preservando as anteriores. A primeira entrega deste chat (sem sufixo) equivale à v01. Entrega atual: `stargaze-2026-09-15-v04.zip` — refinamento visual do Chromascope. v03 e v02 preservadas.
+A partir do Chat 2.0, entregar cada ZIP como arquivo separado no formato `stargaze-AAAA-MM-DD-vNN.zip`, incrementando a versão a cada entrega e preservando as anteriores. A primeira entrega deste chat (sem sufixo) equivale à v01. Entrega atual: `stargaze-2026-09-17-v07.zip` — modos explícitos, movimento sutil, encaixe inline e plano de portfólio. Versões anteriores preservadas.
 
-## v03 — instrumentos inline
+## v03 — histórico da integração inline
 
 - Lissajous: fase reposiciona o rastro existente sem reiniciar seu progresso. Arraste contínuo e teclado; velocidade inicial 2×, limite 10× preservado.
 - Music Box: quadrado estável com controles internos; texto de apresentação desaparece enquanto o instrumento está aberto. Controles respondem à largura do instrumento.
 - Chromascope: `src/instruments/chromascope/{instrument.tsx,inline.css}`, `src/sketches/chromascope.js`, `content/sketches/chromascope.json`. React sob demanda em Shadow DOM, independente do Site privado.
 - Fonte original e versão standalone: Site Chromascope existente `appgprj_6a90a6c574948191b92ccffe332d3e07`, https://chromascope.stargazeyuri.chatgpt.site . Checkout `/workspace/sites/chromascope`, arquivos `app/chromascope.tsx` e `app/scope.css`. Sincronizar as duas cópias ao editar.
-- Verificações: build, check-project-navigation, check-lissajous, check-review e check-inline-instruments. O último exercita desenho, cores, edição, exclusão, modos, eixos, densidade, física finita, limpeza e continuidade da fase. Testes sem navegador; revisão visual e reprodução de áudio permanecem pendentes.
+- Verificações: build, check-project-navigation, check-lissajous, check-review e check-inline-instruments. Na v03, o último exercitava desenho, cores, edição, exclusão, modos, eixos, densidade, física finita, limpeza e continuidade da fase. Testes sem navegador; revisão visual e reprodução de áudio permanecem pendentes.
 - GitHub Pages não foi publicado por este chat.
 
 ## Mensagem para abrir o próximo chat
@@ -68,3 +68,29 @@ A partir do Chat 2.0, entregar cada ZIP como arquivo separado no formato `starga
 ## Refinamento visual — 15/09/2026
 
 DM Mono regular incorporada localmente (licença OFL), textos menores em arco, limpar como ícone com nome acessível, escalas finas e anéis duplos inspirados em astrolábios. O marcador de rotação acompanha o giro; guias discretas auxiliam o desenho. Área de clique dos controles preservada. Referência: https://www.rmg.co.uk/collections/objects/rmgc-object-10740 .
+
+## v05 — composição óptica, 16/09/2026
+
+O usuário autorizou outra abordagem porque o giro físico interminável atrapalhava. Consultada a auditoria do Taste Skill (https://github.com/Leonxlnx/taste-skill), sem instalar dependências novas. A forma agora pertence a uma placa; todos os desenhos entram na simetria e a imagem fica parada após o gesto. Não reintroduzir física automaticamente.
+
+Compor mostra os desenhos originais e uma prévia discreta dos reflexos. Ver reflexos mostra o resultado. Selecionar uma miniatura permite mover, editar vértices, recolorir, mudar material, ampliar/reduzir e apagar. Há até seis peças, cores automáticas, quatro paletas, três materiais e 2–12 eixos. Desfazer cobre mudanças de composição e limpeza. Salvar imagem exporta PNG 2048 × 2048 sem interface.
+
+Manter sincronizados `src/instruments/chromascope/{instrument.tsx,optics.ts,inline.css}` e `app/{chromascope.tsx,optics.ts,scope.css}` do Site original. `optics.ts` é o novo motor determinístico. Aro simplificado, fonte DM Mono local e controles radiais preservados. Nenhuma mudança adicional em Lissajous, Music Box ou layout da home nesta rodada.
+
+Verificação: build do Site e do Stargaze, TypeScript, testes de interação e navegação. Renderizações reais de Canvas inspecionadas; sem revisão em navegador ou teste de áudio. O Site Chromascope é publicado no endereço existente; o ZIP contém a integração local completa. GitHub Pages não foi publicado.
+
+## v06 — desenho assistido e inércia, 16/09/2026
+
+O usuário aprovou a direção v05 e pediu giro animado com inércia e ajuda para desenhar. A inércia agora desacelera e termina; tocar na lente, editar, desfazer, salvar ou ocultar a aba interrompe o movimento. Respeita redução de movimento. Não reintroduzir colisões ou giro individual infinito nas peças.
+
+O controle radial `Traço` alterna Auto, Retas e Livre enquanto desenha; se estiver selecionando uma peça, o primeiro clique retorna ao desenho. Auto reconhece círculos e polígonos e suaviza contornos orgânicos. Retas força segmentos; Livre suaviza sem reconhecimento geométrico. O ajuste ocorre ao soltar. Cores automáticas, edição posterior e desfazer preservados.
+
+Novo arquivo espelhado: `src/instruments/chromascope/drawing.ts` ↔ `app/drawing.ts`. Incluí-lo ao sincronizar o componente, optics.ts e CSS. Novos testes: `node scripts/check-drawing-assist.mjs`. Build, navegação e testes dos instrumentos continuam obrigatórios. Comparações reais de Canvas antes/depois foram inspecionadas; sem revisão em navegador nesta rodada. Nenhum ajuste em outros instrumentos ou na home. ZIP v06 separado, anteriores preservados.
+
+## v07 — encerramento do instrumento e foco editorial, 17/09/2026
+
+Chromascope: controles permanentes Compor / Visualizar com estado pressionado acessível e segmento preenchido. Compor destaca o aro em âmbar; Visualizar em verde claro. Mover / Pausar anima suavemente as duas menores peças, sem acumular deslocamento, deformar ou simular colisões. As peças maiores ficam fixas quando há três ou mais; com poucas peças a amplitude é reduzida conforme a área. Pausar fixa a pose; editar, tocar, salvar e ocultar a aba interrompem o movimento; desfazer recupera o estado anterior. Redução de movimento usa um deslocamento único.
+
+A integração local foi sincronizada; o popup do Chromascope limita a largura pela altura da tela para conter quadrado e barra superior. Fonte/estilos isolados, navegação e cleanup preservados. O Site independente é atualizado; o GitHub Pages permanece sob publicação do usuário a partir do ZIP. Build, tipos, geometria, modos, movimento e navegação verificados; sem inspeção em navegador nesta rodada.
+
+Novo foco solicitado: projetos de dados e escrita crítica, com conceito/design autorais e aprovações antes de pesquisa extensa/código. Ler `PLANO-PORTFOLIO-STARGAZE-v01.md` e a seção nova de AGENTS.md. A chamada Swiss Viz 2026 tem prazo oficial 16/10, verificado em https://www.swissviz.org/ ; 13/10 é prazo interno proposto. Plano e temas ainda para aprovação; nenhum case suíço iniciado ou enviado. GLAMOS foi consultada apenas como fonte de metadados. Próxima decisão: região de vínculo familiar, pergunta escolhida e disponibilidade semanal. Recomendar o modelo para cada rodada antes da execução; não pressupor poder alterar o seletor do usuário.
