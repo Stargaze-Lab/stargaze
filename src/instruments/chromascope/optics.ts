@@ -4,7 +4,7 @@ export type Shape = {id:number;points:Point[];color:string;material:Material};
 export type Plate = {shapes:Shape[];angle:number;axes:number};
 export const TAU=Math.PI*2;
 export const palettes=[
-  {name:'Prisma',colors:['#dca76e','#b96553','#aacbc2','#e5ddbe']},
+  {name:'Prisma',colors:['#8ea69c','#bac7bd','#aacbc2','#e7bd6d']},
   {name:'Tidal',colors:['#68b7c0','#517da5','#cee2d1','#7d8b9c']},
   {name:'Mineral',colors:['#bdc891','#86a99d','#bb8270','#e1cdab']},
   {name:'Ember',colors:['#dda250','#b75743','#e7c69a','#876776']},
@@ -25,22 +25,25 @@ export function moved(points:Point[],dx:number,dy:number){
   return points.map(p=>({x:p.x+dx*amount,y:p.y+dy*amount}));
 }
 export function examplePlate():Plate{
-  const leaf:Point[]=[];
-  for(let i=0;i<=24;i++){const u=i/24;leaf.push({x:.10+.74*u,y:.05+Math.sin(u*Math.PI)*.18});}
-  for(let i=24;i>=0;i--){const u=i/24;leaf.push({x:.10+.74*u,y:.05-Math.sin(u*Math.PI)*.075});}
-  const ribbon:Point[]=[];
-  for(let i=0;i<=28;i++){const a=-.34+i/28*.62;ribbon.push({x:Math.cos(a)*.66,y:Math.sin(a)*.66});}
-  for(let i=28;i>=0;i--){const a=-.34+i/28*.62;ribbon.push({x:Math.cos(a)*.48,y:Math.sin(a)*.48});}
-  const seed=Array.from({length:32},(_,i)=>{const a=i/32*TAU;return{x:.29+Math.cos(a)*.045,y:.075+Math.sin(a)*.13};});
-  return{angle:.13,axes:6,shapes:[{id:1,points:leaf,color:palettes[0].colors[0],material:'glass'},{id:2,points:ribbon,color:palettes[0].colors[2],material:'glass'},{id:3,points:seed,color:palettes[0].colors[1],material:'solid'}]};
+  // Angular glass fragments echo the triangles and squares of the Stargaze hero.
+  const quadrilateral=[{x:.19,y:-.09},{x:.56,y:-.25},{x:.78,y:.13},{x:.43,y:.28}];
+  const triangle=[{x:.30,y:-.04},{x:.68,y:.03},{x:.46,y:.29}];
+  const square=[{x:.70,y:-.18},{x:.81,y:-.23},{x:.86,y:-.12},{x:.75,y:-.07}];
+  return{angle:.13,axes:6,shapes:[
+    {id:1,points:quadrilateral,color:palettes[0].colors[0],material:'glass'},
+    {id:2,points:triangle,color:palettes[0].colors[2],material:'glass'},
+    {id:3,points:square,color:palettes[0].colors[1],material:'glass'},
+  ]};
 }
 function polygon(ctx:CanvasRenderingContext2D,points:Point[]){if(points.length<3)return;ctx.beginPath();ctx.moveTo(points[0].x,points[0].y);for(let i=1;i<points.length;i++)ctx.lineTo(points[i].x,points[i].y);ctx.closePath();}
 function paint(ctx:CanvasRenderingContext2D,shape:Shape,points:Point[],alpha:number,radius:number){
-  ctx.save();polygon(ctx,points);ctx.fillStyle=shape.color;
-  ctx.globalAlpha=alpha*(shape.material==='glass'?.52:shape.material==='glow'?.63:.94);
-  ctx.globalCompositeOperation=shape.material==='solid'?'source-over':'screen';
+  ctx.save();polygon(ctx,points);ctx.fillStyle=shape.color;ctx.strokeStyle=shape.color;
+  ctx.globalCompositeOperation='source-over';
+  ctx.globalAlpha=alpha*(shape.material==='glass'?.055:shape.material==='glow'?.10:.24);
   if(shape.material==='glow'){ctx.shadowBlur=radius*.025;ctx.shadowColor=shape.color;}
-  ctx.fill();ctx.restore();
+  ctx.fill();ctx.shadowBlur=0;
+  ctx.globalAlpha=alpha*(shape.material==='glass'?.44:shape.material==='glow'?.70:.65);
+  ctx.lineWidth=Math.max(.65,radius*.0025);ctx.lineJoin='miter';ctx.stroke();ctx.restore();
 }
 export function renderPlate(ctx:CanvasRenderingContext2D,width:number,height:number,plate:Plate,options:{edit?:boolean;selected?:number|null;draft?:Shape|null;guides?:boolean}={}){
   const cx=width/2,cy=height/2,r=Math.min(width,height)*.485;

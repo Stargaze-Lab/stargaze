@@ -124,9 +124,10 @@ async function startSketch(entry,button){
     const stage=document.createElement('div');stage.className='inline-stage';dialogArt.append(stage);
     const mounted=module.default?module.default(stage,{language}):module.mount(stage,{language});
     const cleanup=mounted instanceof Promise?await mounted:mounted;
-    if(token===loadToken)dialog.scrollTop=0;
     if(token!==loadToken||!dialog.open){cleanup?.();return;}
-    cleanupSketch=typeof cleanup==='function'?cleanup:module.cleanup;button.textContent=t('Instrumento aberto','Instrument open');
+    cleanupSketch=typeof cleanup==='function'?cleanup:module.cleanup;
+    document.querySelector('#project-dialog-hint').textContent=entry.sketch==='chromascope'?t('Arraste a lente para girar. Compor permite editar as peças.','Drag the lens to rotate. Compose lets you edit the pieces.'):entry.sketch==='lissajous'?t('Arraste para mudar a fase. Ajustar abre os controles.','Drag to shift phase. Settings opens the controls.'):t('Explore o instrumento e seus controles dentro do quadro.','Explore the instrument and its controls inside the frame.');
+    button.textContent=t('Instrumento aberto','Instrument open');
   }catch(error){
     if(token!==loadToken)return;
     dialogArt.classList.remove('music-mounted','lissajous-mounted','chromascope-mounted');button.disabled=false;button.textContent=t('Tentar abrir novamente','Try again');

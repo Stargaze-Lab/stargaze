@@ -94,3 +94,11 @@ Chromascope: controles permanentes Compor / Visualizar com estado pressionado ac
 A integração local foi sincronizada; o popup do Chromascope limita a largura pela altura da tela para conter quadrado e barra superior. Fonte/estilos isolados, navegação e cleanup preservados. O Site independente é atualizado; o GitHub Pages permanece sob publicação do usuário a partir do ZIP. Build, tipos, geometria, modos, movimento e navegação verificados; sem inspeção em navegador nesta rodada.
 
 Novo foco solicitado: projetos de dados e escrita crítica, com conceito/design autorais e aprovações antes de pesquisa extensa/código. Ler `PLANO-PORTFOLIO-STARGAZE-v01.md` e a seção nova de AGENTS.md. A chamada Swiss Viz 2026 tem prazo oficial 16/10, verificado em https://www.swissviz.org/ ; 13/10 é prazo interno proposto. Plano e temas ainda para aprovação; nenhum case suíço iniciado ou enviado. GLAMOS foi consultada apenas como fonte de metadados. Próxima decisão: região de vínculo familiar, pergunta escolhida e disponibilidade semanal. Recomendar o modelo para cada rodada antes da execução; não pressupor poder alterar o seletor do usuário.
+
+## v08 — identidade do hero e cartelas estáveis, 17/09/2026
+
+Chromascope parte de três polígonos (quadrilátero, triângulo e quadrado) com preenchimentos translúcidos e contornos finos, em verde-sálvia. A paleta inicial usa tons do hero; âmbar distingue Compor. Materiais, cores automáticas, desenho assistido, inércia e movimento suave permanecem. Esta decisão substitui a preferência anterior por peças sem contorno.
+
+Na home Equilíbrio, iniciar Chromascope, Lissajous ou Music Box substitui apenas a capa quadrada: preserva largura do popup, texto, botão e ordem responsiva, sem reiniciar a rolagem. No celular, a descrição continua acima. Lissajous ganha Ajustar/Fechar ajustes com painel rolável dentro do quadrado; Escape fecha o painel e devolve foco ao botão. Music Box usa DM Mono e Instrument Serif, como o site.
+
+Validação: builds de produção, testes de instrumentos, desenho assistido, movimento e navegação; renderização Canvas inspecionada. Não houve validação em navegador ou reprodução de áudio nesta rodada. Entrega completa: stargaze-2026-09-17-v08.zip. O Site Chromascope é atualizado no endereço existente; publicação do portfólio via GitHub Pages permanece com o usuário.

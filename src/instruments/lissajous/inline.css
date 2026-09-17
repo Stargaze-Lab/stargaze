@@ -26,3 +26,15 @@
 .audio-control{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:12px;margin:3px 0 8px}.audio-control>div:first-child{display:grid!important;gap:5px}.sound-button{justify-self:end}.sound-button.active{border-color:#dedfdb}
 .panel-actions{display:flex;gap:8px}.pulse-button{flex:1;font:11px var(--font-mono)}kbd{display:none}
 @container(max-width:660px){.instrument-frame{grid-template-columns:1fr}.scope-housing{position:relative;padding:12px}.control-panel{border-left:0;border-top:1px solid var(--line);padding:18px;gap:16px}.piano{height:52px}.modulation-panel{grid-template-columns:1fr 1fr;gap:12px 18px}.mode-row,.audio-control{grid-column:1/-1}.panel-heading h1{font-size:24px}.piano-key{font-size:12px}[data-slot=slider]{height:36px}[data-slot=slider-thumb]{width:18px;height:18px}[data-slot=button]{min-height:44px;font-size:13px}}
+
+/* The embedded instrument keeps the cover's dimensions; all controls remain inside it. */
+:host{height:100%;--muted:#a4a5a3;color:#efeee8}
+.is-embedded,.is-embedded .instrument-frame{position:relative;display:block;width:100%;height:100%;aspect-ratio:1;overflow:hidden}
+.is-embedded .scope-housing{position:absolute;inset:0;padding:0}
+.is-embedded .scope-hint{position:absolute;bottom:14px;left:12px;right:12px;font-size:9px;pointer-events:none}
+.is-embedded .ratio-readout{top:26px;left:20px;font-size:10px}
+.is-embedded .settings-toggle{position:absolute;z-index:3;right:12px;top:12px;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:24px;background:#0a0b0c;font:10px var(--font-mono)}
+.is-embedded .control-panel{position:absolute;z-index:2;top:66px;right:12px;bottom:12px;width:min(320px,calc(100% - 24px));overflow-y:auto;overscroll-behavior:contain;background:#0a0b0cf5;border:1px solid var(--line);padding:18px;gap:14px;align-content:start}
+.is-embedded .control-panel[hidden]{display:none}
+.is-embedded .panel-heading h1{font-size:22px}
+.is-embedded .modulation-panel{grid-template-columns:1fr;gap:8px}

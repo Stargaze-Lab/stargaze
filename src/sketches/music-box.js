@@ -34,7 +34,7 @@ const styles = `
 
   .sg-music-box {
     --music-accent: var(--accent, #58d7bd);
-    --ink: #f5f3ef;
+    --ink: #efeee8;
     --muted: rgba(245, 243, 239, 0.52);
     --line: rgba(245, 243, 239, 0.17);
     --surface: rgba(14, 14, 14, 0.9);
@@ -48,7 +48,7 @@ const styles = `
     background-image:
       radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--music-accent) 5%, transparent), transparent 34%),
       linear-gradient(#080808, #080808);
-    font-family: "Space Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-family: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
     isolation: isolate;
     container-type: inline-size;
   }
@@ -100,7 +100,7 @@ const styles = `
 
   .sg-music-box__title em {
     color: var(--music-accent);
-    font-family: "Fraunces", Georgia, serif;
+    font-family: "Instrument Serif", Georgia, serif;
     font-weight: 400;
   }
 
@@ -121,7 +121,7 @@ const styles = `
     color: var(--ink);
     background: var(--surface);
     backdrop-filter: blur(10px);
-    font: 10px/1 "Space Mono", ui-monospace, monospace;
+    font: 10px/1 "DM Mono", ui-monospace, monospace;
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
@@ -129,7 +129,7 @@ const styles = `
   .sg-music-box__field { display: flex; align-items: center; gap: 7px; padding: 0 8px; }
   .sg-music-box__field span { color: var(--muted); }
   .sg-music-box select { border: 0; outline: 0; color: var(--ink); background: transparent; font: inherit; text-transform: uppercase; cursor: pointer; }
-  .sg-music-box select option { color: #f5f3ef; background: #111; }
+  .sg-music-box select option { color: #efeee8; background: #111; }
   .sg-music-box input[type='range'] { accent-color: var(--music-accent); cursor: ew-resize; }
 
   .sg-music-box__button { padding: 0 10px; cursor: pointer; white-space: nowrap; }
@@ -1010,11 +1010,11 @@ class MusicBox {
       ctx.fillStyle = 'rgba(8, 8, 8, 0.86)'; ctx.fill();
       ctx.strokeStyle = index === 0 || isHeld ? accent : 'rgba(245, 243, 239, 0.34)'; ctx.lineWidth = 1; ctx.stroke();
       ctx.beginPath(); ctx.arc(point.x, point.y, Math.max(2.5, radius * 0.42), 0, Math.PI * 2);
-      ctx.fillStyle = index === 0 || index === this.hoveredNode || isHeld ? accent : '#f5f3ef'; ctx.fill();
+      ctx.fillStyle = index === 0 || index === this.hoveredNode || isHeld ? accent : '#efeee8'; ctx.fill();
       ctx.restore();
       if (index === this.hoveredNode || isHeld) {
         ctx.fillStyle = 'rgba(245, 243, 239, 0.62)';
-        ctx.font = '8px "Space Mono", monospace'; ctx.textAlign = 'center';
+        ctx.font = '8px "DM Mono", monospace'; ctx.textAlign = 'center';
         ctx.fillText(noteName(node.midi), point.x, point.y + radius + 22);
       }
     });
@@ -1031,7 +1031,7 @@ class MusicBox {
     const glow = ctx.createRadialGradient(x, y, 0, x, y, 24);
     glow.addColorStop(0, accent); glow.addColorStop(0.18, accent); glow.addColorStop(1, 'transparent');
     ctx.beginPath(); ctx.arc(x, y, 24, 0, Math.PI * 2); ctx.fillStyle = glow; ctx.globalAlpha = 0.34; ctx.fill(); ctx.globalAlpha = 1;
-    ctx.beginPath(); ctx.arc(x, y, 3.2, 0, Math.PI * 2); ctx.fillStyle = this.isPlaying ? '#f5f3ef' : accent; ctx.fill();
+    ctx.beginPath(); ctx.arc(x, y, 3.2, 0, Math.PI * 2); ctx.fillStyle = this.isPlaying ? '#efeee8' : accent; ctx.fill();
   }
 
   drawRadial(ctx) {
@@ -1051,11 +1051,11 @@ class MusicBox {
       ctx.beginPath(); ctx.arc(x, y, active ? 15 : 12, 0, Math.PI * 2);
       ctx.fillStyle = active ? accent : '#111'; ctx.fill();
       ctx.strokeStyle = active ? accent : 'rgba(245, 243, 239, 0.34)'; ctx.stroke();
-      ctx.fillStyle = active ? '#080808' : '#f5f3ef';
-      ctx.font = '9px "Space Mono", monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillStyle = active ? '#080808' : '#efeee8';
+      ctx.font = '9px "DM Mono", monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       ctx.fillText(DEGREE_LABELS[i], x, y + 0.5);
     }
-    ctx.fillStyle = 'rgba(245, 243, 239, 0.62)'; ctx.font = '8px "Space Mono", monospace';
+    ctx.fillStyle = 'rgba(245, 243, 239, 0.62)'; ctx.font = '8px "DM Mono", monospace';
     ctx.fillText(noteName(node.midi), center.x, center.y); ctx.textBaseline = 'alphabetic';
   }
 

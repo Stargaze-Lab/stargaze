@@ -18,6 +18,8 @@ Preserve the existing Vite architecture and visual identity. Do not replace the 
 - Use browser-native APIs unless a dependency is clearly justified.
 - Keep controls keyboard and touch accessible.
 
+- On the Equilíbrio homepage, starting any small study replaces only its square cover. Preserve the popup grid, description column, mobile order and scroll position. Put oversized controls inside an internal panel.
+
 ## Validation and delivery
 
 - Run `npm run build` after every content or code change.

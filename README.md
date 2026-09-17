@@ -117,3 +117,11 @@ Novo módulo `src/instruments/chromascope/drawing.ts`, espelhado em `app/drawing
 Compor / Visualizar agora são modos permanentes com seleção destacada. Mover / Pausar oferece deslocamento e giro sutis das peças menores; respeita redução de movimento, pausa, exportação e desfazer. O popup limita o quadrado pela altura disponível e mantém navegação visível. O código segue espelhado no Site independente.
 
 O plano do próximo ciclo, com escrita autoral, etapas de aprovação e roteiro Swiss Viz, está em `PLANO-PORTFOLIO-STARGAZE-v01.md`. O documento é privado de trabalho; não foi adicionado às publicações do site. Pacote completo: `stargaze-2026-09-17-v07.zip`.
+
+## v08 — identidade do hero e cartelas estáveis, 17/09/2026
+
+Chromascope parte de três polígonos (quadrilátero, triângulo e quadrado) com preenchimentos translúcidos e contornos finos, em verde-sálvia. A paleta inicial usa tons do hero; âmbar distingue Compor. Materiais, cores automáticas, desenho assistido, inércia e movimento suave permanecem. Esta decisão substitui a preferência anterior por peças sem contorno.
+
+Na home Equilíbrio, iniciar Chromascope, Lissajous ou Music Box substitui apenas a capa quadrada: preserva largura do popup, texto, botão e ordem responsiva, sem reiniciar a rolagem. No celular, a descrição continua acima. Lissajous ganha Ajustar/Fechar ajustes com painel rolável dentro do quadrado; Escape fecha o painel e devolve foco ao botão. Music Box usa DM Mono e Instrument Serif, como o site.
+
+Validação: builds de produção, testes de instrumentos, desenho assistido, movimento e navegação; renderização Canvas inspecionada. Não houve validação em navegador ou reprodução de áudio nesta rodada. Entrega completa: stargaze-2026-09-17-v08.zip. O Site Chromascope é atualizado no endereço existente; publicação do portfólio via GitHub Pages permanece com o usuário.

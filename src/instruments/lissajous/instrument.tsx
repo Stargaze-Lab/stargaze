@@ -337,6 +337,8 @@ function LissajousScope({ monochrome = false, xValue, yValue, locked, persistenc
 }
 
 export function LissajousInstrument({embedded=false}:{embedded?:boolean}={}) {
+  const [controlsOpen, setControlsOpen] = useState(false);
+  const controlsButton = useRef<HTMLButtonElement>(null);
   const [xValue, setXValue] = useState(0);
   const [yValue, setYValue] = useState(embedded ? 4 : 7);
   const [locked, setLocked] = useState(true);
@@ -492,7 +494,7 @@ export function LissajousInstrument({embedded=false}:{embedded?:boolean}={}) {
   }, [sendPulse]);
 
   return (
-    <main className="observatory-shell">
+    <main className={`observatory-shell ${embedded ? "is-embedded" : ""}`}>
       <div className="ambient-stars" aria-hidden="true" />
       <div className="instrument-frame">
         <section className={`scope-housing ${powered ? "is-powered" : "is-off"}`} aria-label={tr("Osciloscópio","Oscilloscope")}>
@@ -508,7 +510,12 @@ export function LissajousInstrument({embedded=false}:{embedded?:boolean}={}) {
           <p className="scope-hint">{tr("ARRASTE O CAMPO PARA MUDAR A FASE","DRAG THE FIELD TO SHIFT PHASE")}</p>
         </section>
 
-        <aside className="control-panel" aria-label={tr("Controles do sinal","Signal controls")}>
+        {embedded && <button ref={controlsButton} type="button" className="settings-toggle" aria-expanded={controlsOpen}
+          aria-controls="lissajous-settings" onClick={()=>setControlsOpen(open=>!open)}>
+          {controlsOpen ? tr("Fechar ajustes ×","Close settings ×") : tr("Ajustar +","Settings +")}
+        </button>}
+        <aside id="lissajous-settings" className="control-panel" hidden={embedded&&!controlsOpen}
+          onKeyDown={event=>{if(embedded&&event.key==="Escape"){event.preventDefault();event.stopPropagation();setControlsOpen(false);controlsButton.current?.focus();}}} aria-label={tr("Controles do sinal","Signal controls")}>
           <div className="panel-heading">
             <div><p className="eyebrow">{tr("STARGAZE · ESTUDO LISSAJOUS","STARGAZE · LISSAJOUS STUDY")}</p><h1>{embedded ? "Lissajous" : tr("Oscilador Celeste","Celestial Oscillator")}</h1></div>
             <Button type="button" variant="outline" size="icon-lg" className={`power-button ${powered ? "active" : ""}`}

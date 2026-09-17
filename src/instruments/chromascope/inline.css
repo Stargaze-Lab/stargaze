@@ -1,5 +1,5 @@
 @font-face{font-family:"DM Mono";src:url("./fonts/dm-mono-regular.woff") format("woff");font-weight:400;font-style:normal;font-display:swap}
-.chromascope-shell{--scope-ink:#dbded8;--scope-muted:#8b958e;--scope-accent:#b7cbbf;--scope-line:#414a43;box-sizing:border-box;width:100%;background:#0a0b0c;color:var(--scope-ink);font-family:"DM Mono",monospace;container-type:inline-size}
+.chromascope-shell{--scope-ink:#efeee8;--scope-muted:#a4a5a3;--scope-accent:#b7cbbf;--scope-line:rgba(237,239,230,.15);box-sizing:border-box;width:100%;background:#0a0b0c;color:var(--scope-ink);font-family:"DM Mono",monospace;container-type:inline-size}
 .chromascope-shell *{box-sizing:border-box}.cosmic-scope{width:100%;aspect-ratio:1;position:relative;isolation:isolate;overflow:hidden;background:#0a0b0c}
 .scope-lens{position:absolute;inset:16.1%;border-radius:50%;overflow:hidden;background:#0a0b0c}.scope-canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab;outline-offset:-5px}.scope-canvas:active{cursor:grabbing}[data-mode=edit][data-tool=draw] .scope-canvas{cursor:crosshair}[data-mode=edit][data-tool=select] .scope-canvas{cursor:move}.scope-canvas:focus-visible{outline:1px solid var(--scope-accent)}
 .scope-rings{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}.scope-rings text{font:400 13px "DM Mono",monospace;fill:var(--scope-muted);letter-spacing:1px;user-select:none;pointer-events:none;font-synthesis:none}.scope-rings .scope-title{font-size:12px;letter-spacing:4px;fill:var(--scope-ink)}.scope-rings .scope-hint{font-size:11px;letter-spacing:.65px}.scope-rings .empty-prompt{font-size:14px;fill:var(--scope-muted);letter-spacing:.1px}
@@ -15,7 +15,7 @@
 .optical-action[aria-disabled=true]{opacity:.3;cursor:default}.optical-action[aria-disabled=true] .action-rule{opacity:0}
 
 /* Persistent mode selector: filled active segment plus a distinct lens edge. */
-[data-mode=edit]{--scope-accent:#dca76e;--mode-fill:#dca76e}
+[data-mode=edit]{--scope-accent:#e7bd6d;--mode-fill:#e7bd6d}
 [data-mode=view]{--mode-fill:#b7cbbf}
 .mode-control .action-hit{stroke:#68746b66;stroke-width:.7;fill:#ffffff03}
 .mode-control text{fill:#929b94;letter-spacing:.65px}
@@ -24,7 +24,7 @@
 .mode-control[aria-pressed=true] .action-rule{opacity:1;stroke:#10141166;stroke-width:1.5}
 .mode-control:hover .action-hit{stroke:var(--scope-accent)}
 .mode-control:focus-visible .action-hit{stroke:#fff;stroke-width:2}
-[data-mode=edit] .scope-lens{box-shadow:0 0 0 1px #dca76e88}
-[data-mode=edit] .rim .aperture-edge{stroke:#dca76e;opacity:.9}
+[data-mode=edit] .scope-lens{box-shadow:0 0 0 1px #e7bd6d88}
+[data-mode=edit] .rim .aperture-edge{stroke:#e7bd6d;opacity:.9}
 .motion-control[aria-pressed=true] text{fill:#e8ecdf}
 @container(max-width:480px){.mode-control text{font-size:18px;letter-spacing:.15px}}
