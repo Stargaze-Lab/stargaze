@@ -1,0 +1,7 @@
+case_id,mechanism,frozen_evidence,source,role
+milk_cheese,grass → cattle → milk → transformation/trade,"~17,300 dairy farms; ~3 million t marketed milk/year; about half to cheese/quark",BLW Milch und Milchprodukte,editorial mechanism proof
+wheat_bread,weather → harvest ↓ → imports/stocks/policy response,"~80,000 ha bread grain; 2024 baking-capable harvest 250,773 t",BLW Brotgetreide; swiss granum 31.10.2024,quantitative pilot + resilience case
+apple,harvest → storage → time → imports if needed,"2025 marketed Swiss table fruit ~124,500 t; imports same species ~57,200 t",BLW Obstdaten 2025,storage/time mechanism
+vegetables,season → domestic/import → production system,"2025 domestic offer 386,873 t; imports ~249,000 t; 69.7 kg/person; 17,499 ha",BLW Gemüsedaten 2025,production-system case; no new species model required
+chicken_feed,domestic product → external feed dependency,2024 feed: herbivore domestic share 90.2%; monogastric 39.5%,Agristat Futtermittelbilanz 2024,feed boundary mechanism
+coffee,grown elsewhere → transform here → consume/export,food-balance cultivation share 0%; roasted-coffee exports CHF 1.3bn (2024),Agristat + BLW trade statistics,grown ≠ made mechanism

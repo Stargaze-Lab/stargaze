@@ -1,0 +1,16 @@
+indicator_id,period_universe,value,unit_denominator,evidence_state,publisher,locator,notes
+AREA_total_points_project,project snapshot,4129072,points / statistical hectares,DERIVED,internal QA,TERRITORY_GIS_VALIDATION_v0.1,raw zip hash pinned; raw not bundled
+AREA_agricultural,2013-2018 / situation 2018,14525,km2 AREA,PUBLISHED,BFS,"Land use in Switzerland 2018, G1/G22",
+AREA_arable,2013-2018 / situation 2018,3884,km2 AREA,PUBLISHED,BFS,"Land use in Switzerland 2018, G1",
+AREA_local_grass,2013-2018 / situation 2018,5128,km2 AREA,PUBLISHED,BFS,"Land use in Switzerland 2018, G1",
+AREA_alpine_agriculture,2013-2018 / situation 2018,5033,km2 AREA,PUBLISHED,BFS,"Land use in Switzerland 2018, G1",
+FFF_credited_total,2023,445680,ha credited FFF,PUBLISHED,ARE,FFF Statistik 2023,not AREA/UAA
+FFF_national_minimum,Sachplan,438460,ha FFF,PUBLISHED,ARE,Sachplan FFF,
+siteadapt_current_arable,LPIS/UAA 2021,383745,ha UAA analyzed,PUBLISHED,Kreuzer et al. 2026,Results/Table 2,not AREA
+siteadapt_current_grass,LPIS/UAA 2021,451352,ha UAA analyzed,PUBLISHED,Kreuzer et al. 2026,Results/Table 2,not AREA
+siteadapt_S1_arable,modeled scenario S1,660214,ha modeled,PUBLISHED,Kreuzer et al. 2026,Results 3.1,
+siteadapt_S2_arable,modeled scenario S2,352548,ha modeled,PUBLISHED,Kreuzer et al. 2026,Results 3.2,
+siteadapt_S3_arable,modeled scenario S3,338081,ha modeled,PUBLISHED,Kreuzer et al. 2026,Results 3.3,
+siteadapt_S3_grass,modeled scenario S3,497016,ha modeled,PUBLISHED,Kreuzer et al. 2026,Results 3.3,
+siteadapt_arable_to_potential_grass,modeled scenario S3,161079,ha modeled transition,PUBLISHED,Kreuzer et al. 2026,Results 3.3,
+siteadapt_grass_to_potential_arable,modeled scenario S3,115420,ha modeled transition,PUBLISHED,Kreuzer et al. 2026,Results 3.3,

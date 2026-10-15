@@ -1,0 +1,17 @@
+{
+  "reference_year": 2024,
+  "bread_grain_area_ha_approx": 80000.0,
+  "domestic_baking_capable_bread_grain_t": 250773.0,
+  "effective_baking_capable_supply_yield_t_per_ha_derived": 3.1346625,
+  "milling_demand_t_estimate": 455000,
+  "free_zones_t_estimate": 10000,
+  "tariff_quota_imports_t_estimate": 90000,
+  "reported_stocks_t_estimate": 110000,
+  "total_supply_t_estimate": 461000,
+  "balance_t_estimate": 6000,
+  "notes": [
+    "80,000 ha is approximate BLW bread-grain area, not wheat-only area.",
+    "Derived effective yield uses baking-capable output / approximate bread-grain area and is for calibration only, not agronomic yield.",
+    "Scenario-equivalent hectares are not predicted locations or available land."
+  ]
+}
