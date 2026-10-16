@@ -1,421 +1,369 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#f3efe6" />
-  <meta name="description" content="An open-data investigation by Stargaze into Swiss food production, climate, cross-border trade and the limits of land." />
-  <title>Switzerland 2050 — Food × Territory</title>
-  <link rel="icon" type="image/svg+xml" href="./assets/stargaze-logo.svg" />
-  <script type="module" crossorigin src="./assets/index-BnK3pvNX.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-4a6FAaiM.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="#f3efe6" name="theme-color"/>
+<meta content='Following Swiss food from field to shelf, and finding where "made here" stops. A Stargaze open-data investigation.' name="description"/>
+<title>The Label Is Not the Origin</title>
+<link href="./assets/stargaze-logo.svg" rel="icon" type="image/svg+xml"/>
+  <script type="module" crossorigin src="./assets/index-EuuhMvlx.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CxUJW4NE.css">
 </head>
 <body>
-  <canvas id="three-stage" aria-hidden="true"></canvas>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="scroll-progress" aria-hidden="true"><i></i></div>
-
-  <header class="site-header">
-    <a href="#top" class="brand" aria-label="Switzerland 2050 — start"><span class="brand-year">SWITZERLAND 2050</span></a>
-    <nav aria-label="Story acts">
-      <a href="#balance">01 BALANCE</a>
-      <a href="#network">02 NETWORK</a>
-      <a href="#territory">03 TERRITORY</a>
-      <a href="#lab">04 LAB</a>
-    </nav>
-    <button id="sources-open" class="quiet-button" type="button">SOURCES ↗</button>
-  </header>
-
-  <aside class="story-nav" id="story-nav" aria-label="Story navigation"></aside>
-
-  <main id="top">
-    <section class="hero system" data-system="splash" id="hero">
-      <div class="hero-grid">
-        <p class="kicker reveal">OPEN DATA / FOOD × TERRITORY</p>
-        <div class="hero-title" aria-label="Swiss food is not binary">
-          <span class="hero-line mask"><span>SWISS FOOD</span></span>
-          <span class="hero-line mask"><span>IS NOT</span></span>
-          <span class="hero-line mask accent"><span>BINARY.</span></span>
-        </div>
-        <p class="hero-lede reveal">How will Switzerland feed itself in a changing climate? Follow what it produces, what crosses its borders, and how agriculture shares a finite landscape with cities, forests and mountains.</p>
-        <div class="hero-meta reveal">
-          <span class="evidence-pill observed">OBSERVED + MODELED</span>
-          <a href="https://www.sbv-usp.ch/de/agristat-aktuell-11-25-nahrungsmittelbilanz-nmb-2024" target="_blank" rel="noreferrer">Agristat Food Balance 2024 ↗</a>
-          <span>+ BFS · BLW · ARE · Agroscope · swisstopo</span>
-        </div>
-        <div class="hero-gesture" aria-hidden="true"><span>scroll to disturb the field</span><i></i></div>
-      </div>
-    </section>
-
-    <section class="chapter system balance" id="balance" data-system="balance">
-      <div class="chapter-rail"><span>01</span><b>BALANCE</b><em>Start with production. Then follow what the average conceals.</em></div>
-      <div class="sticky-stage balance-stage">
-        <div class="balance-copy scene-copy">
-          <div class="statement-stack" id="balance-statements">
-            <article class="statement is-active" data-state="hook">
-              <p class="kicker">01 / THE STARTING POINT · 2024</p>
-              <h2><span>Half the food energy</span><span>is produced here.</span></h2>
-              <p class="support">In 2024, Swiss agriculture supplied <strong>half of the food energy available</strong> in the country. Swiss food begins in local production — but it is completed through imports, processing and trade.</p>
-              <div class="evidence-explainer"><b>WHAT IS THE 50%?</b><p>Domestic production divided by the <strong>food energy available for consumption</strong>, expressed as metabolizable energy. It is a food-balance measure, not a survey of meals or a tally of Swiss-grown kilograms.</p>
-                <details class="data-aside"><summary>Another lens: what do the 809 kg describe? <span>+</span></summary><p>The separate <strong>mass</strong> balance estimates <strong>809 kg of food available per person in 2024</strong> — 505 kg of plant foods and 304 kg of animal foods. These add up by weight, but cannot be compared directly with the energy-based 50%.</p><div class="kg-strip" role="img" aria-label="Available food mass: 505 kilograms plant and 304 kilograms animal"><i style="width:62.42%"></i><i style="width:37.58%"></i></div><p class="kg-note">MASS · 505 plant + 304 animal = 809 kg · <a href="https://www.sbv-usp.ch/fileadmin/sbvuspch/04_Medien/Agristat_aktuell/2025/Aktuell_AGRISTAT_2025-11.pdf#page=14" target="_blank" rel="noreferrer">Agristat, Table 7 ↗</a></p></details>
-              </div>
-              <p class="source-line"><span>OBSERVED · 2024 · FOOD ENERGY</span><a href="https://www.sbv-usp.ch/fileadmin/sbvuspch/04_Medien/Agristat_aktuell/2025/Aktuell_AGRISTAT_2025-11.pdf#page=14" target="_blank" rel="noreferrer">Agristat / Energy balance, Table 8 ↗</a></p>
-            </article>
-            <article class="statement" data-state="split">
-              <p class="kicker">02 / ONE AVERAGE, DIFFERENT DEPENDENCIES</p>
-              <h2><span>50% hides</span><span>two realities.</span></h2>
-              <p class="support">Domestic production covered <strong>31% of available plant-food energy</strong>, but <strong>93% of animal-food energy</strong> in 2024. The country depends much more on external supply for one group than the other.</p>
-              <div class="evidence-explainer"><b>HOW TO READ THE BARS</b><p>Each percentage uses <strong>its own food group</strong> as the denominator. The bars do not add up to 100%. And a high domestic share of animal food does not mean its feed and inputs are entirely local.</p></div>
-              <p class="source-line"><span>OBSERVED · 2024 · DIFFERENT GROUP DENOMINATORS</span><a href="https://www.sbv-usp.ch/fileadmin/sbvuspch/04_Medien/Agristat_aktuell/2025/Aktuell_AGRISTAT_2025-11.pdf#page=14" target="_blank" rel="noreferrer">Agristat / Food energy, Table 8 ↗</a><a href="https://www.sbv-usp.ch/de/agristat-aktuell-04-26-futtermittelbilanz-2024" target="_blank" rel="noreferrer">Agristat / Feed balance ↗</a></p>
-            </article>
-            <article class="statement" data-state="shock">
-              <p class="kicker">03 / CLIMATE MEETS THE HARVEST</p>
-              <h2><span>Weather changes</span><span>the balance.</span></h2>
-              <p class="support">The domestic food-energy share fell from <strong>54% in 2023</strong> to <strong>50% in 2024</strong>. Extreme weather hurt agricultural production; domestic plant-food energy was <strong>12% lower</strong> than in 2023.</p>
-              <div class="evidence-explainer"><b>WHY FOLLOW THE NETWORK?</b><p>A disrupted harvest does not stop the food system. Imports, reserves and processing help bridge the gap. <strong>One difficult year shows exposure to weather; it does not by itself prove climate-change attribution.</strong></p></div>
-              <p class="source-line"><span>OBSERVED · 2023→2024 · NOT A LONG-TERM PROJECTION</span><a href="https://www.sbv-usp.ch/fileadmin/sbvuspch/04_Medien/Agristat_aktuell/2025/Aktuell_AGRISTAT_2025-11.pdf#page=1" target="_blank" rel="noreferrer">Agristat / 2024 weather and food balance ↗</a></p>
-            </article>
-          </div>
-        </div>
-        <div class="balance-viz" id="balance-viz">
-          <div class="balance-number" aria-label="50 percent of available food energy produced domestically"><span>50</span><small>%</small></div>
-          <div class="balance-denominator">DOMESTIC PRODUCTION / AVAILABLE FOOD ENERGY · 2024</div>
-          <div class="domestic-compare">
-            <p>PRODUCTION IN SWITZERLAND / AVAILABLE ENERGY</p>
-            <div class="domestic-row total" tabindex="0" role="img" aria-label="All foods 50 percent domestic food energy"><span>ALL FOOD ENERGY</span><b>50%</b><i><em style="width:50%"></em></i></div>
-            <div class="domestic-row plant" tabindex="0" role="img" aria-label="Plant foods 31 percent domestic food energy"><span>PLANT FOOD ENERGY</span><b>31%</b><i><em style="width:31%"></em></i></div>
-            <div class="domestic-row animal" tabindex="0" role="img" aria-label="Animal foods 93 percent domestic food energy"><span>ANIMAL FOOD ENERGY</span><b>93%</b><i><em style="width:93%"></em></i></div>
-            <small>Same method · different food-group denominators · 2024</small>
-          </div>
-          <svg id="balance-chart" class="balance-chart" role="img" aria-label="Food-energy share supplied domestically: 54 percent in 2023, 50 percent in 2024"></svg>
-        </div>
-      </div>
-      <div class="steps" aria-hidden="true">
-        <div class="step" data-scene="balance" data-state="hook"></div>
-        <div class="step" data-scene="balance" data-state="split"></div>
-        <div class="step" data-scene="balance" data-state="shock"></div>
-      </div>
-    </section>
-
-    <section class="bridge interlude transition-card from-balance" id="from-balance" aria-labelledby="from-balance-title">
-      <div class="transition-top"><span>01 → 02</span><span>FROM BALANCE TO NETWORK</span><span>SCROLL TO FOLLOW THE MATERIAL ↓</span></div>
-      <div class="transition-body">
-        <p class="bridge-small reveal">A national percentage describes <em>an outcome.</em></p>
-        <h2 class="transition-head" id="from-balance-title"><span class="mask"><span>It cannot show</span></span><span class="mask"><span><strong>the journey.</strong></span></span></h2>
-        <p class="transition-explainer reveal">What is grown here, imported, transformed or exported? To understand the 50%, we need to follow the food through the systems that produce it.</p>
-      </div>
-      <div class="transition-trace" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-    </section>
-
-    <section class="chapter system network" id="network" data-system="network">
-      <div class="chapter-rail"><span>02</span><b>NETWORK</b><em>Grow here? Process here? Trade elsewhere? Follow the material.</em></div>
-      <div class="sticky-stage network-stage">
-        <div class="network-visual">
-          <div class="network-country" aria-hidden="true">
-            <img src="./assets/switzerland-outline.svg" alt="" />
-          </div>
-          <svg id="network-svg" role="img" aria-label="Animated food system network"></svg>
-          <div class="network-legend"><span><i>◇</i> material</span><span><i>⋯</i> movement</span><span><i>✳</i> transformation</span><span>hover / tap an object</span></div><div class="network-interaction" id="network-interaction" aria-live="polite">Follow a moving link, then inspect an object.</div>
-        </div>
-        <div class="network-copy scene-copy">
-          <div class="statement-stack" id="network-statements">
-            <article class="statement is-active" data-state="system">
-              <p class="kicker">04 / THE DEPENDENCY SYSTEM</p>
-              <h2><span>Swiss-made</span><span>means different things.</span></h2>
-              <p class="support">A food can be grown here, imported as an ingredient, processed here, stored, consumed or exported. <strong>A national border does not tell us where each step happened — or where the finished product ends up.</strong></p>
-              <div class="evidence-explainer"><b>FOLLOW THE ROUTE</b><p>Milk reveals a link to local land; wheat reveals the exposure of harvests to weather; coffee reveals how imported crops become products processed and traded in Switzerland.</p></div>
-              <p class="source-line"><span>EDITORIAL SYNTHESIS · FOOD BALANCE + TRADE</span><a href="https://www.sbv-usp.ch/de/agristat-aktuell-11-25-nahrungsmittelbilanz-nmb-2024" target="_blank" rel="noreferrer">Agristat food balance ↗</a><a href="https://data.blw.admin.ch/de" target="_blank" rel="noreferrer">BLW data portal ↗</a></p>
-            </article>
-            <article class="statement" data-state="milk">
-              <p class="kicker">05 / MILK · LAND → FOOD</p>
-              <h2><span>Grass becomes</span><span>milk. Milk becomes cheese.</span></h2>
-              <p class="support">Around <strong>17,300 dairy farms</strong> produce approximately <strong>3 million tonnes of marketed milk</strong> annually. Roughly <strong>half</strong> of that milk is processed into cheese and quark.</p>
-              <div class="evidence-explainer"><b>WHAT THE DIAGRAM PROVES</b><p>Dairy connects grassland, animals and processing. The national land-use data show grassland is extensive, but <em>do not tell us how many hectares produced each tonne of milk</em>. We therefore do not invent that conversion or an export share.</p></div>
-              <p class="source-line"><span>OBSERVED · APPROX. ANNUAL MILK VOLUME</span><a href="https://www.blw.admin.ch/de/milch-und-milchprodukte" target="_blank" rel="noreferrer">BLW / Milk and dairy ↗</a></p>
-            </article>
-            <article class="statement" data-state="wheat">
-              <p class="kicker">06 / WHEAT · HARVEST → RESPONSE</p>
-              <h2><span>When rain hits</span><span>the harvest.</span></h2>
-              <p class="support">The 2024 harvest supplied about <strong>250,773 tonnes of bread-quality grain</strong>. A poor domestic harvest makes the other links — stocks, imports, milling and policy — visible.</p>
-              <div class="evidence-explainer"><b>THE MECHANISM</b><p>Harvest → domestic supply; stocks and imports supplement it; mills turn grain into flour. These are <strong>alternative and complementary inputs</strong>, not a single mysterious line through “time.” This grain chain returns in the LAB.</p></div>
-              <p class="source-line"><span>OBSERVED · 2024 · BREAD-GRAIN HARVEST</span><a href="https://www.swissgranum.ch/stories/bilanz-der-ernte-2024-durch-swiss-granum" target="_blank" rel="noreferrer">swiss granum / 2024 balance ↗</a><a href="https://www.blw.admin.ch/de/brotgetreide" target="_blank" rel="noreferrer">BLW / Bread grain ↗</a></p>
-            </article>
-            <article class="statement" data-state="coffee">
-              <p class="kicker">07 / COFFEE · INPUT → TRANSFORMATION</p>
-              <h2><span>Grown elsewhere.</span><span>Transformed here.</span></h2>
-              <p class="support">Coffee is not commercially grown in Switzerland. Yet Switzerland also <strong>exports roasted coffee</strong>. Imported beans can be roasted, packaged and traded from Switzerland.</p>
-              <div class="evidence-explainer"><b>WHAT “MADE HERE” MEANS</b><p>Roasting, packaging, logistics and trade can happen in Switzerland while cultivation happens abroad. <strong>Exporting roasted coffee is not the same as growing coffee beans.</strong></p></div>
-              <p class="source-line"><span>DOCUMENTED · COFFEE PROCESSING + TRADE</span><a href="https://wits.worldbank.org/trade/comtrade/en/country/CHE/year/2024/tradeflow/Exports/partner/ALL/product/090121" target="_blank" rel="noreferrer">WITS / 2024 exports ↗</a></p>
-            </article>
-            <article class="statement" data-state="compare">
-              <p class="kicker">08 / THREE WAYS TO BE “SWISS”</p>
-              <h2><span>Swiss-made</span><span>is not one thing.</span></h2>
-              <p class="support"><strong>Milk</strong> relies on territory and animals. <strong>Wheat</strong> exposes harvest risk and reserves. <strong>Coffee</strong> creates domestic value from an imported crop. Each route has a different kind of dependency.</p>
-              <div class="evidence-explainer"><b>THE NEXT QUESTION</b><p>If food labels conceal different journeys, <strong>what can Swiss land actually grow?</strong> We leave the supply network and examine the territory itself.</p></div>
-              <p class="source-line"><span>EDITORIAL COMPARISON · THREE DOCUMENTED CASES</span><button class="inline-source" data-open-sources type="button">Evidence and method ↗</button></p>
-            </article>
-          </div>
-        </div>
-      </div>
-      <div class="steps">
-        <div class="step" data-scene="network" data-state="system"></div>
-        <div class="step" data-scene="network" data-state="milk"></div>
-        <div class="step" data-scene="network" data-state="wheat"></div>
-        <div class="step" data-scene="network" data-state="coffee"></div>
-        <div class="step" data-scene="network" data-state="compare"></div>
-      </div>
-    </section>
-
-    <section class="bridge territory-entry" data-system="bridge">
-      <img class="territory-entry-outline" src="./assets/switzerland-outline.svg" alt="" aria-hidden="true" />
-      <div class="territory-entry-copy">
-        <p class="kicker transition-kicker">02 → 03 / FROM NETWORK TO TERRITORY</p>
-        <h2 class="mask"><span>Food travels</span><span>across borders.</span><span>Land stays put.</span></h2>
-        <p class="territory-entry-note">Milk depends on grassland; wheat on suitable fields; coffee on imported crops and processing. These routes do not demand the same things from Switzerland’s landscape. <strong>Which uses already occupy the land, and where is agriculture possible?</strong></p>
-      </div>
-    </section>
-
-    <section class="chapter system territory" id="territory" data-system="territory">
-      <div class="chapter-rail"><span>03</span><b>TERRITORY</b><em>Food systems meet real land, cities and protected soils.</em></div>
-      <div class="sticky-stage territory-stage">
-        <div class="territory-viz">
-          <div class="territory-caption" id="territory-caption">OBSERVED / CURRENT USE</div>
-          
-          <div class="territory-map-shell" id="territory-map-shell" aria-hidden="true">
-            <img class="territory-data-map" src="./assets/area-four-groups.png" alt="" />
-            <img class="territory-active-layer" id="territory-active-layer" src="./assets/area-four-groups.png" alt="" />
-            <img class="territory-outline-image" src="./assets/switzerland-outline.svg" alt="" />
-            <div class="territory-map-scan"></div>
-          </div>
-          <svg id="territory-flow" class="territory-flow" role="img" aria-label="Current and site-adapted land use comparison"></svg>
-          <div class="territory-constraint-transect"><svg viewBox="0 0 900 390" role="img" aria-label="Proportional composition of Swiss land area: 35 percent agricultural, 32 wooded, 25 unproductive, 8 settlements. Schematic icons within each band are not geospatial locations."><text x="16" y="33" font-family="monospace" font-size="13" fill="#253d31">A FINITE LANDSCAPE  /  THE WIDTHS ARE NATIONAL SHARES</text><rect x="0" y="67" width="315" height="190" fill="#738f65" fill-opacity=".12" stroke="#738f65" stroke-width="1"/><rect x="0" y="67" width="315" height="8" fill="#738f65"/><path d="M24,180 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"/><path d="M52,172 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"/><path d="M80,183 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"/><path d="M108,176 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"/><path d="M136,181 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"/><path d="M164,185 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"/><path d="M192,181 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"/><path d="M220,182 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"/><path d="M248,181 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"/><path d="M276,183 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"/><text x="157.5" y="294" text-anchor="middle" font-family="monospace" font-weight="700" font-size="14" fill="#263b2e">AGRICULTURE</text><text x="157.5" y="320" text-anchor="middle" font-family="monospace" font-size="25" font-weight="700" fill="#738f65">35%</text><rect x="315" y="67" width="288" height="190" fill="#456a5a" fill-opacity=".12" stroke="#456a5a" stroke-width="1"/><rect x="315" y="67" width="288" height="8" fill="#456a5a"/><path d="M331,209 l17,-30 17,30 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"/><path d="M348,209 v-23" stroke="#456a5a" stroke-width="2"/><path d="M361,209 l17,-63 17,63 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"/><path d="M378,209 v-23" stroke="#456a5a" stroke-width="2"/><path d="M391,209 l17,-41 17,41 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"/><path d="M408,209 v-23" stroke="#456a5a" stroke-width="2"/><path d="M421,209 l17,-42 17,42 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"/><path d="M438,209 v-23" stroke="#456a5a" stroke-width="2"/><path d="M451,209 l17,-30 17,30 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"/><path d="M468,209 v-23" stroke="#456a5a" stroke-width="2"/><path d="M481,209 l17,-57 17,57 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"/><path d="M498,209 v-23" stroke="#456a5a" stroke-width="2"/><path d="M511,209 l17,-53 17,53 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"/><path d="M528,209 v-23" stroke="#456a5a" stroke-width="2"/><path d="M541,209 l17,-49 17,49 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"/><path d="M558,209 v-23" stroke="#456a5a" stroke-width="2"/><path d="M571,209 l17,-28 17,28 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"/><path d="M588,209 v-23" stroke="#456a5a" stroke-width="2"/><text x="459.0" y="294" text-anchor="middle" font-family="monospace" font-weight="700" font-size="14" fill="#263b2e">WOODED</text><text x="459.0" y="320" text-anchor="middle" font-family="monospace" font-size="25" font-weight="700" fill="#456a5a">32%</text><rect x="603" y="67" width="225" height="190" fill="#95a9a6" fill-opacity=".12" stroke="#95a9a6" stroke-width="1"/><rect x="603" y="67" width="225" height="8" fill="#95a9a6"/><path d="M612,219 l36,-72 38,72 Z" fill="#95a9a6" fill-opacity=".35" stroke="#95a9a6" stroke-width="1.7"/><path d="M648, 147 l-13,35 h28 Z" fill="#f4f0e5"/><path d="M661,219 l36,-72 38,72 Z" fill="#95a9a6" fill-opacity=".35" stroke="#95a9a6" stroke-width="1.7"/><path d="M697, 147 l-13,35 h28 Z" fill="#f4f0e5"/><path d="M710,219 l36,-88 38,88 Z" fill="#95a9a6" fill-opacity=".35" stroke="#95a9a6" stroke-width="1.7"/><path d="M746, 131 l-13,35 h28 Z" fill="#f4f0e5"/><path d="M759,219 l36,-78 38,78 Z" fill="#95a9a6" fill-opacity=".35" stroke="#95a9a6" stroke-width="1.7"/><path d="M795, 141 l-13,35 h28 Z" fill="#f4f0e5"/><text x="715.5" y="294" text-anchor="middle" font-family="monospace" font-weight="700" font-size="14" fill="#263b2e">UNPRODUCTIVE</text><text x="715.5" y="320" text-anchor="middle" font-family="monospace" font-size="25" font-weight="700" fill="#95a9a6">25%</text><rect x="828" y="67" width="72" height="190" fill="#b56d4f" fill-opacity=".12" stroke="#b56d4f" stroke-width="1"/><rect x="828" y="67" width="72" height="8" fill="#b56d4f"/><path d="M840,215 v-69 l18,-13 17,13 v69 Z" fill="#b56d4f" opacity=".63" stroke="#9b503b"/><path d="M855,215 v-102 l16,-8 15,8 v102" fill="none" stroke="#b56d4f" stroke-width="3"/><text x="864.0" y="295" text-anchor="middle" font-family="monospace" font-size="11" fill="#263b2e">BUILT</text><text x="864.0" y="320" text-anchor="middle" font-family="monospace" font-size="23" font-weight="700" fill="#b56d4f">8%</text><text x="16" y="371" font-family="monospace" font-size="12" fill="#415747">Observed BFS / AREA 2013–2018 · conceptual silhouettes, NOT a cross-section or land-cover map</text></svg></div>
-          <div class="territory-facts" id="territory-facts" aria-label="BFS observed composition of Switzerland land area 2018">
-            <p>SWITZERLAND · LAND USE, 2018 · AREA</p>
-            <div class="territory-area-bar" aria-hidden="true" title="National observed land-area proportions; not the color key to the map"><i style="width:35%;background:#9caa79"></i><i style="width:32%;background:#466b63"></i><i style="width:25%;background:#a6afb0"></i><i style="width:8%;background:#b96f5e"></i></div>
-            <div class="territory-area-key" role="group" aria-label="Highlight observed land use in Switzerland">
-              <button type="button" data-map-category="agriculture" style="--cat-color:#9caa79"><i></i>Agriculture <b>35%</b></button>
-              <button type="button" data-map-category="wooded" style="--cat-color:#466b63"><i></i>Wooded <b>32%</b></button>
-              <button type="button" data-map-category="unproductive" style="--cat-color:#a6afb0"><i></i>Unproductive <b>25%</b></button>
-              <button type="button" data-map-category="settlements" style="--cat-color:#b96f5e"><i></i>Settlements <b>8%</b></button>
-            </div>
-            <div class="territory-subcategories" role="group" aria-label="Inspect specific land-use classes">
-              <button type="button" data-map-category="arable">↗ Arable land · 9.2%</button>
-              <button type="button" data-map-category="rockice">↗ Rock / bare ground / ice · 20.8%</button>
-            </div>
-            <p id="territory-map-readout" class="territory-map-readout" aria-live="polite">Explore the categories: hover, focus or tap a label to highlight the corresponding locations.</p>
-            <small>Observed AREA map, 2013–18. Colored samples match the original category legend; the total bar reports national statistical shares, not pixel counts. Mountain focus means rock, bare soil and ice — not an elevation model. <a href="https://www.bfs.admin.ch/bfsstatic/dam/assets/19365040/master" target="_blank" rel="noreferrer">BFS source ↗</a></small>
-          </div>
-        </div>
-        <div class="territory-copy scene-copy">
-          <div class="statement-stack" id="territory-statements">
-            <article class="statement is-active" data-state="current">
-              <p class="kicker">09 / FIRST, THE OBSERVED TERRITORY</p>
-              <h2><span>Cities, forests,</span><span>fields. One country.</span></h2>
-              <p class="support">In the 2018 land-use baseline, agriculture occupied <strong>35%</strong> of Swiss territory, wooded areas <strong>32%</strong>, unproductive terrain <strong>25%</strong> and settlements <strong>8%</strong>. Mountains, forests and cities are not blank space.</p>
-              <div class="evidence-explainer"><b>HOW TO READ THE MAP</b><p>This is a <strong>categorical map derived from observed BFS AREA data</strong> — not a generic heatmap. Different colors correspond to different existing land covers and uses, not “good vs bad” territory.</p></div>
-              <p class="source-line"><span>OBSERVED · AREA 2013–2018</span><a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/19365051/master" target="_blank" rel="noreferrer">BFS / Land Use in Switzerland, G1 ↗</a></p>
-            </article>
-            <article class="statement" data-state="capability">
-              <p class="kicker">10 / WHAT IF USE FOLLOWED SUITABILITY?</p>
-              <h2><span>What is used</span><span>is not what is suitable.</span></h2>
-              <p class="support">A published site-adaptation model tests a different arrangement of agricultural uses. Within <strong>its own analyzed farmland universe</strong>, the model compares arable and grassland uses — not all Swiss land.</p>
-              <div class="evidence-explainer"><b>THE COMPARISON</b><p>Current analyzed arable land: <strong>383,745 ha</strong>; modeled S3: <strong>338,081 ha</strong>. Grassland: <strong>451,352 → 497,016 ha</strong>. These are <strong>model outputs, not land made available</strong>. AREA and the model are different datasets.</p></div>
-              <p class="source-line"><span>MODELED · UAA/LPIS 2021 UNIVERSE · S3</span><a href="https://doi.org/10.5281/zenodo.17687485" target="_blank" rel="noreferrer">Kreuzer et al. / Agroscope data ↗</a></p>
-            </article>
-            <article class="statement" data-state="constraints">
-              <p class="kicker">11 / LAND IS ALREADY CLAIMED</p>
-              <h2><span>Land is limited.</span><span>Its uses compete.</span></h2>
-              <p class="support">Within the <strong>14,525 km²</strong> classified as agricultural in AREA, <strong>3,884 km²</strong> were arable, <strong>5,128 km²</strong> local grassland, and <strong>5,033 km²</strong> alpine agricultural land. Forest, settlement and rock compete for space elsewhere.</p>
-              <div class="evidence-explainer"><b>THE POLITICAL BOUNDARY</b><p><strong>445,680 ha</strong> of crop-rotation areas (FFF, 2023) are credited under a <em>separate planning framework</em>. They cannot be added to the AREA totals or treated as spare farmland. This is why “more arable land” is not a simple slider.</p></div>
-              <p class="source-line"><span>OBSERVED AREA · POLICY FFF 2023 · DIFFERENT UNIVERSES</span><a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/19365051/master" target="_blank" rel="noreferrer">BFS / Area breakdown ↗</a><a href="https://www.are.admin.ch/de/fff-statistik" target="_blank" rel="noreferrer">ARE / FFF statistics ↗</a></p>
-            </article>
-            <article class="statement" data-state="question">
-              <p class="kicker">12 / THE 2050 DECISION SPACE</p>
-              <h2><span>Changing the plate</span><span>does not move the mountains.</span></h2>
-              <p class="support">A different demand for food changes pressure on fields, pastures, imports and processing. It does <strong>not</strong> automatically turn mountain pasture or built-up land into crop fields.</p>
-              <div class="evidence-explainer"><b>FROM EVIDENCE TO EXPLORATION</b><p>2050 is the horizon for decisions, <em>not a forecast image</em>. The LAB tests directions of change while keeping the map factual and the unknowns visible.</p></div>
-              <p class="source-line"><span>SCENARIO · NO PIXEL-LEVEL 2050 FORECAST</span><a href="#lab">Explore dependencies in LAB ↓</a></p>
-            </article>
-          </div>
-        </div>
-      </div>
-      <div class="steps">
-        <div class="step" data-scene="territory" data-state="current"></div>
-        <div class="step" data-scene="territory" data-state="capability"></div>
-        <div class="step" data-scene="territory" data-state="constraints"></div>
-        <div class="step" data-scene="territory" data-state="question"></div>
-      </div>
-    </section>
-
-
-<section class="interlude transition-card from-territory" id="from-territory" aria-labelledby="from-territory-title">
-  <div class="transition-top"><span>03 → 04</span><span>FROM EVIDENCE TO EXPLORATION</span><span>THE LAB IS NEXT ↓</span></div>
-  <div class="transition-body">
-    <p class="bridge-small reveal">The territory is <em>not a blank canvas.</em></p>
-    <h2 class="transition-head" id="from-territory-title"><span class="mask"><span>So what</span></span><span class="mask"><span><strong>can change?</strong></span></span></h2>
-    <p class="transition-explainer reveal">The observed map shows today's land uses. A separate model explores suitability, not spare hectares. The next step is to explore trade-offs between demand, production and dependencies — <em>without drawing a fictional map of 2050.</em></p>
-  </div>
-  <div class="transition-terms" aria-label="Three types of decisions in the laboratory"><span><b>01</b> FOOD DEMAND</span><span><b>02</b> PRODUCTION SYSTEMS</span><span><b>03</b> LOCAL ↔ EXTERNAL</span></div>
+<canvas aria-hidden="true" id="three-stage"></canvas>
+<div aria-hidden="true" class="grain"></div>
+<div aria-hidden="true" class="scroll-progress"><i></i></div>
+<header class="site-header">
+<a aria-label="The Label Is Not the Origin: back to beginning" class="brand" href="#top"><span class="brand-year">THE LABEL IS NOT THE ORIGIN</span></a>
+<nav aria-label="Story acts">
+<a href="#balance">01 BALANCE</a>
+<a href="#network">02 NETWORK</a>
+<a href="#territory">03 TERRITORY</a>
+<a href="#lab">04 LAB</a>
+</nav>
+<a class="quiet-button" href="#technical-notes" id="sources-open">SOURCES ↓</a>
+</header>
+<aside aria-label="Story navigation" class="story-nav" id="story-nav"></aside>
+<main id="top">
+<section class="hero system" data-system="splash" id="hero">
+<div class="hero-grid">
+<p class="kicker reveal">OPEN DATA / FOOD × TERRITORY</p>
+<div aria-label="Half of it grows here. The rest travels." class="hero-title"><span class="hero-line mask"><span>HALF OF IT</span></span><span class="hero-line mask"><span>GROWS HERE.</span></span><span class="hero-line mask accent"><span>THE REST TRAVELS.</span></span><p class="hero-subtitle reveal">Following Swiss food from field to shelf, and finding where "made here" stops</p></div>
+<p class="hero-lede reveal">How will Switzerland feed itself as the climate changes? Follow what it produces, what crosses its borders, and how farming shares a finite landscape with cities, forests and mountains. The data answers part of that question, and refuses the rest.</p>
+<div class="hero-meta reveal">
+<span class="evidence-pill observed">OBSERVED + MODELED</span>
+<a href="https://www.sbv-usp.ch/de/agristat-aktuell-11-25-nahrungsmittelbilanz-nmb-2024" rel="noreferrer" target="_blank">Agristat Food Balance 2024 ↗</a>
+<span>+ BFS · BLW · ARE · Agroscope · swisstopo</span>
+</div>
+<div aria-hidden="true" class="hero-gesture"><span>scroll to disturb the field</span><i></i></div>
+</div>
 </section>
-
-<section class="lab system" id="lab" data-system="lab">
-      <div class="lab-intro">
-        <p class="kicker">04 / LAB — CONTROL CHANGES HANDS</p>
-        <h2><span>Change the system.</span><span>Trace what</span><span class="accent">changes with it.</span></h2>
-        <p class="lab-lede">Move a control to see how food, land and external dependencies respond. The map remains observed; the animated symbols are a conceptual system model, not predictions of farm locations.</p>
-      </div>
-
-      <div class="lab-shell">
-        <div class="lab-panel">
-          <div class="lab-group">
-            <div class="lab-heading"><span>01</span><b>REBALANCE FOOD</b><em>qualitative dependency shift</em></div>
-            <label class="range-label" for="rebalance"><span>more animal</span><span>more plant</span></label>
-            <input id="rebalance" type="range" min="-100" max="100" value="0" step="1" />
-            <div class="lab-directions" id="lab-directions"></div>
-            <p class="microcopy">This is a directional thought experiment, not an estimate of new hectares. Plant/animal diets change different pressures, including land and imports.</p>
-            <p class="source-line"><span>SCENARIO · qualitative only</span><a href="https://www.sbv-usp.ch/fileadmin/sbvuspch/04_Medien/Agristat_aktuell/2025/Aktuell_AGRISTAT_2025-11.pdf" target="_blank" rel="noreferrer">Food-balance baseline ↗</a><button class="inline-source" data-open-sources type="button">Method ↗</button></p>
-          </div>
-
-          <div class="lab-group">
-            <div class="lab-heading"><span>02</span><b>CHANGE HOW WE PRODUCE</b><em>dependency profile</em></div>
-            <div class="segmented" id="production-method">
-              <button class="is-active" data-method="open" type="button">OPEN FIELD</button>
-              <button data-method="protected" type="button">PROTECTED</button>
-              <button data-method="controlled" type="button">CONTROLLED</button>
-            </div>
-            <div class="dependency-radar" id="dependency-radar"></div>
-            <p class="source-line"><span>SCENARIO · no sustainability score</span><a href="https://www.agroscope.admin.ch/en/10-vertical-farming-urban-farming-food-production-outside-agriculture" target="_blank" rel="noreferrer">Agroscope production systems ↗</a></p>
-          </div>
-
-          <div class="lab-group">
-            <div class="lab-heading"><span>03</span><b>RESPONSIBILITY</b><em>agency ≠ zoom</em></div>
-            <div class="lens" id="lens">
-              <button class="is-active" data-lens="here" type="button">HERE</button>
-              <button data-lens="region" type="button">REGION</button>
-              <button data-lens="country" type="button">COUNTRY</button>
-              <button data-lens="elsewhere" type="button">ELSEWHERE</button>
-            </div>
-            <p class="lens-copy" id="lens-copy">Local action changes some dependencies, but cannot erase the network around them.</p>
-            <p class="source-line"><span>DERIVED · responsibility lens</span><a href="https://www.blw.admin.ch/en/agriculture-and-food-climate-strategy-2050" target="_blank" rel="noreferrer">BLW Climate Strategy 2050 ↗</a><button class="inline-source" data-open-sources type="button">Method ↗</button></p>
-          </div>
-        </div>
-
-        <div class="lab-stage">
-          <div class="lab-status"><span class="evidence-pill scenario">SCENARIO</span><span id="lab-status-copy">No spatial forecast · dependencies only</span></div>
-          <div class="lab-map-label"><b>AN ATLAS OF DEPENDENCIES</b><span>real territory backdrop · symbolic objects (not geolocated) · live scenarios</span></div>
-          <div class="lab-map-wrap">
-            <svg id="lab-map-viz" role="img" aria-label="Interactive Swiss territory scenario map"></svg>
-            <div class="lab-symbol-note">ILLUSTRATED SYSTEM · OBJECT LOCATIONS ARE SCHEMATIC</div><div class="lab-map-readout" id="lab-map-readout">
-              <span>BASELINE</span>
-              <b>dependencies only</b>
-            </div>
-          </div>
-          <svg id="lab-output-viz" role="img" aria-label="Qualitative food-system dependency outputs"></svg>
-
-          <div class="calibration">
-            <div class="calibration-title">
-              <span class="kicker">QUANTITATIVE CALIBRATION / WHEAT → BREAD</span>
-              <b>A measured chain: wheat → bread.</b>
-            </div>
-            <label for="wheat-slider"><span>milling demand</span><output id="wheat-change">0%</output></label>
-            <input id="wheat-slider" type="range" min="-10" max="10" value="0" step="1" />
-            <div class="calibration-output">
-              <div><span>scenario demand</span><b id="wheat-demand">455,000 t</b></div>
-              <div><span>scenario-equivalent area Δ</span><b id="wheat-area">0 ha</b></div>
-            </div>
-            <p class="microcopy">Equivalent area is a calibration only: no pixel allocation, no automatic grassland conversion, no policy recommendation.</p>
-            <p class="source-line"><span>SCENARIO · frozen 2024 calibration</span><a href="https://www.blw.admin.ch/de/brotgetreide" target="_blank" rel="noreferrer">BLW bread grain ↗</a><a href="https://www.swissgranum.ch/stories/bilanz-der-ernte-2024-durch-swiss-granum" target="_blank" rel="noreferrer">swiss granum 2024 ↗</a></p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-<section class="takeaway system" id="takeaway" data-system="takeaway" aria-labelledby="takeaway-title">
-  <div class="takeaway-rail"><span>05</span><b>WHAT WE LEARNED</b><span>THE FINDING · NOT A FORECAST</span></div>
-  <div class="takeaway-lead">
-    <p class="kicker reveal">BACK TO THE QUESTION WE STARTED WITH</p>
-    <h2 id="takeaway-title" class="transition-head"><span class="mask"><span>Making more here</span></span><span class="mask"><span>is <em>not the whole</em></span></span><span class="mask"><span>answer.</span></span></h2>
-    <div class="takeaway-argument reveal">
-      <p>We set out to understand Swiss food production as climate and land pressures grow. The data did not produce a credible forecast for 2050. <strong>It did reveal why domestic production alone is an incomplete measure of how the food system works.</strong></p>
-      <p>Food depends on a changing harvest, on inputs and trade across borders, and on a landscape where not every hectare can serve the same purpose.</p>
-    </div>
-  </div>
-  <div class="finding-thread" aria-label="Four linked findings of this investigation">
-    <article class="finding-cell reveal">
-      <div class="finding-index">01 / BALANCE <span>→</span></div>
-      <b class="finding-value">50<small>%</small></b>
-      <h3>A partial measure</h3>
-      <p>Domestic production covered half the available food energy in 2024, but plant and animal foods had very different domestic shares.</p>
-      <a href="https://www.sbv-usp.ch/de/agristat-aktuell-11-25-nahrungsmittelbilanz-nmb-2024" target="_blank" rel="noopener noreferrer">Agristat · Food Balance 2024 ↗</a>
-    </article>
-    <article class="finding-cell reveal">
-      <div class="finding-index">02 / CLIMATE + ROUTES <span>→</span></div>
-      <b class="finding-value">2024</b>
-      <h3>A system that adapts</h3>
-      <p>Adverse weather weakened harvests. Stocks, imports and processing help explain how supply extends beyond one season and one border.</p>
-      <a href="https://www.sbv-usp.ch/de/agristat-aktuell-11-25-nahrungsmittelbilanz-nmb-2024" target="_blank" rel="noopener noreferrer">Agristat · 2024 analysis ↗</a>
-    </article>
-    <article class="finding-cell reveal">
-      <div class="finding-index">03 / LAND <span>→</span></div>
-      <b class="finding-value">35<small>%</small></b>
-      <h3>A finite territory</h3>
-      <p>Agriculture occupies roughly 35% of national land in the observed AREA baseline. Grassland, arable fields, forests and settlements cannot be exchanged as if they were the same resource.</p>
-      <a href="https://www.bfs.admin.ch/bfs/en/home/statistics/territory-environment/land-use-cover.html" target="_blank" rel="noopener noreferrer">BFS · Land Use Statistics ↗</a>
-    </article>
-    <article class="finding-cell finding-open reveal">
-      <div class="finding-index">04 / 2050 <span>↗</span></div>
-      <b class="finding-value">?</b>
-      <h3>Choices, not a prediction</h3>
-      <p>Future production will involve choices about diets, technologies, land suitability and international dependencies. Our LAB illustrates trade-offs; it does not calculate a national 2050 outcome.</p>
-      <a href="#lab">Return to the LAB ↑</a>
-    </article>
-  </div>
-  <div class="takeaway-boundary reveal">
-    <p class="kicker">WHAT THE INVESTIGATION CAN — AND CANNOT — SAY</p>
-    <p><strong>Established:</strong> the published 2024 food balance, documented supply mechanisms and observed/modelled land-use constraints challenge a simple local-versus-imported story. <strong>Not established:</strong> long-term climate attribution from one difficult harvest year, a quantified climate forecast, a definitive 2050 land-use plan or an amount of new cropland that could safely be created.</p>
-    <a href="#about">ABOUT THE INVESTIGATION ↓</a>
-  </div>
+<section class="chapter system balance" data-system="balance" id="balance">
+<div class="chapter-rail"><span>01</span><b>BALANCE</b><em>Start with production. Then follow what the average conceals.</em></div>
+<div class="sticky-stage balance-stage">
+<div class="balance-copy scene-copy">
+<div class="statement-stack" id="balance-statements">
+<article class="statement is-active" data-state="hook">
+<p class="kicker">01 / THE STARTING POINT · 2024</p>
+<h2><span>Half of what</span><span>the country eats</span><span>grows in the country.</span></h2>
+<p class="support">Domestic production covered half of the available food energy in 2024. The other half crossed a border.</p>
+<p class="source-line"><span>OBSERVED · 2024 · FOOD ENERGY</span><a href="https://www.sbv-usp.ch/fileadmin/sbvuspch/04_Medien/Agristat_aktuell/2025/Aktuell_AGRISTAT_2025-11.pdf#page=14" rel="noreferrer" target="_blank">Agristat, Food Balance 2024 ↗</a></p>
+</article><article class="statement" data-state="plate"><p class="kicker">THE PLATE / AVAILABLE FOOD MASS</p><h2><span>Every number above</span><span>is a plate.</span></h2><p class="support">809 kg of food per person per year comes in by weight, about 2.2 kg a day, 505 kg of it plant and 304 kg animal. Behind every share is somebody deciding what to buy, what to cook, and what to leave on the shelf.</p><p class="source-line"><span>OBSERVED · 2024 · MASS BALANCE</span><a href="https://www.sbv-usp.ch/fileadmin/sbvuspch/04_Medien/Agristat_aktuell/2025/Aktuell_AGRISTAT_2025-11.pdf#page=14" rel="noopener noreferrer" target="_blank">Agristat, Table 7, mass balance ↗</a></p></article>
+<article class="statement" data-state="split">
+<p class="kicker">02 / ONE AVERAGE, DIFFERENT DEPENDENCIES</p>
+<h2><span>That half is</span><span>really two countries.</span></h2>
+<p class="support">93% of animal-food energy came from domestic production. For plant foods it was 31%. One average hides both.</p>
+<p class="source-line"><span>OBSERVED · 2024 · DIFFERENT GROUP DENOMINATORS</span><a href="https://www.sbv-usp.ch/fileadmin/sbvuspch/04_Medien/Agristat_aktuell/2025/Aktuell_AGRISTAT_2025-11.pdf#page=14" rel="noreferrer" target="_blank">Agristat, Food energy Table 8, and Feed balance ↗</a><a href="https://www.sbv-usp.ch/de/agristat-aktuell-04-26-futtermittelbilanz-2024" rel="noreferrer" target="_blank">Agristat / Feed balance ↗</a></p>
+</article>
+<article class="statement" data-state="shock">
+<p class="kicker">03 / CLIMATE MEETS THE HARVEST</p>
+<h2><span>Weather moves</span><span>the number.</span></h2>
+<p class="support">The domestic share fell from 54% to 50% in a single year, because a bad harvest is not a long-term trend, it is a warning about exposure.</p>
+<p class="source-line"><span>OBSERVED · 2023→2024 · NOT A LONG-TERM PROJECTION</span><a href="https://www.sbv-usp.ch/fileadmin/sbvuspch/04_Medien/Agristat_aktuell/2025/Aktuell_AGRISTAT_2025-11.pdf#page=1" rel="noreferrer" target="_blank">Agristat, 2024 weather and food balance ↗</a></p>
+</article>
+</div>
+</div>
+<div class="balance-viz" id="balance-viz">
+<div aria-label="50 percent of available food energy produced domestically" class="balance-number"><span>50</span><small>%</small></div><div aria-label="Food available in 2024: 809 kilograms per person per year, with 505 kilograms plant and 304 kilograms animal" class="plate-viz" role="img"><div class="plate-number">809<small>kg</small></div><div class="plate-caption">AVAILABLE FOOD / PERSON / YEAR · 2024</div><div class="plate-breakdown"><div><b>505 kg</b><span>PLANT FOODS</span></div><div><b>304 kg</b><span>ANIMAL FOODS</span></div></div><div class="kg-strip"><i style="width:62.42%"></i><i style="width:37.58%"></i></div></div>
+<div class="balance-denominator">DOMESTIC PRODUCTION / AVAILABLE FOOD ENERGY · 2024</div>
+<div class="domestic-compare">
+<p>PRODUCTION IN SWITZERLAND / AVAILABLE ENERGY</p>
+<div aria-label="All foods 50 percent domestic food energy" class="domestic-row total" role="img" tabindex="0"><span>ALL FOOD ENERGY</span><b>50%</b><i><em style="width:50%"></em></i></div>
+<div aria-label="Plant foods 31 percent domestic food energy" class="domestic-row plant" role="img" tabindex="0"><span>PLANT FOOD ENERGY</span><b>31%</b><i><em style="width:31%"></em></i></div>
+<div aria-label="Animal foods 93 percent domestic food energy" class="domestic-row animal" role="img" tabindex="0"><span>ANIMAL FOOD ENERGY</span><b>93%</b><i><em style="width:93%"></em></i></div>
+<small>Same method · different food-group denominators · 2024</small>
+</div>
+<svg aria-label="Food-energy share supplied domestically: 54 percent in 2023, 50 percent in 2024" class="balance-chart" id="balance-chart" role="img"></svg>
+</div>
+</div>
+<div aria-hidden="true" class="steps">
+<div class="step" data-scene="balance" data-state="hook"></div><div class="step" data-scene="balance" data-state="plate"></div>
+<div class="step" data-scene="balance" data-state="split"></div>
+<div class="step" data-scene="balance" data-state="shock"></div>
+</div>
 </section>
-
-<section class="about-section system" id="about" data-system="about">
-      <div class="about-index">06 / ABOUT <div class="stargaze-brand about-brand"><img class="about-logo" src="./assets/stargaze-logo.svg" alt="Stargaze official symbol" /><span>STARGAZE<small>powered by Glitch</small></span></div></div>
-      <div class="about-title">
-        <p class="kicker">ABOUT THE PROJECT</p>
-        <h2>Where does Swiss food <em>really</em> come from?</h2>
-      </div>
-      <div class="about-copy">
-        <p><b>Switzerland 2050 — Food × Territory</b> began as an investigation into food production and its future under climate pressure. Switzerland’s unusually rich public data made it a compelling laboratory: a place to follow evidence across food balances, trade, processing and land use rather than rely on assumptions.</p>
-        <p>The findings complicate the idea of food made “here.” Domestic agriculture supplies about half of the available food energy; many products associated with Switzerland depend on imported raw materials; and imported goods can be transformed locally and sold again. At the same time, productive land is limited and already shared with settlements, forests and mountains. The story traces these connections from production balance to supply networks, territorial limits and possible choices for 2050.</p>
-        <p><strong>Human-directed, AI-assisted research and design.</strong> AI supported source discovery, research synthesis, dataset connections, interface creation and interactive prototyping. Evidence and open questions are documented; editorial judgment and the visual direction are authored by Stargaze. LAB objects describe dependencies, not forecasts of where farms or cities will be built.</p>
-      </div>
-      <div class="about-meta">
-        <div><span>METHOD</span><b>Observed → Modeled → Scenario</b></div>
-        <div><span>DATA</span><b>Agristat · BFS · BLW · ARE · Agroscope</b></div>
-        <div><span>CONCEPT / DESIGN / CODE</span><b>Stargaze · AI-assisted workflow · 2026</b></div>
-        <button class="quiet-button" data-open-sources type="button">OPEN METHOD + SOURCES ↗</button>
-      </div>
-    </section>
-
-    <footer>
-      <div class="footer-identity"><div class="stargaze-brand footer-brand"><img src="./assets/stargaze-logo.svg" alt="Stargaze official symbol"/><span>STARGAZE<small>powered by Glitch</small></span></div><span>SWITZERLAND 2050 / FOOD × TERRITORY · INDEPENDENT OPEN-DATA STUDY · 2026</span></div>
-      <div class="footer-links"><a href="#hero">BACK TO TOP ↑</a><button class="quiet-button" data-open-sources type="button">METHOD + SOURCES ↗</button></div>
-    </footer>
-  </main>
-
-  <dialog id="sources-dialog" class="sources-dialog">
-    <div class="sources-head">
-      <div><span class="kicker">EVIDENCE LAYER</span><h2>Method + sources</h2></div>
-      <button id="sources-close" class="quiet-button" type="button">CLOSE ×</button>
-    </div>
-    <div id="sources-list" class="sources-list"></div>
-    <div class="sources-method">
-      <p><b>Observed</b> = measured or published data.</p>
-      <p><b>Modeled</b> = published model output with a different universe/denominator.</p>
-      <p><b>Scenario</b> = user-controlled exploration. It is not a forecast.</p>
-      <p><b>Firewall</b> = AREA, UAA/SAU, FFF, modeled eligible ha and scenario-equivalent ha·year are never silently summed.</p>
-    </div>
-  </dialog>
-
+<section aria-labelledby="from-balance-title" class="bridge interlude transition-card from-balance" id="from-balance">
+<div class="transition-top"><span>01 → 02</span><span>FROM BALANCE TO NETWORK</span><span>SCROLL TO FOLLOW THE MATERIAL ↓</span></div>
+<div class="transition-body">
+<p class="bridge-small reveal">A national percentage describes <em>an outcome.</em></p>
+<h2 class="transition-head" id="from-balance-title"><span class="mask"><span>It cannot show</span></span><span class="mask"><span><strong>the journey.</strong></span></span></h2>
+<p class="transition-explainer reveal">What is grown here, imported, transformed or exported? To understand the 50%, we need to follow the food through the systems that produce it.</p>
+</div>
+<div aria-hidden="true" class="transition-trace"><i></i><i></i><i></i><i></i></div>
+</section>
+<section class="chapter system network" data-system="network" id="network">
+<div class="chapter-rail"><span>02</span><b>NETWORK</b><em>Grow here? Process here? Trade elsewhere? Follow the material.</em></div>
+<div class="sticky-stage network-stage">
+<div class="network-visual">
+<div aria-hidden="true" class="network-country">
+<img alt="" src="./assets/switzerland-outline.svg"/>
+</div>
+<svg aria-label="Animated food system network" id="network-svg" role="img"></svg>
+<div class="network-legend"><span><i>◇</i> material</span><span><i>⋯</i> movement</span><span><i>✳</i> transformation</span><span>hover / tap an object</span></div><div aria-live="polite" class="network-interaction" id="network-interaction">Follow a moving link, then inspect an object.</div>
+</div>
+<div class="network-copy scene-copy">
+<div class="statement-stack" id="network-statements">
+<article class="statement is-active" data-state="system">
+<p class="kicker">04 / THE DEPENDENCY SYSTEM</p>
+<h2><span>A border does not say</span><span>where a food was made.</span></h2>
+<p class="support">Grown here, imported as an ingredient, processed here, stored, eaten or sold on. Follow the route instead of the flag.</p>
+<p class="source-line"><span>EDITORIAL SYNTHESIS · FOOD BALANCE + TRADE</span><a href="https://www.sbv-usp.ch/de/agristat-aktuell-11-25-nahrungsmittelbilanz-nmb-2024" rel="noreferrer" target="_blank">Agristat food balance, BLW data portal ↗</a><a href="https://data.blw.admin.ch/de" rel="noreferrer" target="_blank">BLW data portal ↗</a></p>
+</article>
+<article class="statement" data-state="milk">
+<p class="kicker">05 / MILK · LAND → FOOD</p>
+<h2><span>Grass becomes milk,</span><span>milk becomes cheese,</span><span>and the land is</span><span>already spoken for.</span></h2>
+<p class="support">Around 17,300 dairy farms market roughly three million tonnes of milk a year. About half of it becomes cheese and quark, from grassland that cannot be conjured into being.</p>
+<p class="source-line"><span>OBSERVED · APPROX. ANNUAL MILK VOLUME</span><a href="https://www.blw.admin.ch/de/milch-und-milchprodukte" rel="noreferrer" target="_blank">BLW, Milk and dairy ↗</a></p>
+</article>
+<article class="statement" data-state="wheat">
+<p class="kicker">06 / WHEAT · HARVEST → RESPONSE</p>
+<h2><span>A bad wheat harvest</span><span>reveals the machinery</span><span>behind the shelf.</span></h2>
+<p class="support">Around 250,773 tonnes of bread-quality grain came in with the 2024 harvest. When it fell short, stocks, imports and milling showed up in the numbers.</p>
+<p class="source-line"><span>OBSERVED · 2024 · BREAD-GRAIN HARVEST</span><a href="https://www.swissgranum.ch/stories/bilanz-der-ernte-2024-durch-swiss-granum" rel="noreferrer" target="_blank">swiss granum, 2024 balance, and BLW, Bread grain ↗</a><a href="https://www.blw.admin.ch/de/brotgetreide" rel="noreferrer" target="_blank">BLW / Bread grain ↗</a></p>
+</article>
+<article class="statement" data-state="coffee">
+<p class="kicker">07 / COFFEE · INPUT → TRANSFORMATION</p>
+<h2><span>Coffee is grown elsewhere,</span><span>roasted here,</span><span>and sold as Swiss.</span></h2>
+<p class="support">Imported beans can be processed, packaged and traded from Switzerland. Cultivation happened somewhere else entirely.</p>
+<p class="source-line"><span>DOCUMENTED · COFFEE PROCESSING + TRADE</span><a href="https://wits.worldbank.org/trade/comtrade/en/country/CHE/year/2024/tradeflow/Exports/partner/ALL/product/090121" rel="noreferrer" target="_blank">WITS, 2024 exports ↗</a></p>
+</article>
+<article class="statement" data-state="compare">
+<p class="kicker">08 / THREE WAYS TO BE “SWISS”</p>
+<h2><span>There are three ways</span><span>to be Swiss.</span></h2>
+<p class="support">Milk rests on territory, wheat on risk and reserves, coffee on value added to an imported crop. Each route carries a different dependency.</p>
+<p class="source-line"><span>EDITORIAL SYNTHESIS</span><a href="https://www.sbv-usp.ch/de/agristat-aktuell-11-25-nahrungsmittelbilanz-nmb-2024" rel="noopener noreferrer" target="_blank">Editorial synthesis, food balance and trade ↗</a></p>
+</article>
+</div>
+</div>
+</div>
+<div class="steps">
+<div class="step" data-scene="network" data-state="system"></div>
+<div class="step" data-scene="network" data-state="milk"></div>
+<div class="step" data-scene="network" data-state="wheat"></div>
+<div class="step" data-scene="network" data-state="coffee"></div>
+<div class="step" data-scene="network" data-state="compare"></div>
+</div>
+</section>
+<section class="bridge territory-entry" data-system="bridge" id="from-network">
+<img alt="" aria-hidden="true" class="territory-entry-outline" src="./assets/switzerland-outline.svg"/>
+<div class="territory-entry-copy">
+<p class="kicker transition-kicker">02 → 03 / FROM NETWORK TO TERRITORY</p>
+<h2 class="mask"><span>Food travels</span><span>across borders.</span><span>Land stays put.</span></h2>
+<p class="territory-entry-note">Milk depends on grassland; wheat on suitable fields; coffee on imported crops and processing. These routes do not demand the same things from Switzerland’s landscape. <strong>Which uses already occupy the land, and where is agriculture possible?</strong></p>
+</div>
+</section>
+<section class="chapter system territory" data-system="territory" id="territory">
+<div class="chapter-rail"><span>03</span><b>TERRITORY</b><em>Food systems meet real land, cities and protected soils.</em></div>
+<div class="sticky-stage territory-stage">
+<div class="territory-viz">
+<div class="territory-caption" id="territory-caption">OBSERVED / CURRENT USE</div>
+<div aria-hidden="true" class="territory-map-shell" id="territory-map-shell">
+<img alt="" class="territory-data-map" src="./assets/area-four-groups.png"/>
+<img alt="" class="territory-active-layer" id="territory-active-layer" src="./assets/area-four-groups.png"/>
+<img alt="" class="territory-outline-image" src="./assets/switzerland-outline.svg"/>
+<div class="territory-map-scan"></div>
+</div>
+<svg aria-label="Current and site-adapted land use comparison" class="territory-flow" id="territory-flow" role="img"></svg>
+<div class="territory-constraint-transect"><svg aria-label="Proportional composition of Swiss land area: 35 percent agricultural, 32 wooded, 25 unproductive, 8 settlements. Schematic icons within each band are not geospatial locations." role="img" viewBox="0 0 900 390"><text fill="#253d31" font-family="monospace" font-size="13" x="16" y="33">A FINITE LANDSCAPE  /  THE WIDTHS ARE NATIONAL SHARES</text><rect fill="#738f65" fill-opacity=".12" height="190" stroke="#738f65" stroke-width="1" width="315" x="0" y="67"></rect><rect fill="#738f65" height="8" width="315" x="0" y="67"></rect><path d="M24,180 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"></path><path d="M52,172 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"></path><path d="M80,183 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"></path><path d="M108,176 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"></path><path d="M136,181 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"></path><path d="M164,185 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"></path><path d="M192,181 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"></path><path d="M220,182 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"></path><path d="M248,181 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"></path><path d="M276,183 v-43 m0,9 l-13,-17 m13,18 l13,-18" fill="none" stroke="#738f65" stroke-width="2.5"></path><text fill="#263b2e" font-family="monospace" font-size="14" font-weight="700" text-anchor="middle" x="157.5" y="294">AGRICULTURE</text><text fill="#738f65" font-family="monospace" font-size="25" font-weight="700" text-anchor="middle" x="157.5" y="320">35%</text><rect fill="#456a5a" fill-opacity=".12" height="190" stroke="#456a5a" stroke-width="1" width="288" x="315" y="67"></rect><rect fill="#456a5a" height="8" width="288" x="315" y="67"></rect><path d="M331,209 l17,-30 17,30 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"></path><path d="M348,209 v-23" stroke="#456a5a" stroke-width="2"></path><path d="M361,209 l17,-63 17,63 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"></path><path d="M378,209 v-23" stroke="#456a5a" stroke-width="2"></path><path d="M391,209 l17,-41 17,41 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"></path><path d="M408,209 v-23" stroke="#456a5a" stroke-width="2"></path><path d="M421,209 l17,-42 17,42 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"></path><path d="M438,209 v-23" stroke="#456a5a" stroke-width="2"></path><path d="M451,209 l17,-30 17,30 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"></path><path d="M468,209 v-23" stroke="#456a5a" stroke-width="2"></path><path d="M481,209 l17,-57 17,57 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"></path><path d="M498,209 v-23" stroke="#456a5a" stroke-width="2"></path><path d="M511,209 l17,-53 17,53 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"></path><path d="M528,209 v-23" stroke="#456a5a" stroke-width="2"></path><path d="M541,209 l17,-49 17,49 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"></path><path d="M558,209 v-23" stroke="#456a5a" stroke-width="2"></path><path d="M571,209 l17,-28 17,28 Z" fill="#456a5a" opacity=".24" stroke="#456a5a" stroke-width="2"></path><path d="M588,209 v-23" stroke="#456a5a" stroke-width="2"></path><text fill="#263b2e" font-family="monospace" font-size="14" font-weight="700" text-anchor="middle" x="459.0" y="294">WOODED</text><text fill="#456a5a" font-family="monospace" font-size="25" font-weight="700" text-anchor="middle" x="459.0" y="320">32%</text><rect fill="#95a9a6" fill-opacity=".12" height="190" stroke="#95a9a6" stroke-width="1" width="225" x="603" y="67"></rect><rect fill="#95a9a6" height="8" width="225" x="603" y="67"></rect><path d="M612,219 l36,-72 38,72 Z" fill="#95a9a6" fill-opacity=".35" stroke="#95a9a6" stroke-width="1.7"></path><path d="M648, 147 l-13,35 h28 Z" fill="#f4f0e5"></path><path d="M661,219 l36,-72 38,72 Z" fill="#95a9a6" fill-opacity=".35" stroke="#95a9a6" stroke-width="1.7"></path><path d="M697, 147 l-13,35 h28 Z" fill="#f4f0e5"></path><path d="M710,219 l36,-88 38,88 Z" fill="#95a9a6" fill-opacity=".35" stroke="#95a9a6" stroke-width="1.7"></path><path d="M746, 131 l-13,35 h28 Z" fill="#f4f0e5"></path><path d="M759,219 l36,-78 38,78 Z" fill="#95a9a6" fill-opacity=".35" stroke="#95a9a6" stroke-width="1.7"></path><path d="M795, 141 l-13,35 h28 Z" fill="#f4f0e5"></path><text fill="#263b2e" font-family="monospace" font-size="14" font-weight="700" text-anchor="middle" x="715.5" y="294">UNPRODUCTIVE</text><text fill="#95a9a6" font-family="monospace" font-size="25" font-weight="700" text-anchor="middle" x="715.5" y="320">25%</text><rect fill="#b56d4f" fill-opacity=".12" height="190" stroke="#b56d4f" stroke-width="1" width="72" x="828" y="67"></rect><rect fill="#b56d4f" height="8" width="72" x="828" y="67"></rect><path d="M840,215 v-69 l18,-13 17,13 v69 Z" fill="#b56d4f" opacity=".63" stroke="#9b503b"></path><path d="M855,215 v-102 l16,-8 15,8 v102" fill="none" stroke="#b56d4f" stroke-width="3"></path><text fill="#263b2e" font-family="monospace" font-size="11" text-anchor="middle" x="864.0" y="295">BUILT</text><text fill="#b56d4f" font-family="monospace" font-size="23" font-weight="700" text-anchor="middle" x="864.0" y="320">8%</text><text fill="#415747" font-family="monospace" font-size="12" x="16" y="371">Observed BFS / AREA 2013–2018 · conceptual silhouettes, NOT a cross-section or land-cover map</text></svg></div>
+<div aria-label="BFS observed composition of Switzerland land area 2018" class="territory-facts" id="territory-facts">
+<p>SWITZERLAND · LAND USE, 2018 · AREA</p>
+<div aria-hidden="true" class="territory-area-bar" title="National observed land-area proportions; not the color key to the map"><i style="width:35%;background:#9caa79"></i><i style="width:32%;background:#466b63"></i><i style="width:25%;background:#a6afb0"></i><i style="width:8%;background:#b96f5e"></i></div>
+<div aria-label="Highlight observed land use in Switzerland" class="territory-area-key" role="group">
+<button data-map-category="agriculture" style="--cat-color:#9caa79" type="button"><i></i>Agriculture <b>35%</b></button>
+<button data-map-category="wooded" style="--cat-color:#466b63" type="button"><i></i>Wooded <b>32%</b></button>
+<button data-map-category="unproductive" style="--cat-color:#a6afb0" type="button"><i></i>Unproductive <b>25%</b></button>
+<button data-map-category="settlements" style="--cat-color:#b96f5e" type="button"><i></i>Settlements <b>8%</b></button>
+</div>
+<div aria-label="Inspect specific land-use classes" class="territory-subcategories" role="group">
+<button data-map-category="arable" type="button">↗ Arable land · 9.2%</button>
+<button data-map-category="rockice" type="button">↗ Rock / bare ground / ice · 20.8%</button>
+</div>
+<p aria-live="polite" class="territory-map-readout" id="territory-map-readout">Explore the categories: hover, focus or tap a label to highlight the corresponding locations.</p>
+<small>Observed AREA map, 2013–18. Colored samples match the original category legend; the total bar reports national statistical shares, not pixel counts. Mountain focus means rock, bare soil and ice: not an elevation model. <a href="https://www.bfs.admin.ch/bfsstatic/dam/assets/19365040/master" rel="noreferrer" target="_blank">BFS source ↗</a></small>
+</div>
+</div>
+<div class="territory-copy scene-copy">
+<div class="statement-stack" id="territory-statements">
+<article class="statement is-active" data-state="current">
+<p class="kicker">09 / FIRST, THE OBSERVED TERRITORY</p>
+<h2><span>Cities, forests,</span><span>fields. One country.</span></h2>
+<p class="support">In the 2018 land-use baseline, agriculture occupied <strong>35%</strong> of Swiss territory, wooded areas <strong>32%</strong>, unproductive terrain <strong>25%</strong> and settlements <strong>8%</strong>. Mountains, forests and cities are not blank space.</p>
+<p class="source-line"><span>OBSERVED · AREA 2013–2018</span><a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/19365051/master" rel="noreferrer" target="_blank">BFS / Land Use in Switzerland, G1 ↗</a></p>
+</article>
+<article class="statement" data-state="capability">
+<p class="kicker">10 / WHAT IF USE FOLLOWED SUITABILITY?</p>
+<h2><span>What is used</span><span>is not what is suitable.</span></h2>
+<p class="support">A published site-adaptation model tests a different arrangement of agricultural uses. Within <strong>its own analyzed farmland universe</strong>, the model compares arable and grassland uses: not all Swiss land.</p>
+<p class="source-line"><span>MODELED · UAA/LPIS 2021 UNIVERSE · S3</span><a href="https://doi.org/10.5281/zenodo.17687485" rel="noreferrer" target="_blank">Kreuzer et al. / Agroscope data ↗</a></p>
+</article>
+<article class="statement" data-state="constraints">
+<p class="kicker">11 / LAND IS ALREADY CLAIMED</p>
+<h2><span>Land is limited.</span><span>Its uses compete.</span></h2>
+<p class="support">Within the <strong>14,525 km²</strong> classified as agricultural in AREA, <strong>3,884 km²</strong> were arable, <strong>5,128 km²</strong> local grassland, and <strong>5,033 km²</strong> alpine agricultural land. Forest, settlement and rock compete for space elsewhere.</p>
+<p class="source-line"><span>OBSERVED AREA · POLICY FFF 2023 · DIFFERENT UNIVERSES</span><a href="https://dam-api.bfs.admin.ch/hub/api/dam/assets/19365051/master" rel="noreferrer" target="_blank">BFS / Area breakdown ↗</a><a href="https://www.are.admin.ch/de/fff-statistik" rel="noreferrer" target="_blank">ARE / FFF statistics ↗</a></p>
+</article>
+<article class="statement" data-state="question">
+<p class="kicker">12 / THE 2050 DECISION SPACE</p>
+<h2><span>Changing the plate</span><span>does not move the mountains.</span></h2>
+<p class="support">A different demand for food changes pressure on fields, pastures, imports and processing. It does <strong>not</strong> automatically turn mountain pasture or built-up land into crop fields.</p>
+<p class="source-line"><span>SCENARIO · NO PIXEL-LEVEL 2050 FORECAST</span><a href="#lab">Explore dependencies in LAB ↓</a></p>
+</article>
+</div>
+</div>
+</div>
+<div class="steps">
+<div class="step" data-scene="territory" data-state="current"></div>
+<div class="step" data-scene="territory" data-state="capability"></div>
+<div class="step" data-scene="territory" data-state="constraints"></div>
+<div class="step" data-scene="territory" data-state="question"></div>
+</div>
+</section>
+<section aria-labelledby="from-territory-title" class="interlude transition-card from-territory" id="from-territory">
+<div class="transition-top"><span>03 → 04</span><span>FROM EVIDENCE TO EXPLORATION</span><span>THE LAB IS NEXT ↓</span></div>
+<div class="transition-body">
+<p class="bridge-small reveal">The territory is <em>not a blank canvas.</em></p>
+<h2 class="transition-head" id="from-territory-title"><span class="mask"><span>So what</span></span><span class="mask"><span><strong>can change?</strong></span></span></h2>
+<p class="transition-explainer reveal">The observed map shows today's land uses. A separate model explores suitability, not spare hectares. The next step is to explore trade-offs between demand, production and dependencies: <em>without drawing a fictional map of 2050.</em></p>
+</div>
+<div aria-label="Three types of decisions in the laboratory" class="transition-terms"><span><b>01</b> FOOD DEMAND</span><span><b>02</b> PRODUCTION SYSTEMS</span><span><b>03</b> LOCAL ↔ EXTERNAL</span></div>
+</section>
+<section class="lab system" data-system="lab" id="lab">
+<div class="lab-intro">
+<p class="kicker">04 / LAB: CONTROL CHANGES HANDS</p>
+<h2><span>What would it take,</span><span>and what the data</span><span class="accent">refuses to promise.</span></h2>
+<p class="lab-lede">The LAB lets you move the levers. It calibrates, it does not forecast, and it will not invent a hectare.</p>
+</div>
+<div class="lab-shell">
+<div class="lab-panel">
+<div class="lab-group">
+<div class="lab-heading"><span>01</span><b>REBALANCE FOOD</b><em>qualitative dependency shift</em></div>
+<label class="range-label" for="rebalance"><span>more animal</span><span>more plant</span></label>
+<input id="rebalance" max="100" min="-100" step="1" type="range" value="0"/>
+<div class="lab-directions" id="lab-directions"></div>
+<p class="source-line"><span>SCENARIO · CALIBRATION, NOT FORECAST</span><a href="https://www.blw.admin.ch/de/brotgetreide" rel="noopener noreferrer" target="_blank">BLW bread grain ↗</a><a href="https://www.swissgranum.ch/stories/bilanz-der-ernte-2024-durch-swiss-granum" rel="noopener noreferrer" target="_blank">swiss granum 2024 ↗</a></p>
+</div>
+<div class="lab-group">
+<div class="lab-heading"><span>02</span><b>CHANGE HOW WE PRODUCE</b><em>dependency profile</em></div>
+<div class="segmented" id="production-method">
+<button class="is-active" data-method="open" type="button">OPEN FIELD</button>
+<button data-method="protected" type="button">PROTECTED</button>
+<button data-method="controlled" type="button">CONTROLLED</button>
+</div>
+<div class="dependency-radar" id="dependency-radar"></div>
+<p class="source-line"><span>SCENARIO · no sustainability score</span><a href="https://www.agroscope.admin.ch/en/10-vertical-farming-urban-farming-food-production-outside-agriculture" rel="noreferrer" target="_blank">Agroscope production systems ↗</a></p>
+</div>
+<div class="lab-group">
+<div class="lab-heading"><span>03</span><b>RESPONSIBILITY</b><em>agency ≠ zoom</em></div>
+<div class="lens" id="lens">
+<button class="is-active" data-lens="here" type="button">HERE</button>
+<button data-lens="region" type="button">REGION</button>
+<button data-lens="country" type="button">COUNTRY</button>
+<button data-lens="elsewhere" type="button">ELSEWHERE</button>
+</div>
+<p class="lens-copy" id="lens-copy">Local action changes some dependencies, but cannot erase the network around them.</p>
+<p class="source-line"><span>DERIVED · responsibility lens</span><a href="https://www.blw.admin.ch/en/agriculture-and-food-climate-strategy-2050" rel="noreferrer" target="_blank">BLW Climate Strategy 2050 ↗</a><a class="inline-source" href="#technical-notes">Method ↗</a></p>
+</div>
+</div>
+<div class="lab-stage">
+<div class="lab-status"><span class="evidence-pill scenario">SCENARIO</span><span id="lab-status-copy">No spatial forecast · dependencies only</span></div>
+<div class="lab-map-label"><b>AN ATLAS OF DEPENDENCIES</b><span>real territory backdrop · symbolic objects (not geolocated) · live scenarios</span></div>
+<div class="lab-map-wrap">
+<svg aria-label="Interactive Swiss territory scenario map" id="lab-map-viz" role="img"></svg>
+<div class="lab-symbol-note">ILLUSTRATED SYSTEM · OBJECT LOCATIONS ARE SCHEMATIC</div><div class="lab-map-readout" id="lab-map-readout">
+<span>BASELINE</span>
+<b>dependencies only</b>
+</div>
+</div>
+<svg aria-label="Qualitative food-system dependency outputs" id="lab-output-viz" role="img"></svg>
+<div class="calibration">
+<div class="calibration-title">
+<span class="kicker">QUANTITATIVE CALIBRATION / WHEAT → BREAD</span>
+<b>A measured chain: wheat → bread.</b>
+</div>
+<label for="wheat-slider"><span>milling demand</span><output id="wheat-change">0%</output></label>
+<input id="wheat-slider" max="10" min="-10" step="1" type="range" value="0"/>
+<div class="calibration-output">
+<div><span>scenario demand</span><b id="wheat-demand">455,000 t</b></div>
+<div><span>scenario-equivalent area Δ</span><b id="wheat-area">0 ha</b></div>
+</div>
+<p class="source-line"><span>SCENARIO · frozen 2024 calibration</span><a href="https://www.blw.admin.ch/de/brotgetreide" rel="noreferrer" target="_blank">BLW bread grain ↗</a><a href="https://www.swissgranum.ch/stories/bilanz-der-ernte-2024-durch-swiss-granum" rel="noreferrer" target="_blank">swiss granum 2024 ↗</a></p>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="takeaway-title" class="takeaway system" data-system="takeaway" id="takeaway">
+<div class="takeaway-rail"><span>05</span><b>WHAT WE LEARNED</b><span>THE FINDING · NOT A FORECAST</span></div>
+<div class="takeaway-lead">
+<p class="kicker reveal">BACK TO THE QUESTION WE STARTED WITH</p>
+<h2 class="transition-head" id="takeaway-title"><span class="mask"><span>The label</span></span><span class="mask"><span>is <em>not the origin.</em></span></span></h2>
+<div class="takeaway-argument reveal"><p>Half of Swiss food is grown here, and much of what carries the Swiss name begins somewhere else. Making more here is part of the answer, not the whole of it.</p><p class="source-line takeaway-source"><span>EDITORIAL SYNTHESIS · OBSERVED FOOD BALANCE</span><a href="https://www.sbv-usp.ch/de/agristat-aktuell-11-25-nahrungsmittelbilanz-nmb-2024" rel="noopener noreferrer" target="_blank">Agristat, Food Balance 2024 ↗</a></p></div>
+</div>
+<div aria-label="Four linked findings of this investigation" class="finding-thread">
+<article class="finding-cell reveal">
+<div class="finding-index">01 / BALANCE <span>→</span></div>
+<b class="finding-value">50<small>%</small></b>
+<h3>A partial measure</h3>
+<p>Domestic production covered half the available food energy in 2024, but plant and animal foods had very different domestic shares.</p>
+<a href="https://www.sbv-usp.ch/de/agristat-aktuell-11-25-nahrungsmittelbilanz-nmb-2024" rel="noopener noreferrer" target="_blank">Agristat · Food Balance 2024 ↗</a>
+</article>
+<article class="finding-cell reveal">
+<div class="finding-index">02 / CLIMATE + ROUTES <span>→</span></div>
+<b class="finding-value">2024</b>
+<h3>A system that adapts</h3>
+<p>Adverse weather weakened harvests. Stocks, imports and processing help explain how supply extends beyond one season and one border.</p>
+<a href="https://www.sbv-usp.ch/de/agristat-aktuell-11-25-nahrungsmittelbilanz-nmb-2024" rel="noopener noreferrer" target="_blank">Agristat · 2024 analysis ↗</a>
+</article>
+<article class="finding-cell reveal">
+<div class="finding-index">03 / LAND <span>→</span></div>
+<b class="finding-value">35<small>%</small></b>
+<h3>A finite territory</h3>
+<p>Agriculture occupies roughly 35% of national land in the observed AREA baseline. Grassland, arable fields, forests and settlements cannot be exchanged as if they were the same resource.</p>
+<a href="https://www.bfs.admin.ch/bfs/en/home/statistics/territory-environment/land-use-cover.html" rel="noopener noreferrer" target="_blank">BFS · Land Use Statistics ↗</a>
+</article>
+<article class="finding-cell finding-open reveal">
+<div class="finding-index">04 / 2050 <span>↗</span></div>
+<b class="finding-value">?</b>
+<h3>Choices, not a prediction</h3>
+<p>Future production will involve choices about diets, technologies, land suitability and international dependencies. Our LAB illustrates trade-offs; it does not calculate a national 2050 outcome.</p>
+<a href="#lab">Return to the LAB ↑</a>
+</article>
+</div>
+</section>
+<section class="about-section system" data-system="about" id="about">
+<div class="about-index">06 / ABOUT <div class="stargaze-brand about-brand"><img alt="Stargaze official symbol" class="about-logo" src="./assets/stargaze-logo.svg"/><span>STARGAZE<small>powered by Glitch</small></span></div></div>
+<div class="about-title">
+<p class="kicker">ABOUT THE PROJECT</p>
+<h2>Where does Swiss food <em>really</em> come from?</h2>
+</div>
+<div class="about-copy">
+<p><b>The Label Is Not the Origin</b> began as an investigation into food production and its future under climate pressure. Switzerland’s unusually rich public data made it a compelling laboratory: a place to follow evidence across food balances, trade, processing and land use rather than rely on assumptions.</p>
+<p>The findings complicate the idea of food made “here.” Domestic agriculture supplies about half of the available food energy; many products associated with Switzerland depend on imported raw materials; and imported goods can be transformed locally and sold again. At the same time, productive land is limited and already shared with settlements, forests and mountains. The story traces these connections from production balance to supply networks, territorial limits and possible choices for 2050.</p>
+<p><strong>Human-directed, AI-assisted research and design.</strong> AI supported source discovery, research synthesis, dataset connections, interface creation and interactive prototyping. Evidence and open questions are documented; editorial judgment and the visual direction are authored by Stargaze. LAB objects describe dependencies, not forecasts of where farms or cities will be built.</p>
+</div>
+<div class="about-meta">
+<div><span>METHOD</span><b>Observed → Modeled → Scenario</b></div>
+<div><span>DATA</span><b>Agristat · BFS · BLW · ARE · Agroscope</b></div>
+<div><span>CONCEPT / DESIGN / CODE</span><b>Stargaze · AI-assisted workflow · 2026</b></div>
+<a class="quiet-button" href="#technical-notes">OPEN METHOD + SOURCES ↗</a>
+</div>
+</section>
+<section aria-labelledby="technical-heading" class="technical-notes system" data-system="notes" id="technical-notes">
+<div class="technical-intro"><p class="kicker">METHOD / DATA / LIMITS</p><h2 id="technical-heading">Technical notes</h2>
+<p>This investigation uses three kinds of material and never mixes them silently. Observed is measured or published data. Modeled is published model output that uses a different universe or denominator, so it cannot be added to observed figures. Scenario is your own exploration inside the LAB: it shows trade-offs, it is not a forecast. One rule holds throughout: hectares from different sources are never summed. A modelled eligible hectare is not a statistical hectare, and a scenario-equivalent hectare is not a place.</p>
+</div>
+<div class="technical-findings"><h3>What this investigation can and cannot say</h3>
+<p><b>Established:</b> in 2024, domestic agriculture supplied about half of the available food energy, and much less of the plant share than of the animal share. Products associated with Switzerland depend on imported raw materials, and imported goods can be transformed locally and sold on. Agriculture occupies roughly 35% of national land, shared with forests, settlements and mountains.</p>
+<p><b>Not established:</b> a quantified forecast for 2050, long-term climate attribution from one difficult harvest year, or an amount of new cropland that could safely be created. The data did not yield a forecast. It yielded a reason why production inside a border is an incomplete measure of how a country eats.</p>
+</div>
+<div class="technical-scenes"><h3>Notes by scene</h3><div class="technical-scenes-grid" id="technical-scenes-grid"><article class="technical-note"><h4>01</h4><p>The 50% is domestic production divided by the food energy available for consumption, expressed as metabolizable energy. It is a food-balance measure, not a survey of meals or a tally of Swiss-grown kilograms. The separate mass balance estimates 809 kg per person for 2024, 505 kg plant and 304 kg animal. These add up by weight, but cannot be compared directly with the energy-based 50%.</p></article><article class="technical-note"><h4>THE PLATE</h4><p>The 2.2 kg a day is the 809 kg annual mass balance divided by 365, arithmetic on the published figure, not a new measurement.</p></article><article class="technical-note"><h4>02</h4><p>Each percentage uses its own food group as the denominator, so the bars do not add up to 100%. A high domestic share of animal food does not mean its feed and inputs are entirely local.</p></article><article class="technical-note"><h4>03</h4><p>One difficult year shows exposure to weather. It does not by itself prove climate-change attribution, and it is not a long-term projection.</p></article><article class="technical-note"><h4>Milk</h4><p>National land-use data show grassland is extensive, but they do not tell us how many hectares produced each tonne of milk. We therefore do not invent that conversion or an export share.</p></article><article class="technical-note"><h4>Wheat</h4><p>Harvest feeds domestic supply, and stocks and imports supplement it. These are alternative and complementary inputs, not a single line through time.</p></article><article class="technical-note"><h4>Coffee</h4><p>Roasting, packaging, logistics and trade can happen in Switzerland while cultivation happens abroad. Exporting roasted coffee is not the same as growing coffee beans.</p></article><article class="technical-note"><h4>LAB</h4><p>Equivalent area is a calibration only. No pixel allocation, no automatic grassland conversion, no policy recommendation.</p></article><h3 class="original-notes-heading">Scene explanations from the original edition</h3><article class="technical-note preserved-note"><h4>01 / BALANCE</h4><div class="archived-note"><b>WHAT IS THE 50%?</b><p>Domestic production divided by the <strong>food energy available for consumption</strong>, expressed as metabolizable energy. It is a food-balance measure, not a survey of meals or a tally of Swiss-grown kilograms.</p>
+<details class="data-aside"><summary>Another lens: what do the 809 kg describe? <span>+</span></summary><p>The separate <strong>mass</strong> balance estimates <strong>809 kg of food available per person in 2024</strong>: 505 kg of plant foods and 304 kg of animal foods. These add up by weight, but cannot be compared directly with the energy-based 50%.</p><div aria-label="Available food mass: 505 kilograms plant and 304 kilograms animal" class="kg-strip" role="img"><i style="width:62.42%"></i><i style="width:37.58%"></i></div><p class="kg-note">MASS · 505 plant + 304 animal = 809 kg · <a href="https://www.sbv-usp.ch/fileadmin/sbvuspch/04_Medien/Agristat_aktuell/2025/Aktuell_AGRISTAT_2025-11.pdf#page=14" rel="noreferrer" target="_blank">Agristat, Table 7 ↗</a></p></details>
+</div></article><article class="technical-note preserved-note"><h4>02 / BALANCE</h4><div class="archived-note"><b>HOW TO READ THE BARS</b><p>Each percentage uses <strong>its own food group</strong> as the denominator. The bars do not add up to 100%. And a high domestic share of animal food does not mean its feed and inputs are entirely local.</p></div></article><article class="technical-note preserved-note"><h4>03 / WEATHER</h4><div class="archived-note"><b>WHY FOLLOW THE NETWORK?</b><p>A disrupted harvest does not stop the food system. Imports, reserves and processing help bridge the gap. <strong>One difficult year shows exposure to weather; it does not by itself prove climate-change attribution.</strong></p></div></article><article class="technical-note preserved-note"><h4>04 / NETWORK</h4><div class="archived-note"><b>FOLLOW THE ROUTE</b><p>Milk reveals a link to local land; wheat reveals the exposure of harvests to weather; coffee reveals how imported crops become products processed and traded in Switzerland.</p></div></article><article class="technical-note preserved-note"><h4>05 / MILK</h4><div class="archived-note"><b>WHAT THE DIAGRAM PROVES</b><p>Dairy connects grassland, animals and processing. The national land-use data show grassland is extensive, but <em>do not tell us how many hectares produced each tonne of milk</em>. We therefore do not invent that conversion or an export share.</p></div></article><article class="technical-note preserved-note"><h4>06 / WHEAT</h4><div class="archived-note"><b>THE MECHANISM</b><p>Harvest → domestic supply; stocks and imports supplement it; mills turn grain into flour. These are <strong>alternative and complementary inputs</strong>, not a single mysterious line through “time.” This grain chain returns in the LAB.</p></div></article><article class="technical-note preserved-note"><h4>07 / COFFEE</h4><div class="archived-note"><b>WHAT “MADE HERE” MEANS</b><p>Roasting, packaging, logistics and trade can happen in Switzerland while cultivation happens abroad. <strong>Exporting roasted coffee is not the same as growing coffee beans.</strong></p></div></article><article class="technical-note preserved-note"><h4>08 / SYNTHESIS</h4><div class="archived-note"><b>THE NEXT QUESTION</b><p>If food labels conceal different journeys, <strong>what can Swiss land actually grow?</strong> We leave the supply network and examine the territory itself.</p></div></article><article class="technical-note preserved-note"><h4>TERRITORY / CURRENT USE</h4><div class="archived-note"><b>HOW TO READ THE MAP</b><p>This is a <strong>categorical map derived from observed BFS AREA data</strong>: not a generic heatmap. Different colors correspond to different existing land covers and uses, not “good vs bad” territory.</p></div></article><article class="technical-note preserved-note"><h4>TERRITORY / CAPABILITY</h4><div class="archived-note"><b>THE COMPARISON</b><p>Current analyzed arable land: <strong>383,745 ha</strong>; modeled S3: <strong>338,081 ha</strong>. Grassland: <strong>451,352 → 497,016 ha</strong>. These are <strong>model outputs, not land made available</strong>. AREA and the model are different datasets.</p></div></article><article class="technical-note preserved-note"><h4>TERRITORY / CONSTRAINTS</h4><div class="archived-note"><b>THE POLITICAL BOUNDARY</b><p><strong>445,680 ha</strong> of crop-rotation areas (FFF, 2023) are credited under a <em>separate planning framework</em>. They cannot be added to the AREA totals or treated as spare farmland. This is why “more arable land” is not a simple slider.</p></div></article><article class="technical-note preserved-note"><h4>TERRITORY / 2050</h4><div class="archived-note"><b>FROM EVIDENCE TO EXPLORATION</b><p>2050 is the horizon for decisions, <em>not a forecast image</em>. The LAB tests directions of change while keeping the map factual and the unknowns visible.</p></div></article><article class="technical-note preserved-note"><h4>LAB / WHEAT</h4><div class="archived-note"><b>CALIBRATION</b><p class="microcopy">Equivalent area is a calibration only: no pixel allocation, no automatic grassland conversion, no policy recommendation.</p></div></article><article class="technical-note preserved-note"><h4>LAB / REBALANCE</h4><div class="archived-note"><b>REBALANCE FOOD</b><p class="microcopy">This is a directional thought experiment, not an estimate of new hectares. Plant/animal diets change different pressures, including land and imports.</p></div></article><article class="technical-note preserved-note"><h4>CLOSING</h4><div class="archived-note"><b>WHAT THE INVESTIGATION CAN AND CANNOT SAY</b><p><strong>Established:</strong> the published 2024 food balance, documented supply mechanisms and observed/modelled land-use constraints challenge a simple local-versus-imported story. <strong>Not established:</strong> long-term climate attribution from one difficult harvest year, a quantified climate forecast, a definitive 2050 land-use plan or an amount of new cropland that could safely be created.</p></div></article><article class="technical-note preserved-note"><h4>LAB / ORIGINAL CONTEXT</h4><p>Move a control to see how food, land and external dependencies respond. The map remains observed; the animated symbols are a conceptual system model, not predictions of farm locations.</p></article><article class="technical-note preserved-note"><h4>WHAT WE LEARNED / ORIGINAL CONTEXT</h4><p>We set out to understand Swiss food production as climate and land pressures grow. The data did not produce a credible forecast for 2050. <strong>It did reveal why domestic production alone is an incomplete measure of how the food system works.</strong></p><p>Food depends on a changing harvest, on inputs and trade across borders, and on a landscape where not every hectare can serve the same purpose.</p></article></div></div>
+<div class="technical-sources"><p class="kicker">EVIDENCE REGISTER</p><h3>Sources</h3><p>Agristat, BFS, BLW, ARE, Agroscope, swisstopo, swiss granum. Primary links from the original site are retained in each scene and collected here.</p><div class="sources-list" id="sources-list"></div></div>
+</section><footer>
+<div class="footer-identity"><div class="stargaze-brand footer-brand"><img alt="Stargaze official symbol" src="./assets/stargaze-logo.svg"/><span>STARGAZE<small>powered by Glitch</small></span></div><span>THE LABEL IS NOT THE ORIGIN / FOOD × TERRITORY · INDEPENDENT OPEN-DATA STUDY · 2026</span></div>
+<div class="footer-links"><a href="#hero">BACK TO TOP ↑</a><a class="quiet-button" href="#technical-notes">METHOD + SOURCES ↗</a></div>
+</footer>
+</main>
 </body>
 </html>
