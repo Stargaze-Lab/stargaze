@@ -8,6 +8,7 @@ import {t,language,mountLanguage,projectEnglish} from './site-language.js';
 import {mountProjectNavigation} from './project-navigation.js';
 import {renderLissajousContext} from './lissajous-context.js';
 import {mountCursor} from './blob-cursor.js';
+import {mountSwissCover} from './swiss-cover.js';
 
 const scenes=[
   {id:'flock',name:'Cardume · movimentos coletivos',short:'Cardume',color:'#e7bd6d'},
@@ -37,7 +38,7 @@ function clearSelection(){
 }
 function changeField(scene,label,color){
   // Celeste retains its cover, but the dome no longer enters the hero.
-  if(scene==='dome')scene=scenes[currentScene].id;
+  if(scene==='dome'||scene==='swiss-territory')scene=scenes[currentScene].id;
   hero.dataset.cursor=['network','kaleidoscope'].includes(scene)?'drag':'interact';
   clearTimeout(transitionTimer);clearTimeout(transitionClassTimer);cycleElapsed=0;
   document.querySelector('#scene-progress').style.transform='scaleX(0)';
@@ -76,7 +77,7 @@ function renderGroup(group,target){
     card.dataset.cursor='open';
     card.innerHTML=`<div class="card-art-wrap"><div class="card-art" aria-hidden="true"></div><span class="card-index" aria-hidden="true">${String(index+1).padStart(2,'0')}</span></div><div class="card-meta"><div><p class="card-category"></p><h3>${escapeHTML(entry.title)}</h3><p class="card-summary"></p>${entry.state?'<span class="card-state"></span>':''}</div><span class="card-arrow" aria-hidden="true">↗</span></div><button class="card-tune" type="button" aria-haspopup="dialog"></button>`;
     container.append(card);
-    fieldMounts.push(engine.mount(card.querySelector('.card-art'),entry.scene));
+    fieldMounts.push(entry.scene==='swiss-territory'?mountSwissCover(card.querySelector('.card-art'),{pointerSurface:card,compact:true,paused:engine.paused}):engine.mount(card.querySelector('.card-art'),entry.scene));
     on(card.querySelector('.card-tune'),'click',()=>openProject(entry.slug));
   });
 }
@@ -97,11 +98,12 @@ function openProject(slug){
   document.querySelector('#project-dialog-label').textContent=t(entry.category,translated[0]);
   document.querySelector('#project-dialog-title').textContent=entry.title;
   document.querySelector('#project-dialog-summary').textContent=t(entry.summary,translated[1]);
-  const context=document.querySelector('#project-dialog-context');context.hidden=entry.slug!=='lissajous';
-  context.open=false;context.querySelector('summary').textContent=t('Contexto e referências','Context and references');
-  document.querySelector('#project-dialog-references').innerHTML=entry.slug==='lissajous'?renderLissajousContext(language):'';
+  const context=document.querySelector('#project-dialog-context'),copy=entry.portfolioCopy?.[language];
+  context.hidden=entry.slug!=='lissajous'&&!copy;
+  context.open=false;context.querySelector('summary').textContent=copy?t('Sobre o estudo','About the study'):t('Contexto e referências','Context and references');
+  document.querySelector('#project-dialog-references').innerHTML=copy?copy.slice(1).map((paragraph,index)=>index===copy.length-2?`<p><em>${escapeHTML(paragraph)}</em></p>`:`<p>${escapeHTML(paragraph)}</p>`).join(''):entry.slug==='lissajous'?renderLissajousContext(language):'';
   document.querySelector('#project-dialog-tags').innerHTML=(entry.tools||[]).map(tag=>`<span>${escapeHTML(tag)}</span>`).join('');
-  document.querySelector('#project-dialog-hint').textContent=entry.scene==='network'?t('Arraste um nó para puxar a rede. Arraste o vazio para girar.','Drag a node to pull the network. Drag empty space to rotate.'):entry.scene==='kaleidoscope'?t('Arraste para reorganizar os fragmentos.','Drag to rearrange the fragments.'):entry.scene==='lissajous'?t('Clique para mudar a fase. Arraste para explorar a curva.','Click to shift the phase. Drag to explore the curve.'):t('Explore a capa com o mouse ou o toque.','Explore the cover with your pointer or touch.');
+  document.querySelector('#project-dialog-hint').textContent=entry.scene==='swiss-territory'?t('Passe o ponteiro ou toque para revelar as texturas do território.','Move your pointer or touch to reveal the textures of the territory.'):entry.scene==='network'?t('Arraste um nó para puxar a rede. Arraste o vazio para girar.','Drag a node to pull the network. Drag empty space to rotate.'):entry.scene==='kaleidoscope'?t('Arraste para reorganizar os fragmentos.','Drag to rearrange the fragments.'):entry.scene==='lissajous'?t('Clique para mudar a fase. Arraste para explorar a curva.','Click to shift the phase. Drag to explore the curve.'):t('Explore a capa com o mouse ou o toque.','Explore the cover with your pointer or touch.');
   const action=document.querySelector('#project-dialog-action');action.replaceChildren();
   const href=projectHref(entry);
   if(entry.status==='live' && entry.sketch && sketchModules['./sketches/'+entry.sketch+'.js']){
@@ -113,7 +115,9 @@ function openProject(slug){
     const note=document.createElement('p');note.textContent=entry.slug==='life-threads'?t('Pesquisa pausada.','Research on hold.'):t('Capa animada. Experimento completo em integração.','Animated cover. Full experiment awaiting integration.');action.append(note);
   }
   if(!dialog.open)dialog.showModal();dialog.scrollTop=0;
-  dialogField=engine.mount(dialogArt,entry.scene);
+  dialogField=entry.scene==='swiss-territory'?mountSwissCover(dialogArt,{paused:engine.paused}):engine.mount(dialogArt,entry.scene);
+  dialogArt.dataset.cursor=entry.scene==='swiss-territory'?'explore':'drag';
+  document.querySelector('.dialog-caption').textContent=entry.scene==='swiss-territory'?t('Territórios imaginados. Capa abstrata, sem correspondência com usos reais do solo.','Imagined territories. An abstract cover, not a map of actual land use.'):t('Estudo de capa generativa.','Generative cover study.');
 }
 async function startSketch(entry,button){
   cleanupStage();const token=loadToken;button.disabled=true;button.textContent=t('Abrindo instrumento…','Opening instrument…');
@@ -140,6 +144,7 @@ const cleanupNavigation=mountProjectNavigation({dialog,previous:document.querySe
 on(document.querySelector('#reset-field'),'click',()=>chooseScene(currentScene));
 
 function updatePauseButton(){
+  fieldMounts.forEach(field=>field.setPaused?.(engine.paused));dialogField?.setPaused?.(engine.paused);
   const button=document.querySelector('#motion-toggle');button.setAttribute('aria-pressed',String(engine.paused));
   button.innerHTML=engine.paused?'<span aria-hidden="true">▷</span>':'<span aria-hidden="true">Ⅱ</span>';
   button.setAttribute('aria-label',engine.paused?t('Retomar animações e alternância de cenas','Resume animation and scene cycling'):t('Pausar todas as animações e a alternância de cenas','Pause all animation and scene cycling'));

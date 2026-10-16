@@ -60,6 +60,7 @@ export function mountLanguage(onChange){
   return()=>{abort.abort();geoAbort.abort();};
 }
 export const projectEnglish={
+  "switzerland-2050":["Data Visualization · 2026", "An interactive investigation into how Switzerland produces, imports, transforms and trades food — and what a changing climate and limited territory could mean for its future.", ""],
   'wikiverso':['Knowledge atlas','One idea leads to another. Small universes emerge from connections between subjects.',''],
   'colony-globe':['Data · territory · power','Six centuries of colonial rule, explored across space and time.',''],
   'celeste':['Personal celestial atlas','A place, a moment and a sky to explore.',''],

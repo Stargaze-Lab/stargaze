@@ -125,3 +125,15 @@ Chromascope parte de três polígonos (quadrilátero, triângulo e quadrado) com
 Na home Equilíbrio, iniciar Chromascope, Lissajous ou Music Box substitui apenas a capa quadrada: preserva largura do popup, texto, botão e ordem responsiva, sem reiniciar a rolagem. No celular, a descrição continua acima. Lissajous ganha Ajustar/Fechar ajustes com painel rolável dentro do quadrado; Escape fecha o painel e devolve foco ao botão. Music Box usa DM Mono e Instrument Serif, como o site.
 
 Validação: builds de produção, testes de instrumentos, desenho assistido, movimento e navegação; renderização Canvas inspecionada. Não houve validação em navegador ou reprodução de áudio nesta rodada. Entrega completa: stargaze-2026-09-17-v08.zip. O Site Chromascope é atualizado no endereço existente; publicação do portfólio via GitHub Pages permanece com o usuário.
+
+## v10 — Switzerland 2050 e capa territorial, 16/10/2026
+
+Base desta entrega: ZIP `stargaze- versão out 16.zip` enviado pelo usuário. Integração dos JSONs ao código existente, preservando os estudos compilados desse ZIP, as alterações de Wikiverso e o workflow de publicação. Entrega completa: `stargaze-2026-10-16-v10.zip`.
+
+Novo cartão em destaque: Switzerland 2050 — Food × Territory. Textos PT/EN fornecidos pelo usuário; introdução e botão visíveis, restante em Sobre o estudo. Tags Data Visualization, Interactive Storytelling, Creative Coding, Open Data e 2026. Link `./studies/switzerland-2050/`; estudo já presente em `public/studies/switzerland-2050/`.
+
+Capa SVG minimalista em verde-sálvia, no cartão e no popup. `src/swiss-outline.js` reutiliza o perímetro simplificado do estudo enviado. `src/swiss-cover.js` constrói símbolos vetoriais de grama, pasto, montanha e cidade, curvas de divisão abstratas e um realce suave sob o ponteiro/toque. Os padrões não são dados de uso do solo. SVG estático reutilizável em `public/covers/switzerland-2050.svg`. Não usar esta capa como mapa estatístico.
+
+Movimento limitado a poucos pixels. Respeita redução de movimento e botão global de pausa; suspende fora da tela e com a aba oculta. Montagem/desmontagem remove animação, eventos e observadores. O hero mantém suas quatro cenas. As demais cartelas mantêm o comportamento inline aprovado.
+
+Verificação: build, testes existentes de publicação/navegação/renderizadores, navegador Chromium em 1440px/390px, ausência de sobreposição e rolagem horizontal, abertura/fechamento/reabertura, textos PT/EN e descrições, hover, pausa, redução de movimento e carregamento do estudo sem erros JS ou assets locais 404. Revisão visual com fontes da Stargaze. Não foi feita uma nova auditoria de dados, áudio ou de todos os controles internos dos estudos. Nenhuma publicação remota executada; o usuário publica pelo GitHub Pages.

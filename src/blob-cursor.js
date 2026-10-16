@@ -14,7 +14,7 @@ export function mountCursor(){
     if(!visible){visible=true;el.hidden=false;document.documentElement.classList.add('blob-active');}
     el.classList.toggle('flip-hint',event.clientX>right-110);
     const hit=event.target.closest('button,a,summary,[data-cursor]');
-    const hint=hit?.dataset.cursor==='read'?t('leia +','read +'):hit?.dataset.cursor==='drag'?t('arraste','drag'):hit?.dataset.cursor==='rotate'?t('gire','rotate'):hit?t('clique','click'):'';
+    const hint=hit?.dataset.cursor==='explore'?t('explore','explore'):hit?.dataset.cursor==='read'?t('leia +','read +'):hit?.dataset.cursor==='drag'?t('arraste','drag'):hit?.dataset.cursor==='rotate'?t('gire','rotate'):hit?t('clique','click'):'';
     if(hint!==lastHint){lastHint=hint;label.textContent=hint;el.classList.toggle('has-hint',!!hint);}
   },{signal:abort.signal,passive:true});
   document.addEventListener('pointerdown',()=>el.classList.add('pressed'),{signal:abort.signal});document.addEventListener('pointerup',()=>el.classList.remove('pressed'),{signal:abort.signal});

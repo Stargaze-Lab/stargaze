@@ -1,6 +1,14 @@
 {
   "selection": [
     {
+      "slug": "switzerland-2050",
+      "scene": "swiss-territory",
+      "color": "#a8c8bc",
+      "category": "Data Visualization · 2026",
+      "summary": "Uma investigação interativa sobre como a Suíça produz, importa, transforma e comercializa alimentos — e o que as mudanças climáticas e os limites do território podem significar para seu futuro.",
+      "size": "feature"
+    },
+    {
       "slug": "wikiverso",
       "scene": "network",
       "color": "#94bde5",

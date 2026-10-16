@@ -20,3 +20,17 @@ O build inclui os estudos das pastas `colony`, `wikiverso`, `string-tuner` e `ex
 - Um ZIP de nota deve ser mesclado na raiz do projeto; depois, gere e publique o site novamente. A nota passa a aparecer na home.
 
 O layout anterior está guardado como fonte em `archive/home-before-equilibrium.html`. Os estudos antigos de layout continuam em `/design-studies/`, sem indexação e sem chamada na home principal. Nada é publicado no seu GitHub automaticamente por este pacote.
+
+## Switzerland 2050 — incluído na v10
+
+Esta entrega completa parte do ZIP de 16/out enviado pelo usuário. O cartão e os textos PT/EN já estão integrados, e o estudo compilado está em `public/studies/switzerland-2050/`. Não é necessário copiar os JSONs separadamente.
+
+1. Mescle a pasta `stargaze/` deste ZIP no seu repositório, preservando `.git` e arquivos alterados após o envio de 16/out.
+2. Rode `npm ci` e `npm run build`.
+3. Confira com `npm run preview`: cartão Switzerland 2050, texto PT/EN, popup e botão Abrir projeto completo.
+4. Faça commit/push pelo fluxo habitual. O GitHub Actions publica o resultado de `dist/`.
+5. Após concluir, confira `https://stargaze.glitchme.art/studies/switzerland-2050/`.
+
+Para atualizar somente o estudo no futuro, copie o conteúdo do novo build para `public/studies/switzerland-2050/`: `index.html`, `assets/` e `data/` diretamente ali. Não coloque uma segunda pasta `dist` dentro e não edite somente o `dist` gerado pela Stargaze.
+
+A capa pode ser editada em `src/swiss-cover.js` (símbolos/interação), `src/swiss-outline.js` (perímetro) e no bloco Switzerland 2050 de `src/equilibrium.css`. A cópia SVG estática está em `public/covers/switzerland-2050.svg`.
