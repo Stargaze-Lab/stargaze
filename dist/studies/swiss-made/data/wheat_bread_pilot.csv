@@ -1,0 +1,4 @@
+scenario_id,demand_change_pct,milling_demand_t,baseline_domestic_baking_capable_t,domestic_supply_delta_t_if_all_increment_domestic,scenario_equivalent_area_delta_ha,interpretation
+baseline_identity,0.0,455000.0,250773.0,0.0,0.0,identity; must return zero delta
+demand_plus_10pct,10.0,500500.00000000006,250773.0,45500.0,14515.119251275057,if entire demand increment were met by domestic baking-capable grain at 2024 effective supply yield
+demand_minus_10pct,-10.0,409500.0,250773.0,-45500.0,-14515.119251275057,scenario-equivalent only; does not assign land

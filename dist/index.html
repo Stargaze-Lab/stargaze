@@ -1,64 +1,41 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#090a0a" />
-    <meta name="description" content="Stargaze is an independent design studio translating complex information into data stories, 3D and interactive experiences." />
-    <meta property="og:title" content="Stargaze — Data Visualization Lab" />
-    <meta property="og:description" content="Journey thru data cosmos." />
-    <meta property="og:type" content="website" />
-    <title>Stargaze — Data Visualization Lab</title>
+    <meta name="theme-color" content="#0a0b0c" />
+    <meta name="description" content="Stargaze. Um laboratório independente de dados, narrativas e experimentação visual." />
+    <title>Stargaze — laboratório visual</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-    <script type="module" crossorigin src="./assets/index-rpX2Fn1i.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Ilwtiuta.css">
+    <script type="module" crossorigin src="./assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
+    <script type="module" crossorigin src="./assets/projects.generated-BCfCDKCd.js"></script>
+    <script type="module" crossorigin src="./assets/lissajous-context--QENbcO1.js"></script>
+    <script type="module" crossorigin src="./assets/equilibrium-CEqAR-YV.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/equilibrium-CVX5UIET.css">
   </head>
   <body>
-    <nav class="site-nav" aria-label="Primary navigation">
-      <a class="brand" href="#top" aria-label="Stargaze home"><img class="brand-logo" src="./logo.svg" alt="" /><span>stargaze</span></a>
-      <div class="view-switch" aria-label="Selected work view"><button class="active" data-view="grid" aria-pressed="true">grid</button><span>/</span><button data-view="index" aria-pressed="false">index</button></div>
-      <div class="nav-links"><a href="#work">work</a><a href="#lab">lab</a><a href="#studio">studio</a></div>
-    </nav>
-
-    <header class="hero" id="top">
-      <canvas class="hero-flock" id="hero-flock" aria-hidden="true"></canvas>
-      <p class="kicker"><span></span> Independent design studio · Brazil</p>
-      <h1>journey <em>thru</em><br />data cosmos</h1>
-      <p class="hero-interaction-note"><span>↗</span> Move through the flock</p>
-      <div class="hero-foot">
-        <p>We translate complex information into visual experiences — through data visualization, 3D and creative code.</p>
-        <div class="hero-services"><span>Data stories</span><span>Interactive systems</span><span>Creative technology</span></div>
-      </div>
+    <a class="skip-link" href="#main">Pular para os estudos</a>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Stargaze, início"><img src="./logo.svg" alt="" width="30" height="30" /><span>stargaze</span></a>
+      <span class="header-edition">Laboratório independente <span aria-hidden="true">/</span> Brasil</span>
+      <nav aria-label="Navegação principal"><a href="#universes">Estudos</a><a href="#field-notes">Field Notes</a><a href="#about">Sobre</a></nav>
     </header>
-
-    <main>
-      <section class="work-section" id="work">
-        <div class="section-head"><p><span>01</span> Selected work</p><p id="project-count"></p><div class="view-switch view-switch-local" aria-label="Selected work view"><button class="active" data-view="grid" aria-pressed="true">grid</button><span>/</span><button data-view="index" aria-pressed="false">index</button></div></div>
-        <div class="project-grid" id="project-grid"></div>
-        <div class="project-index" id="project-index" hidden></div>
-      </section>
-
-      <section class="lab-section" id="lab">
-        <div class="section-head"><p><span>02</span> Live lab</p><p id="sketch-count"></p></div>
-        <div class="lab-intro"><h2>Small tools,<br /><em>open experiments.</em></h2><p>A focused shelf of browser-native studies in sound, motion and interaction — small enough to explore, complete enough to play with.</p></div>
-        <div class="lab-grid" id="lab-grid"></div>
-      </section>
-
-      <section class="studio-section" id="studio">
-        <div class="section-head"><p><span>03</span> Studio</p><p>Ideas with a visible form</p></div>
-        <div class="studio-grid">
-          <h2>We make the abstract<br /><em>clear enough to feel.</em></h2>
-          <div class="studio-copy"><p>Stargaze is a small design studio working where information, narrative and technology meet. We partner with teams that need more than a chart — they need a way into the subject.</p><a href="mailto:hello@stargaze.studio">Start a conversation <span aria-hidden="true">→</span></a></div>
-          <div class="services-list"><span><b>01</b> Data visualization</span><span><b>02</b> Editorial storytelling</span><span><b>03</b> Interactive prototypes</span><span><b>04</b> 3D visual systems</span></div>
-        </div>
-      </section>
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-art" id="hero-art" aria-hidden="true"></div><div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-eyebrow"><span>Dados. Histórias. Possibilidades.</span></div>
+      <h1 id="hero-title">Novas formas<br />de <em>ver uma ideia.</em></h1>
+      <div class="hero-footer"><p>Um espaço para explorar universos novos —<br class="desktop-break" /> com dados, narrativas e código criativo.</p><a class="quiet-link" href="#universes">Explorar os estudos <span aria-hidden="true">↓</span></a></div>
+      <div class="scene-console"><div class="scene-selectors" id="scene-selectors" role="group" aria-label="Escolher cena do hero"></div><button class="pause-button" id="motion-toggle" type="button" aria-pressed="false"><span aria-hidden="true">Ⅱ</span></button><div class="scene-progress" aria-hidden="true"><span id="scene-progress"></span></div></div>
+    </section>
+    <main id="main">
+      <section class="works section-wrap" id="universes" aria-labelledby="work-title"><header class="section-head"><div><span class="section-id">01 / EXPOSIÇÃO</span><h2 id="work-title">Universos em aberto.</h2></div><p>Abra um estudo.<br />Siga uma nova conexão.</p></header><div class="project-grid" id="selected-projects"></div><div class="focus-strip"><span class="focus-mark" aria-hidden="true">↳</span><p id="focus-message" aria-live="polite">Um mesmo lugar. Diferentes formas de olhar.</p><button class="text-button" id="reset-field" type="button" hidden>Voltar ao campo livre</button></div></section>
+      <section class="instruments section-wrap" id="instruments" aria-labelledby="instruments-title"><header class="section-head"><div><span class="section-id">02 / EXPERIMENTAÇÃO</span><h2 id="instruments-title">Ideias para tocar.</h2></div><p>Som, ritmo e simetria.<br />Estudos em diferentes estágios.</p></header><div class="instrument-grid" id="instrument-projects"></div></section>
+      <section class="notes section-wrap" id="field-notes" aria-labelledby="notes-title"><header class="section-head"><div><span class="section-id">03 / FIELD NOTES</span><h2 id="notes-title">O que fica<br /><em>entre os projetos.</em></h2></div><div class="notes-intro"><p>Processos, ensaios, desenhos e referências.<br />Um espaço para a escrita autoral.</p></div></header><div id="notes-list" class="notes-list"></div><div class="notes-empty" id="notes-empty"><span class="empty-index" aria-hidden="true">Nº —</span><div><h3>A primeira nota<br /><em>ainda está por escrever.</em></h3><p>Observações, descobertas e perguntas em processo.<br />Novas notas em breve.</p></div><span class="empty-line" aria-hidden="true"></span></div></section>
+      <section class="research section-wrap" aria-labelledby="research-title"><details><summary><span class="section-id">NA ESTANTE</span><span id="research-title">Pesquisas em pausa</span><span aria-hidden="true">+</span></summary><div class="shelf-content" id="shelf-projects"></div></details></section>
+      <section class="about section-wrap" id="about" aria-labelledby="about-title"><span class="section-id">04 / STARGAZE</span><div class="about-content"><h2 id="about-title">Um laboratório.<br /><em>Muitas perguntas.</em></h2><p>A Stargaze nasceu da vontade de fazer projetos que dificilmente encontram espaço no dia a dia do mercado de design. É uma iniciativa independente de exercício, inovação e experimentação.</p></div></section>
     </main>
-
-    <footer><a class="brand" href="#top"><img class="brand-logo" src="./logo.svg" alt="" /><span>stargaze</span></a><p>Vibecoding the cosmos</p><p>© <span id="current-year"></span> · São Paulo / Remote</p></footer>
-
-    <div class="project-overlay" id="project-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Project viewer">
-      <div class="project-stage"><div class="stage-art" id="stage-art"></div><div class="stage-nav"><span id="stage-counter"></span><div><button data-action="previous" aria-label="Previous item">←</button><button data-action="next" aria-label="Next item">→</button><button data-action="close" class="close" aria-label="Close project">×</button></div></div></div>
-      <aside class="project-sheet"><div class="sheet-head"><span id="sheet-eyebrow"></span><button data-action="close" aria-label="Close project">×</button></div><h2 id="sheet-title"></h2><p class="sheet-summary" id="sheet-summary"></p><p class="sheet-description" id="sheet-description"></p><dl><div><dt>Tools</dt><dd id="sheet-tools"></dd></div><div><dt>Year</dt><dd id="sheet-year"></dd></div><div><dt>Format</dt><dd id="sheet-format"></dd></div></dl><div id="sheet-action"></div></aside>
-    </div>
+    <footer class="site-footer"><a class="brand" href="#top"><img src="./logo.svg" alt="" width="30" height="30" /><span>stargaze</span></a><span>Um campo sempre em formação.</span><div class="language-switch" role="group" aria-label="Idioma / Language"><button type="button" data-language="pt" lang="pt-BR" aria-label="Português — Brasil" title="Português"><svg viewBox="0 0 36 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="1" y="1" width="34" height="22" rx="1"/><path d="m18 4 13 8-13 8L5 12Z"/><circle cx="18" cy="12" r="4"/><path d="M14.2 10.7q4-1 7.5 2.2"/></svg></button><button type="button" data-language="en" lang="en" aria-label="English — England" title="English"><svg viewBox="0 0 36 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><rect x="1" y="1" width="34" height="22" rx="1"/><path d="M15 1v8H1m20-8v8h14M1 15h14v8m20-8H21v8"/></svg></button></div></footer>
+    <dialog id="project-dialog" class="project-dialog" aria-labelledby="project-dialog-title"><div class="dialog-toolbar"><span id="project-dialog-label" class="eyebrow"></span><div class="dialog-controls"><button class="icon-button" type="button" id="previous-project" aria-label="Projeto anterior" title="Projeto anterior (←)" aria-keyshortcuts="ArrowLeft">&lt;</button><button class="icon-button" type="button" data-close-project aria-label="Fechar projeto">×</button><button class="icon-button" type="button" id="next-project" aria-label="Próximo projeto" title="Próximo projeto (→)" aria-keyshortcuts="ArrowRight">&gt;</button></div></div><div class="project-dialog-body"><div class="project-dialog-art" id="project-dialog-art" data-cursor="drag"></div><div class="project-dialog-copy"><h2 id="project-dialog-title"></h2><p id="project-dialog-summary"></p><div id="project-dialog-action"></div><div id="project-dialog-tags" class="project-tags"></div><p id="project-dialog-hint"></p><details id="project-dialog-context" class="project-context" hidden><summary>Contexto e referências</summary><div id="project-dialog-references"></div></details><p class="dialog-caption">Estudo de capa generativa.</p></div></div></dialog>
+    <dialog id="note-dialog" class="note-dialog" aria-labelledby="note-reader-title"><div class="dialog-toolbar"><span class="eyebrow">Field Notes</span><button class="icon-button" type="button" data-close-note aria-label="Fechar leitura">×</button></div><article id="note-reader" class="note-reader"></article></dialog>
   </body>
 </html>

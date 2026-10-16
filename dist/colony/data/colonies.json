@@ -1,0 +1,380 @@
+{
+  "meta": {
+    "title": "Impérios & Colônias — uma linha do tempo",
+    "note": "Dataset curado a partir de conhecimento histórico aberto. Datas aproximadas, refletem o controle colonial dominante/efetivo. 'wiki' aponta para o título do artigo na Wikipedia (pt).",
+    "sources": [
+      { "label": "Wikipédia (pt/en)", "url": "https://pt.wikipedia.org", "use": "Datas de colonização, independência e contexto histórico; resumos exibidos ao vivo via API REST." },
+      { "label": "Wikidata", "url": "https://www.wikidata.org", "use": "Referência cruzada de datas e entidades históricas." },
+      { "label": "World Atlas / Natural Earth (world-atlas)", "url": "https://github.com/topojson/world-atlas", "use": "Polígonos dos países (TopoJSON 110m), preenchidos pela cor do colonizador." },
+      { "label": "Three.js", "url": "https://threejs.org", "use": "Renderização do globo 3D." }
+    ],
+    "disclaimer": "Material de estudo, não fonte primária. As datas marcam o controle colonial efetivo dominante e simplificam processos longos, disputados e sobrepostos. Quando um território teve vários colonizadores, eles aparecem como períodos sucessivos. Correções são bem-vindas.",
+    "limitations": [
+      "As datas de início e fim são aproximadas e refletem o controle colonial dominante, não a totalidade de disputas, fronteiras móveis ou regimes sobrepostos.",
+      "Ilhas muito pequenas aparecem como um ponto (bolinha) no lugar do contorno real, porque o mapa-base de baixa resolução não as desenha — a história delas é representada, a forma não.",
+      "Fronteiras são as atuais (mapa-base moderno); o mapa não redesenha fronteiras históricas, então impérios que se fragmentaram aparecem através dos países que existem hoje na região.",
+      "A cor de um país segue o colonizador dominante; presenças menores (ex.: enclaves portugueses na Índia) aparecem só no painel de detalhes, não na cor.",
+      "A seleção de territórios prioriza os principais impérios europeus e não é exaustiva."
+    ],
+    "empires": {
+      "PT": { "name": "Portugal", "color": "#2e8b57", "label": "Império Português", "homeIso": "620", "wiki": "Império Português", "about": "A expansão marítima portuguesa, iniciada no século XV, montou rotas de comércio e exploração que se sustentaram em grande medida sobre o tráfico de pessoas escravizadas e a apropriação de terras. Foi um dos impérios coloniais mais duradouros, com territórios na América, África e Ásia." },
+      "ES": { "name": "Espanha", "color": "#d4a017", "label": "Império Espanhol", "homeIso": "724", "wiki": "Império Espanhol", "about": "A colonização espanhola das Américas, a partir de 1492, levou ao colapso demográfico de povos indígenas por violência e doenças, à exploração mineira forçada e à imposição de língua e religião. Deixou marcas profundas em quase toda a América Latina." },
+      "GB": { "name": "Reino Unido", "color": "#c0392b", "label": "Império Britânico", "homeIso": "826", "wiki": "Império Britânico", "about": "O maior império da história em extensão, presente em todos os continentes. Sua administração combinou exploração econômica, divisões territoriais arbitrárias e domínio que ainda hoje ecoa em fronteiras, línguas e conflitos pós-coloniais." },
+      "FR": { "name": "França", "color": "#2e6fb5", "label": "Império Francês", "homeIso": "250", "wiki": "Império Colonial Francês", "about": "O domínio colonial francês estendeu-se pela África, Sudeste Asiático e Caribe. Processos de independência frequentemente violentos — como na Argélia e na Indochina — marcaram seu desmonte, e laços econômicos e linguísticos persistem até hoje." },
+      "NL": { "name": "Países Baixos", "color": "#e67e22", "label": "Império Holandês", "homeIso": "528", "wiki": "Império Colonial Neerlandês", "about": "Estruturado em torno de companhias comerciais como a VOC, o império holandês controlou rotas e territórios na Ásia, nas Américas e na África, com forte envolvimento no comércio de especiarias e no tráfico de escravizados." },
+      "BE": { "name": "Bélgica", "color": "#8e44ad", "label": "Império Belga", "homeIso": "056", "wiki": "Império Colonial Belga", "about": "O domínio belga no Congo, primeiro como propriedade pessoal do rei Leopoldo II, é associado a alguns dos episódios mais brutais da era colonial, com trabalho forçado e violência em massa." },
+      "DE": { "name": "Alemanha", "color": "#7f8c8d", "label": "Império Colonial Alemão", "homeIso": "276", "wiki": "Império Colonial Alemão", "about": "Embora breve (sobretudo 1884–1918), o colonialismo alemão na África foi marcado por extrema violência, incluindo o genocídio dos hererós e namás na atual Namíbia." },
+      "IT": { "name": "Itália", "color": "#16a085", "label": "Império Colonial Italiano", "homeIso": "380", "wiki": "Império Colonial Italiano", "about": "A expansão colonial italiana concentrou-se no norte e leste da África. A ocupação envolveu campanhas militares violentas e tentativas de povoamento, deixando vestígios em países como Líbia, Eritreia e Somália." },
+      "DK": { "name": "Dinamarca", "color": "#c0567a", "label": "Império Colonial Dinamarquês", "homeIso": "208", "wiki": "Império Colonial Dinamarquês", "about": "A Dinamarca manteve colônias e postos comerciais no Caribe, na Índia e na África, com participação no comércio atlântico de escravizados." },
+      "RU": { "name": "Rússia", "color": "#6b4f9e", "label": "Império Russo / URSS", "homeIso": "643", "wiki": "Império Russo", "about": "A expansão russa, depois soviética, anexou vastos territórios na Ásia Central, no Cáucaso e no Leste Europeu. Sua herança ainda alimenta tensões e conflitos de soberania na região." },
+      "JP": { "name": "Japão", "color": "#b03a48", "label": "Império do Japão", "homeIso": "392", "wiki": "Império do Japão", "about": "No fim do século XIX e início do XX, o Japão expandiu-se sobre a Coreia, Taiwan e partes da China, com ocupações marcadas por trabalho forçado e violência, cujas memórias ainda afetam relações diplomáticas." },
+      "OT": { "name": "Império Otomano", "color": "#a05a2c", "label": "Império Otomano", "homeIso": "792", "wiki": "Império Otomano", "about": "Por séculos, o Império Otomano dominou o sudeste europeu, o Oriente Médio e o norte da África. Sua dissolução após a Primeira Guerra Mundial redesenhou fronteiras que até hoje moldam conflitos na região." },
+      "US": { "name": "Estados Unidos", "color": "#34495e", "label": "Estados Unidos", "homeIso": "840", "wiki": "Imperialismo dos Estados Unidos", "about": "Após a guerra de 1898, os Estados Unidos passaram a administrar territórios como Porto Rico, Guam e Filipinas. Alguns permanecem sem soberania plena até hoje." }
+    }
+  },
+  "colonies": [
+    { "name": "Brasil", "iso": "076", "lat": -10.0, "lon": -53.0, "language": "Português", "stillTied": "CPLP / língua portuguesa", "wiki": "Independência do Brasil", "independence": 1822,
+      "periods": [ { "colonizer": "PT", "from": 1500, "to": 1822, "method": "Independência declarada" } ] },
+    { "name": "Angola", "iso": "024", "lat": -12.5, "lon": 18.5, "language": "Português", "stillTied": "CPLP / língua portuguesa", "wiki": "Guerra Colonial Portuguesa", "independence": 1975,
+      "periods": [ { "colonizer": "PT", "from": 1575, "to": 1975, "method": "Guerra de independência" } ] },
+    { "name": "Moçambique", "iso": "508", "lat": -18.0, "lon": 35.0, "language": "Português", "stillTied": "CPLP / língua portuguesa", "wiki": "Independência de Moçambique", "independence": 1975,
+      "periods": [ { "colonizer": "PT", "from": 1505, "to": 1975, "method": "Guerra de independência" } ] },
+    { "name": "Cabo Verde", "iso": "132", "lat": 16.0, "lon": -24.0, "language": "Português / crioulo", "stillTied": "CPLP", "wiki": "Cabo Verde", "independence": 1975,
+      "periods": [ { "colonizer": "PT", "from": 1462, "to": 1975, "method": "Descolonização" } ] },
+    { "name": "Guiné-Bissau", "iso": "624", "lat": 12.0, "lon": -15.0, "language": "Português / crioulo", "stillTied": "CPLP", "wiki": "Guerra de Independência da Guiné-Bissau", "independence": 1974,
+      "periods": [ { "colonizer": "PT", "from": 1588, "to": 1974, "method": "Guerra de independência" } ] },
+    { "name": "São Tomé e Príncipe", "iso": "678", "lat": 0.2, "lon": 6.6, "language": "Português", "stillTied": "CPLP", "wiki": "São Tomé e Príncipe", "independence": 1975,
+      "periods": [ { "colonizer": "PT", "from": 1493, "to": 1975, "method": "Descolonização" } ] },
+    { "name": "Timor-Leste", "iso": "626", "lat": -8.8, "lon": 125.7, "language": "Português / tétum", "stillTied": "CPLP", "wiki": "Independência de Timor-Leste", "independence": 2002,
+      "periods": [ { "colonizer": "PT", "from": 1702, "to": 1975, "method": "Descolonização; seguida de ocupação indonésia até 2002" } ] },
+    { "name": "Índia", "iso": "356", "lat": 22.0, "lon": 79.0, "language": "Inglês (oficial) / hindi", "stillTied": "Commonwealth / inglês", "wiki": "Movimento de independência da Índia", "independence": 1947,
+      "periods": [
+        { "colonizer": "PT", "from": 1505, "to": 1961, "method": "Enclaves (Goa, Damão, Diu) anexados pela Índia em 1961", "partial": true },
+        { "colonizer": "GB", "from": 1757, "to": 1947, "method": "Movimento de independência" }
+      ] },
+    { "name": "Macau", "iso": "446", "lat": 22.2, "lon": 113.5, "language": "Chinês / português", "stillTied": "Patuá / arquitetura", "wiki": "História de Macau", "independence": 1999,
+      "periods": [ { "colonizer": "PT", "from": 1557, "to": 1999, "method": "Transferência para a China" } ] },
+
+    { "name": "México", "iso": "484", "lat": 23.0, "lon": -102.0, "language": "Espanhol", "stillTied": "Hispanidade / língua espanhola", "wiki": "Guerra da Independência do México", "independence": 1821,
+      "periods": [ { "colonizer": "ES", "from": 1521, "to": 1821, "method": "Guerra de independência" } ] },
+    { "name": "Peru", "iso": "604", "lat": -10.0, "lon": -76.0, "language": "Espanhol / quéchua", "stillTied": "Hispanidade", "wiki": "Independência do Peru", "independence": 1821,
+      "periods": [ { "colonizer": "ES", "from": 1532, "to": 1821, "method": "Guerra de independência" } ] },
+    { "name": "Colômbia", "iso": "170", "lat": 4.0, "lon": -73.0, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "Independência da Colômbia", "independence": 1819,
+      "periods": [ { "colonizer": "ES", "from": 1525, "to": 1819, "method": "Guerra de independência" } ] },
+    { "name": "Argentina", "iso": "032", "lat": -34.0, "lon": -64.0, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "Independência da Argentina", "independence": 1816,
+      "periods": [ { "colonizer": "ES", "from": 1536, "to": 1816, "method": "Guerra de independência" } ] },
+    { "name": "Chile", "iso": "152", "lat": -33.0, "lon": -71.0, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "Independência do Chile", "independence": 1818,
+      "periods": [ { "colonizer": "ES", "from": 1541, "to": 1818, "method": "Guerra de independência" } ] },
+    { "name": "Cuba", "iso": "192", "lat": 22.0, "lon": -79.5, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "Guerra de Independência Cubana", "independence": 1902,
+      "periods": [
+        { "colonizer": "ES", "from": 1511, "to": 1898, "method": "Guerra de independência" },
+        { "colonizer": "US", "from": 1898, "to": 1902, "method": "Ocupação militar dos EUA até 1902" }
+      ] },
+    { "name": "Filipinas", "iso": "608", "lat": 13.0, "lon": 122.0, "language": "Filipino / inglês", "stillTied": "Sobrenomes / catolicismo", "wiki": "Capitania-Geral das Filipinas", "independence": 1946,
+      "periods": [
+        { "colonizer": "ES", "from": 1565, "to": 1898, "method": "Cedida aos EUA no Tratado de Paris (1898)" },
+        { "colonizer": "US", "from": 1898, "to": 1946, "method": "Período norte-americano; independência plena em 1946" }
+      ] },
+    { "name": "Bolívia", "iso": "068", "lat": -17.0, "lon": -65.0, "language": "Espanhol / quéchua / aimará", "stillTied": "Hispanidade", "wiki": "Independência da Bolívia", "independence": 1825,
+      "periods": [ { "colonizer": "ES", "from": 1538, "to": 1825, "method": "Guerra de independência" } ] },
+    { "name": "Venezuela", "iso": "862", "lat": 7.0, "lon": -66.0, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "Independência da Venezuela", "independence": 1821,
+      "periods": [ { "colonizer": "ES", "from": 1522, "to": 1821, "method": "Guerra de independência" } ] },
+
+    { "name": "Estados Unidos", "iso": "840", "lat": 39.0, "lon": -98.0, "language": "Inglês", "stillTied": "Língua inglesa", "wiki": "Independência dos Estados Unidos", "independence": 1776,
+      "periods": [ { "colonizer": "GB", "from": 1607, "to": 1776, "method": "Revolução Americana" } ] },
+    { "name": "Austrália", "iso": "036", "lat": -25.0, "lon": 134.0, "language": "Inglês", "stillTied": "Commonwealth / monarca como chefe de Estado", "wiki": "História da Austrália", "independence": 1901,
+      "periods": [ { "colonizer": "GB", "from": 1788, "to": 1901, "method": "Federação / autonomia" } ] },
+    { "name": "Canadá", "iso": "124", "lat": 56.0, "lon": -106.0, "language": "Inglês / francês", "stillTied": "Commonwealth / monarca como chefe de Estado", "wiki": "História do Canadá", "independence": 1867,
+      "periods": [
+        { "colonizer": "FR", "from": 1608, "to": 1763, "method": "Nova França cedida à Grã-Bretanha (1763)" },
+        { "colonizer": "GB", "from": 1763, "to": 1867, "method": "Confederação" }
+      ] },
+    { "name": "África do Sul", "iso": "710", "lat": -29.0, "lon": 24.0, "language": "Inglês / africâner", "stillTied": "Commonwealth", "wiki": "História da África do Sul", "independence": 1931,
+      "periods": [
+        { "colonizer": "NL", "from": 1652, "to": 1806, "method": "Colônia do Cabo holandesa, tomada pelos britânicos" },
+        { "colonizer": "GB", "from": 1806, "to": 1931, "method": "Estatuto de Westminster" }
+      ] },
+    { "name": "Nigéria", "iso": "566", "lat": 9.0, "lon": 8.0, "language": "Inglês (oficial)", "stillTied": "Commonwealth / inglês", "wiki": "Nigéria", "independence": 1960,
+      "periods": [ { "colonizer": "GB", "from": 1900, "to": 1960, "method": "Descolonização" } ] },
+    { "name": "Quênia", "iso": "404", "lat": 0.0, "lon": 38.0, "language": "Inglês / suaíli", "stillTied": "Commonwealth", "wiki": "Quénia", "independence": 1963,
+      "periods": [ { "colonizer": "GB", "from": 1895, "to": 1963, "method": "Descolonização" } ] },
+    { "name": "Egito", "iso": "818", "lat": 26.5, "lon": 30.0, "language": "Árabe", "stillTied": "Influência geopolítica", "wiki": "Reino do Egito", "independence": 1922,
+      "periods": [
+        { "colonizer": "OT", "from": 1517, "to": 1882, "method": "Província otomana (autônoma sob os quediva a partir de 1805)" },
+        { "colonizer": "GB", "from": 1882, "to": 1922, "method": "Independência nominal em 1922; tropas só saíram em 1956" }
+      ] },
+    { "name": "Jamaica", "iso": "388", "lat": 18.1, "lon": -77.3, "language": "Inglês / patuá", "stillTied": "Commonwealth", "wiki": "Jamaica", "independence": 1962,
+      "periods": [
+        { "colonizer": "ES", "from": 1509, "to": 1655, "method": "Tomada pela Inglaterra em 1655" },
+        { "colonizer": "GB", "from": 1655, "to": 1962, "method": "Descolonização" }
+      ] },
+    { "name": "Irlanda", "iso": "372", "lat": 53.3, "lon": -8.0, "language": "Inglês / irlandês", "stillTied": "Língua inglesa", "wiki": "Guerra de Independência Irlandesa", "independence": 1922,
+      "periods": [ { "colonizer": "GB", "from": 1542, "to": 1922, "method": "Guerra de independência" } ] },
+    { "name": "Sri Lanka", "iso": "144", "lat": 7.5, "lon": 80.7, "language": "Cingalês / tâmil / inglês", "stillTied": "Commonwealth", "wiki": "Ceilão Britânico", "independence": 1948,
+      "periods": [
+        { "colonizer": "PT", "from": 1505, "to": 1658, "method": "Áreas costeiras tomadas pelos holandeses" },
+        { "colonizer": "NL", "from": 1658, "to": 1796, "method": "Cedida aos britânicos" },
+        { "colonizer": "GB", "from": 1796, "to": 1948, "method": "Descolonização" }
+      ] },
+    { "name": "Gana", "iso": "288", "lat": 7.9, "lon": -1.0, "language": "Inglês", "stillTied": "Commonwealth", "wiki": "Costa do Ouro (colônia britânica)", "independence": 1957,
+      "periods": [ { "colonizer": "GB", "from": 1874, "to": 1957, "method": "Primeira colônia da África subsaariana a se tornar independente" } ] },
+    { "name": "Mianmar (Birmânia)", "iso": "104", "lat": 21.0, "lon": 96.0, "language": "Birmanês", "stillTied": "Influência histórica", "wiki": "Birmânia Britânica", "independence": 1948,
+      "periods": [ { "colonizer": "GB", "from": 1824, "to": 1948, "method": "Descolonização" } ] },
+    { "name": "Paquistão", "iso": "586", "lat": 30.0, "lon": 70.0, "language": "Urdu / inglês", "stillTied": "Commonwealth / inglês", "wiki": "Partição da Índia", "independence": 1947,
+      "periods": [ { "colonizer": "GB", "from": 1757, "to": 1947, "method": "Partição da Índia Britânica" } ] },
+
+    { "name": "Argélia", "iso": "012", "lat": 28.0, "lon": 3.0, "language": "Árabe / francês", "stillTied": "Francofonia", "wiki": "Guerra da Argélia", "independence": 1962,
+      "periods": [
+        { "colonizer": "OT", "from": 1516, "to": 1830, "method": "Regência otomana de Argel" },
+        { "colonizer": "FR", "from": 1830, "to": 1962, "method": "Guerra de independência" }
+      ] },
+    { "name": "Vietnã", "iso": "704", "lat": 16.0, "lon": 107.0, "language": "Vietnamita", "stillTied": "Influência cultural", "wiki": "Indochina Francesa", "independence": 1954,
+      "periods": [ { "colonizer": "FR", "from": 1858, "to": 1954, "method": "Guerra da Indochina" } ] },
+    { "name": "Senegal", "iso": "686", "lat": 14.5, "lon": -14.5, "language": "Francês / wolof", "stillTied": "Francofonia / franco CFA", "wiki": "Senegal", "independence": 1960,
+      "periods": [ { "colonizer": "FR", "from": 1677, "to": 1960, "method": "Descolonização" } ] },
+    { "name": "Costa do Marfim", "iso": "384", "lat": 7.5, "lon": -5.5, "language": "Francês", "stillTied": "Francofonia / franco CFA", "wiki": "Costa do Marfim", "independence": 1960,
+      "periods": [ { "colonizer": "FR", "from": 1893, "to": 1960, "method": "Descolonização" } ] },
+    { "name": "Mali", "iso": "466", "lat": 17.0, "lon": -4.0, "language": "Francês", "stillTied": "Francofonia / franco CFA", "wiki": "Mali", "independence": 1960,
+      "periods": [ { "colonizer": "FR", "from": 1892, "to": 1960, "method": "Descolonização" } ] },
+    { "name": "Madagascar", "iso": "450", "lat": -19.0, "lon": 47.0, "language": "Malgaxe / francês", "stillTied": "Francofonia", "wiki": "Madagáscar", "independence": 1960,
+      "periods": [ { "colonizer": "FR", "from": 1897, "to": 1960, "method": "Descolonização" } ] },
+    { "name": "Marrocos", "iso": "504", "lat": 32.0, "lon": -6.0, "language": "Árabe / francês", "stillTied": "Francofonia", "wiki": "Protetorado Francês de Marrocos", "independence": 1956,
+      "periods": [ { "colonizer": "FR", "from": 1912, "to": 1956, "method": "Fim do protetorado" } ] },
+    { "name": "Haiti", "iso": "332", "lat": 19.0, "lon": -72.4, "language": "Francês / crioulo haitiano", "stillTied": "Francofonia", "wiki": "Revolução Haitiana", "independence": 1804,
+      "periods": [ { "colonizer": "FR", "from": 1697, "to": 1804, "method": "Revolução Haitiana" } ] },
+    { "name": "Tunísia", "iso": "788", "lat": 34.0, "lon": 9.5, "language": "Árabe / francês", "stillTied": "Francofonia", "wiki": "Protetorado Francês da Tunísia", "independence": 1956,
+      "periods": [
+        { "colonizer": "OT", "from": 1574, "to": 1881, "method": "Beylicato sob suserania otomana" },
+        { "colonizer": "FR", "from": 1881, "to": 1956, "method": "Fim do protetorado" }
+      ] },
+    { "name": "Camarões", "iso": "120", "lat": 6.0, "lon": 12.5, "language": "Francês / inglês", "stillTied": "Francofonia / Commonwealth", "wiki": "Camarões", "independence": 1960,
+      "periods": [
+        { "colonizer": "DE", "from": 1884, "to": 1916, "method": "Kamerun alemão, dividido após a 1ª Guerra" },
+        { "colonizer": "FR", "from": 1916, "to": 1960, "method": "Descolonização (parte francesa)" }
+      ] },
+
+    { "name": "Indonésia", "iso": "360", "lat": -2.0, "lon": 118.0, "language": "Indonésio", "stillTied": "Palavras de origem neerlandesa", "wiki": "Índias Orientais Neerlandesas", "independence": 1945,
+      "periods": [ { "colonizer": "NL", "from": 1610, "to": 1949, "method": "Declarada em 1945, reconhecida em 1949" } ] },
+    { "name": "Suriname", "iso": "740", "lat": 4.0, "lon": -56.0, "language": "Neerlandês", "stillTied": "Língua neerlandesa", "wiki": "Suriname", "independence": 1975,
+      "periods": [ { "colonizer": "NL", "from": 1667, "to": 1975, "method": "Descolonização" } ] },
+
+    { "name": "Congo (RDC)", "iso": "180", "lat": -2.0, "lon": 23.5, "language": "Francês", "stillTied": "Francofonia", "wiki": "Estado Livre do Congo", "independence": 1960,
+      "periods": [ { "colonizer": "BE", "from": 1885, "to": 1960, "method": "Descolonização" } ] },
+    { "name": "Ruanda", "iso": "646", "lat": -2.0, "lon": 30.0, "language": "Francês / quiniaruanda", "stillTied": "Francofonia (histórica)", "wiki": "Ruanda", "independence": 1962,
+      "periods": [
+        { "colonizer": "DE", "from": 1897, "to": 1916, "method": "Parte da África Oriental Alemã" },
+        { "colonizer": "BE", "from": 1916, "to": 1962, "method": "Mandato belga, descolonização" }
+      ] },
+
+    { "name": "Namíbia", "iso": "516", "lat": -22.0, "lon": 17.0, "language": "Inglês / africâner / alemão", "stillTied": "Comunidade germano-namibiana", "wiki": "África do Sudoeste Alemã", "independence": 1990,
+      "periods": [ { "colonizer": "DE", "from": 1884, "to": 1915, "method": "Domínio alemão até 1915; depois administração sul-africana até a independência em 1990" } ] },
+    { "name": "Tanzânia", "iso": "834", "lat": -6.0, "lon": 35.0, "language": "Suaíli / inglês", "stillTied": "Commonwealth", "wiki": "África Oriental Alemã", "independence": 1961,
+      "periods": [
+        { "colonizer": "DE", "from": 1885, "to": 1919, "method": "África Oriental Alemã" },
+        { "colonizer": "GB", "from": 1919, "to": 1961, "method": "Mandato britânico (Tanganica), descolonização" }
+      ] },
+
+    { "name": "Líbia", "iso": "434", "lat": 27.0, "lon": 17.0, "language": "Árabe", "stillTied": "Influência histórica", "wiki": "Líbia Italiana", "independence": 1951,
+      "periods": [
+        { "colonizer": "OT", "from": 1551, "to": 1911, "method": "Província otomana" },
+        { "colonizer": "IT", "from": 1911, "to": 1947, "method": "Descolonização pós-guerra, independência em 1951" }
+      ] },
+    { "name": "Eritreia", "iso": "232", "lat": 15.0, "lon": 39.0, "language": "Tigrínia / árabe", "stillTied": "Arquitetura italiana em Asmara", "wiki": "Eritreia Italiana", "independence": 1993,
+      "periods": [ { "colonizer": "IT", "from": 1890, "to": 1941, "method": "Colônia italiana até 1941; depois federada à Etiópia, independência em 1993" } ] },
+    { "name": "Somália", "iso": "706", "lat": 5.0, "lon": 46.0, "language": "Somali / árabe", "stillTied": "Influência histórica", "wiki": "Somalilândia Italiana", "independence": 1960,
+      "periods": [ { "colonizer": "IT", "from": 1889, "to": 1960, "method": "Descolonização" } ] },
+
+    { "name": "Cazaquistão", "iso": "398", "lat": 48.0, "lon": 67.0, "language": "Cazaque / russo", "stillTied": "Língua russa / CEI", "wiki": "Cazaquistão", "independence": 1991,
+      "periods": [ { "colonizer": "RU", "from": 1731, "to": 1991, "method": "Dissolução da URSS" } ] },
+    { "name": "Ucrânia", "iso": "804", "lat": 49.0, "lon": 32.0, "language": "Ucraniano / russo", "stillTied": "Conflito atual / herança soviética", "wiki": "Independência da Ucrânia", "independence": 1991,
+      "periods": [ { "colonizer": "RU", "from": 1793, "to": 1991, "method": "Dissolução da URSS" } ] },
+    { "name": "Geórgia", "iso": "268", "lat": 42.0, "lon": 43.5, "language": "Georgiano", "stillTied": "Herança soviética", "wiki": "Geórgia", "independence": 1991,
+      "periods": [ { "colonizer": "RU", "from": 1801, "to": 1991, "method": "Dissolução da URSS" } ] },
+    { "name": "Uzbequistão", "iso": "860", "lat": 41.0, "lon": 64.0, "language": "Uzbeque / russo", "stillTied": "Língua russa / CEI", "wiki": "Uzbequistão", "independence": 1991,
+      "periods": [ { "colonizer": "RU", "from": 1868, "to": 1991, "method": "Dissolução da URSS" } ] },
+
+    { "name": "Coreia do Sul", "iso": "410", "lat": 37.0, "lon": 127.8, "language": "Coreano", "stillTied": "Memória histórica / disputas", "wiki": "Coreia sob domínio japonês", "independence": 1945,
+      "periods": [ { "colonizer": "JP", "from": 1910, "to": 1945, "method": "Fim da 2ª Guerra Mundial" } ] },
+    { "name": "Coreia do Norte", "iso": "408", "lat": 40.0, "lon": 127.0, "language": "Coreano", "stillTied": "Memória histórica / disputas", "wiki": "Coreia sob domínio japonês", "independence": 1945,
+      "periods": [ { "colonizer": "JP", "from": 1910, "to": 1945, "method": "Fim da 2ª Guerra Mundial" } ] },
+
+    { "name": "Grécia", "iso": "300", "lat": 39.0, "lon": 22.0, "language": "Grego", "stillTied": "Heranças culinárias / linguísticas", "wiki": "Guerra de Independência da Grécia", "independence": 1830,
+      "periods": [ { "colonizer": "OT", "from": 1453, "to": 1830, "method": "Guerra de independência" } ] },
+    { "name": "Sérvia", "iso": "688", "lat": 44.0, "lon": 21.0, "language": "Sérvio", "stillTied": "Heranças culturais", "wiki": "Sérvia Otomana", "independence": 1878,
+      "periods": [ { "colonizer": "OT", "from": 1459, "to": 1878, "method": "Congresso de Berlim" } ] },
+    { "name": "Bulgária", "iso": "100", "lat": 42.7, "lon": 25.0, "language": "Búlgaro", "stillTied": "Heranças culturais", "wiki": "Bulgária Otomana", "independence": 1908,
+      "periods": [ { "colonizer": "OT", "from": 1396, "to": 1878, "method": "Autonomia em 1878, independência plena em 1908" } ] },
+
+    { "name": "Porto Rico", "iso": "630", "lat": 18.2, "lon": -66.4, "language": "Espanhol / inglês", "stillTied": "Território dos EUA — sem soberania plena hoje", "wiki": "Porto Rico", "independence": null,
+      "periods": [
+        { "colonizer": "ES", "from": 1508, "to": 1898, "method": "Cedida aos EUA (1898)" },
+        { "colonizer": "US", "from": 1898, "to": 9999, "method": "Território não incorporado dos EUA (atual)" }
+      ] },
+
+    { "name": "Iraque", "iso": "368", "lat": 33.0, "lon": 44.0, "language": "Árabe / curdo", "stillTied": "Fronteiras desenhadas no mandato britânico", "wiki": "Mandato Britânico da Mesopotâmia", "independence": 1932,
+      "periods": [
+        { "colonizer": "OT", "from": 1534, "to": 1918, "method": "Províncias otomanas (Bagdá, Bassorá, Mossul)" },
+        { "colonizer": "GB", "from": 1918, "to": 1932, "method": "Mandato britânico, independência em 1932" }
+      ] },
+    { "name": "Síria", "iso": "760", "lat": 35.0, "lon": 38.0, "language": "Árabe", "stillTied": "Fronteiras do acordo Sykes-Picot", "wiki": "Mandato Francês da Síria e Líbano", "independence": 1946,
+      "periods": [
+        { "colonizer": "OT", "from": 1516, "to": 1918, "method": "Província otomana" },
+        { "colonizer": "FR", "from": 1920, "to": 1946, "method": "Mandato francês, independência em 1946" }
+      ] },
+    { "name": "Líbano", "iso": "422", "lat": 33.8, "lon": 35.8, "language": "Árabe / francês", "stillTied": "Francofonia", "wiki": "Mandato Francês da Síria e Líbano", "independence": 1943,
+      "periods": [
+        { "colonizer": "OT", "from": 1516, "to": 1918, "method": "Província otomana" },
+        { "colonizer": "FR", "from": 1920, "to": 1943, "method": "Mandato francês, independência em 1943" }
+      ] },
+    { "name": "Jordânia", "iso": "400", "lat": 31.0, "lon": 36.5, "language": "Árabe", "stillTied": "Fronteiras do mandato britânico", "wiki": "Emirado da Transjordânia", "independence": 1946,
+      "periods": [
+        { "colonizer": "OT", "from": 1516, "to": 1918, "method": "Província otomana" },
+        { "colonizer": "GB", "from": 1921, "to": 1946, "method": "Mandato britânico, independência em 1946" }
+      ] },
+    { "name": "Israel / Palestina", "iso": "376", "lat": 31.5, "lon": 35.0, "language": "Hebraico / árabe", "stillTied": "Conflito ligado às fronteiras do mandato", "wiki": "Mandato Britânico da Palestina", "independence": 1948,
+      "periods": [
+        { "colonizer": "OT", "from": 1516, "to": 1917, "method": "Província otomana" },
+        { "colonizer": "GB", "from": 1920, "to": 1948, "method": "Mandato britânico da Palestina" }
+      ] },
+
+    { "name": "Panamá", "iso": "591", "lat": 8.5, "lon": -80.0, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "História do Panamá", "independence": 1903,
+      "periods": [ { "colonizer": "ES", "from": 1538, "to": 1821, "method": "Parte da Grã-Colômbia, depois separação em 1903" } ] },
+    { "name": "Costa Rica", "iso": "188", "lat": 9.8, "lon": -84.0, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "História da Costa Rica", "independence": 1821,
+      "periods": [ { "colonizer": "ES", "from": 1524, "to": 1821, "method": "Descolonização" } ] },
+    { "name": "Nicarágua", "iso": "558", "lat": 12.8, "lon": -85.0, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "História da Nicarágua", "independence": 1821,
+      "periods": [ { "colonizer": "ES", "from": 1524, "to": 1821, "method": "Descolonização" } ] },
+    { "name": "Guatemala", "iso": "320", "lat": 15.5, "lon": -90.3, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "História da Guatemala", "independence": 1821,
+      "periods": [ { "colonizer": "ES", "from": 1524, "to": 1821, "method": "Descolonização" } ] },
+    { "name": "Honduras", "iso": "340", "lat": 14.8, "lon": -86.5, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "História de Honduras", "independence": 1821,
+      "periods": [ { "colonizer": "ES", "from": 1524, "to": 1821, "method": "Descolonização" } ] },
+    { "name": "El Salvador", "iso": "222", "lat": 13.8, "lon": -88.9, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "História de El Salvador", "independence": 1821,
+      "periods": [ { "colonizer": "ES", "from": 1525, "to": 1821, "method": "Descolonização" } ] },
+    { "name": "República Dominicana", "iso": "214", "lat": 19.0, "lon": -70.7, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "História da República Dominicana", "independence": 1844,
+      "periods": [ { "colonizer": "ES", "from": 1496, "to": 1821, "method": "Primeira colônia europeia nas Américas; independência em 1844" } ] },
+    { "name": "Trinidad e Tobago", "iso": "780", "lat": 10.5, "lon": -61.3, "language": "Inglês", "stillTied": "Commonwealth", "wiki": "Trindade e Tobago", "independence": 1962,
+      "periods": [
+        { "colonizer": "ES", "from": 1498, "to": 1797, "method": "Tomada pelos britânicos" },
+        { "colonizer": "GB", "from": 1797, "to": 1962, "method": "Descolonização" }
+      ] },
+
+    { "name": "Uruguai", "iso": "858", "lat": -33.0, "lon": -56.0, "language": "Espanhol", "stillTied": "Hispanidade", "wiki": "Independência do Uruguai", "independence": 1828,
+      "periods": [
+        { "colonizer": "PT", "from": 1680, "to": 1777, "method": "Disputa luso-espanhola na região do Prata" },
+        { "colonizer": "ES", "from": 1777, "to": 1811, "method": "Província espanhola, depois independência" }
+      ] },
+    { "name": "Paraguai", "iso": "600", "lat": -23.0, "lon": -58.0, "language": "Espanhol / guarani", "stillTied": "Hispanidade", "wiki": "Independência do Paraguai", "independence": 1811,
+      "periods": [ { "colonizer": "ES", "from": 1537, "to": 1811, "method": "Descolonização" } ] },
+    { "name": "Equador", "iso": "218", "lat": -1.5, "lon": -78.5, "language": "Espanhol / quéchua", "stillTied": "Hispanidade", "wiki": "Independência do Equador", "independence": 1822,
+      "periods": [ { "colonizer": "ES", "from": 1534, "to": 1822, "method": "Guerra de independência" } ] },
+
+    { "name": "Mauritânia", "iso": "478", "lat": 20.0, "lon": -10.5, "language": "Árabe / francês", "stillTied": "Francofonia / franco CFA", "wiki": "Mauritânia", "independence": 1960,
+      "periods": [ { "colonizer": "FR", "from": 1904, "to": 1960, "method": "Descolonização" } ] },
+    { "name": "Chade", "iso": "148", "lat": 15.0, "lon": 19.0, "language": "Francês / árabe", "stillTied": "Francofonia / franco CFA", "wiki": "Chade", "independence": 1960,
+      "periods": [ { "colonizer": "FR", "from": 1900, "to": 1960, "method": "Descolonização" } ] },
+    { "name": "Sudão", "iso": "729", "lat": 15.0, "lon": 30.0, "language": "Árabe / inglês", "stillTied": "Influência histórica", "wiki": "Sudão Anglo-Egípcio", "independence": 1956,
+      "periods": [
+        { "colonizer": "OT", "from": 1821, "to": 1885, "method": "Domínio egípcio-otomano (Turquia-Egito)" },
+        { "colonizer": "GB", "from": 1899, "to": 1956, "method": "Condomínio anglo-egípcio, independência em 1956" }
+      ] },
+    { "name": "Uganda", "iso": "800", "lat": 1.0, "lon": 32.5, "language": "Inglês / suaíli", "stillTied": "Commonwealth", "wiki": "Uganda", "independence": 1962,
+      "periods": [ { "colonizer": "GB", "from": 1894, "to": 1962, "method": "Protetorado britânico, descolonização" } ] },
+    { "name": "Zimbábue", "iso": "716", "lat": -19.0, "lon": 29.8, "language": "Inglês / shona", "stillTied": "Commonwealth (suspenso)", "wiki": "Rodésia", "independence": 1980,
+      "periods": [ { "colonizer": "GB", "from": 1890, "to": 1980, "method": "Colônia da Rodésia, independência em 1980" } ] },
+    { "name": "Zâmbia", "iso": "894", "lat": -13.5, "lon": 27.8, "language": "Inglês", "stillTied": "Commonwealth", "wiki": "Zâmbia", "independence": 1964,
+      "periods": [ { "colonizer": "GB", "from": 1888, "to": 1964, "method": "Rodésia do Norte, descolonização" } ] },
+    { "name": "Etiópia", "iso": "231", "lat": 9.0, "lon": 39.5, "language": "Amárico", "stillTied": "Nunca colonizada formalmente — só ocupada (1936–41)", "wiki": "África Oriental Italiana", "independence": 1941,
+      "periods": [ { "colonizer": "IT", "from": 1936, "to": 1941, "method": "Ocupação italiana breve; nunca foi colônia formal", "partial": true } ] },
+
+    { "name": "Papua-Nova Guiné", "iso": "598", "lat": -6.0, "lon": 145.0, "language": "Inglês / tok pisin", "stillTied": "Commonwealth", "wiki": "Papua-Nova Guiné", "independence": 1975,
+      "periods": [
+        { "colonizer": "DE", "from": 1884, "to": 1914, "method": "Nordeste alemão (Nova Guiné Alemã)" },
+        { "colonizer": "GB", "from": 1914, "to": 1975, "method": "Administração australiana/britânica, independência em 1975" }
+      ] },
+    { "name": "Nova Zelândia", "iso": "554", "lat": -42.0, "lon": 173.0, "language": "Inglês / maori", "stillTied": "Commonwealth / monarca como chefe de Estado", "wiki": "História da Nova Zelândia", "independence": 1907,
+      "periods": [ { "colonizer": "GB", "from": 1840, "to": 1907, "method": "Tratado de Waitangi; domínio em 1907" } ] },
+    { "name": "Polinésia Francesa", "iso": "258", "lat": -17.5, "lon": -149.5, "language": "Francês / taitiano", "stillTied": "Coletividade da França — sem soberania plena hoje", "wiki": "Polinésia Francesa", "independence": null,
+      "periods": [ { "colonizer": "FR", "from": 1842, "to": 9999, "method": "Coletividade de ultramar francesa (atual)" } ] },
+
+    { "name": "Guiana", "iso": "328", "lat": 5.0, "lon": -59.0, "language": "Inglês", "stillTied": "Commonwealth", "wiki": "Guiana Britânica", "independence": 1966,
+      "periods": [
+        { "colonizer": "NL", "from": 1616, "to": 1814, "method": "Colônias holandesas cedidas aos britânicos" },
+        { "colonizer": "GB", "from": 1814, "to": 1966, "method": "Guiana Britânica, descolonização" }
+      ] },
+    { "name": "Guiana Francesa", "iso": "254", "lat": 4.0, "lon": -53.0, "language": "Francês", "stillTied": "Departamento da França — sem soberania plena hoje", "wiki": "Guiana Francesa", "independence": null,
+      "periods": [ { "colonizer": "FR", "from": 1643, "to": 9999, "method": "Departamento ultramarino francês (atual)" } ] },
+    { "name": "Bahamas", "iso": "044", "lat": 24.5, "lon": -76.5, "language": "Inglês", "stillTied": "Commonwealth / monarca como chefe de Estado", "wiki": "Bahamas", "independence": 1973,
+      "periods": [ { "colonizer": "GB", "from": 1718, "to": 1973, "method": "Descolonização" } ] },
+    { "name": "Belize", "iso": "084", "lat": 17.2, "lon": -88.7, "language": "Inglês / espanhol", "stillTied": "Commonwealth", "wiki": "Honduras Britânicas", "independence": 1981,
+      "periods": [ { "colonizer": "GB", "from": 1862, "to": 1981, "method": "Honduras Britânicas, descolonização" } ] },
+
+    { "name": "Fiji", "iso": "242", "lat": -17.8, "lon": 178.0, "language": "Inglês / fijiano", "stillTied": "Commonwealth", "wiki": "Fiji", "independence": 1970,
+      "periods": [ { "colonizer": "GB", "from": 1874, "to": 1970, "method": "Colônia britânica, descolonização" } ] },
+    { "name": "Ilhas Salomão", "iso": "090", "lat": -9.0, "lon": 160.0, "language": "Inglês", "stillTied": "Commonwealth", "wiki": "Ilhas Salomão", "independence": 1978,
+      "periods": [ { "colonizer": "GB", "from": 1893, "to": 1978, "method": "Protetorado britânico, descolonização" } ] },
+    { "name": "Vanuatu", "iso": "548", "lat": -16.0, "lon": 167.0, "language": "Bislamá / inglês / francês", "stillTied": "Commonwealth / Francofonia", "wiki": "Vanuatu", "independence": 1980,
+      "periods": [
+        { "colonizer": "FR", "from": 1906, "to": 1980, "method": "Condomínio franco-britânico das Novas Hébridas", "partial": true },
+        { "colonizer": "GB", "from": 1906, "to": 1980, "method": "Condomínio franco-britânico, descolonização" }
+      ] },
+
+    { "name": "Botsuana", "iso": "072", "lat": -22.0, "lon": 24.0, "language": "Inglês / tswana", "stillTied": "Commonwealth", "wiki": "Botsuana", "independence": 1966,
+      "periods": [ { "colonizer": "GB", "from": 1885, "to": 1966, "method": "Protetorado de Bechuanalândia, descolonização" } ] },
+    { "name": "Malawi", "iso": "454", "lat": -13.5, "lon": 34.0, "language": "Inglês / chichewa", "stillTied": "Commonwealth", "wiki": "Malawi", "independence": 1964,
+      "periods": [ { "colonizer": "GB", "from": 1891, "to": 1964, "method": "Niassalândia, descolonização" } ] },
+
+    { "name": "Camboja", "iso": "116", "lat": 12.5, "lon": 105.0, "language": "Khmer", "stillTied": "Francofonia", "wiki": "Camboja", "independence": 1953,
+      "periods": [ { "colonizer": "FR", "from": 1863, "to": 1953, "method": "Parte da Indochina Francesa" } ] },
+    { "name": "Laos", "iso": "418", "lat": 18.0, "lon": 105.0, "language": "Laosiano", "stillTied": "Francofonia", "wiki": "Laos", "independence": 1953,
+      "periods": [ { "colonizer": "FR", "from": 1893, "to": 1953, "method": "Parte da Indochina Francesa" } ] },
+    { "name": "Bangladesh", "iso": "050", "lat": 24.0, "lon": 90.0, "language": "Bengali / inglês", "stillTied": "Commonwealth / inglês", "wiki": "Partição da Índia", "independence": 1947,
+      "periods": [ { "colonizer": "GB", "from": 1757, "to": 1947, "method": "Bengala Oriental; depois Paquistão Oriental até 1971" } ] },
+
+    { "name": "Barbados", "iso": "052", "lat": 13.2, "lon": -59.5, "dot": true, "language": "Inglês", "stillTied": "Commonwealth (república desde 2021)", "wiki": "Barbados", "independence": 1966,
+      "periods": [ { "colonizer": "GB", "from": 1627, "to": 1966, "method": "Descolonização" } ] },
+    { "name": "Granada", "iso": "308", "lat": 12.1, "lon": -61.7, "dot": true, "language": "Inglês", "stillTied": "Commonwealth", "wiki": "Granada (país)", "independence": 1974,
+      "periods": [
+        { "colonizer": "FR", "from": 1649, "to": 1763, "method": "Cedida aos britânicos" },
+        { "colonizer": "GB", "from": 1763, "to": 1974, "method": "Descolonização" }
+      ] },
+    { "name": "Santa Lúcia", "iso": "662", "lat": 13.9, "lon": -60.97, "dot": true, "language": "Inglês / crioulo francês", "stillTied": "Commonwealth", "wiki": "Santa Lúcia", "independence": 1979,
+      "periods": [
+        { "colonizer": "FR", "from": 1660, "to": 1814, "method": "Disputada, cedida aos britânicos" },
+        { "colonizer": "GB", "from": 1814, "to": 1979, "method": "Descolonização" }
+      ] },
+    { "name": "Antígua e Barbuda", "iso": "028", "lat": 17.1, "lon": -61.8, "dot": true, "language": "Inglês", "stillTied": "Commonwealth", "wiki": "Antígua e Barbuda", "independence": 1981,
+      "periods": [ { "colonizer": "GB", "from": 1632, "to": 1981, "method": "Descolonização" } ] },
+    { "name": "Dominica", "iso": "212", "lat": 15.4, "lon": -61.4, "dot": true, "language": "Inglês / crioulo", "stillTied": "Commonwealth", "wiki": "Dominica", "independence": 1978,
+      "periods": [ { "colonizer": "GB", "from": 1763, "to": 1978, "method": "Descolonização" } ] },
+    { "name": "São Vicente e Granadinas", "iso": "670", "lat": 13.0, "lon": -61.2, "dot": true, "language": "Inglês", "stillTied": "Commonwealth", "wiki": "São Vicente e Granadinas", "independence": 1979,
+      "periods": [ { "colonizer": "GB", "from": 1763, "to": 1979, "method": "Descolonização" } ] },
+    { "name": "Maurício", "iso": "480", "lat": -20.3, "lon": 57.5, "dot": true, "language": "Inglês / francês / crioulo", "stillTied": "Commonwealth / Francofonia", "wiki": "Maurícia", "independence": 1968,
+      "periods": [
+        { "colonizer": "FR", "from": 1715, "to": 1810, "method": "Tomada pelos britânicos" },
+        { "colonizer": "GB", "from": 1810, "to": 1968, "method": "Descolonização" }
+      ] },
+    { "name": "Sechelles", "iso": "690", "lat": -4.7, "lon": 55.5, "dot": true, "language": "Crioulo / inglês / francês", "stillTied": "Commonwealth", "wiki": "Seicheles", "independence": 1976,
+      "periods": [
+        { "colonizer": "FR", "from": 1756, "to": 1810, "method": "Tomada pelos britânicos" },
+        { "colonizer": "GB", "from": 1810, "to": 1976, "method": "Descolonização" }
+      ] },
+    { "name": "Maldivas", "iso": "462", "lat": 3.2, "lon": 73.2, "dot": true, "language": "Divehi", "stillTied": "Commonwealth", "wiki": "Maldivas", "independence": 1965,
+      "periods": [
+        { "colonizer": "PT", "from": 1558, "to": 1573, "method": "Breve ocupação portuguesa", "partial": true },
+        { "colonizer": "GB", "from": 1887, "to": 1965, "method": "Protetorado britânico, descolonização" }
+      ] },
+    { "name": "Malta", "iso": "470", "lat": 35.9, "lon": 14.4, "dot": true, "language": "Maltês / inglês", "stillTied": "Commonwealth", "wiki": "Malta", "independence": 1964,
+      "periods": [
+        { "colonizer": "FR", "from": 1798, "to": 1800, "method": "Breve ocupação napoleônica, expulsa pelos britânicos", "partial": true },
+        { "colonizer": "GB", "from": 1800, "to": 1964, "method": "Colônia britânica, descolonização" }
+      ] },
+    { "name": "Tonga", "iso": "776", "lat": -21.2, "lon": -175.2, "dot": true, "language": "Tonganês / inglês", "stillTied": "Commonwealth", "wiki": "Tonga", "independence": 1970,
+      "periods": [ { "colonizer": "GB", "from": 1900, "to": 1970, "method": "Protetorado britânico" } ] },
+    { "name": "Samoa", "iso": "882", "lat": -13.8, "lon": -172.1, "dot": true, "language": "Samoano / inglês", "stillTied": "Commonwealth", "wiki": "Samoa", "independence": 1962,
+      "periods": [
+        { "colonizer": "DE", "from": 1900, "to": 1914, "method": "Samoa Alemã, ocupada pela Nova Zelândia" },
+        { "colonizer": "GB", "from": 1914, "to": 1962, "method": "Mandato neozelandês, independência em 1962" }
+      ] },
+    { "name": "Cingapura", "iso": "702", "lat": 1.35, "lon": 103.8, "dot": true, "language": "Inglês / mandarim / malaio / tâmil", "stillTied": "Commonwealth / inglês", "wiki": "Singapura", "independence": 1965,
+      "periods": [ { "colonizer": "GB", "from": 1819, "to": 1963, "method": "Porto britânico; via Malásia, independência em 1965" } ] }
+  ]
+}
