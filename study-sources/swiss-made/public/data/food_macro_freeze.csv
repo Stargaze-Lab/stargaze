@@ -1,0 +1,10 @@
+indicator_id,period,value,unit_denominator,geography,evidence_state,source,locator,notes
+food_available_total,2024,809,kg/person/year,Switzerland,OBSERVED,Agristat Food Balance 2024,Nahrungsmittelbilanz 2024; Table summary,"availability, not measured ingestion"
+food_available_plant,2024,505,kg/person/year,Switzerland,OBSERVED,Agristat Food Balance 2024,Nahrungsmittelbilanz 2024,availability
+food_available_animal,2024,304,kg/person/year,Switzerland,OBSERVED,Agristat Food Balance 2024,Nahrungsmittelbilanz 2024,availability
+domestic_share_total,2024,50,percent of available metabolizable energy,Switzerland,OBSERVED,Agristat Food Balance 2024,Table 8 / macro summary,not mass share
+domestic_share_plant,2024,31,percent of available metabolizable energy,Switzerland,OBSERVED,Agristat Food Balance 2024,Table 8 / macro summary,not mass share
+domestic_share_animal,2024,93,percent of available metabolizable energy,Switzerland,OBSERVED,Agristat Food Balance 2024,Table 8 / macro summary,not mass share
+uaa_total,2024,1041000,ha UAA/SAU,Switzerland,OBSERVED,BLW/BFS Agricultural structural survey 2024,published structural survey,not AREA
+uaa_grass_share,2024,58,percent of UAA,Switzerland,OBSERVED,BLW/BFS Agricultural structural survey 2024,published structural survey,not AREA
+uaa_arable_share,2024,38,percent of UAA,Switzerland,OBSERVED,BLW/BFS Agricultural structural survey 2024,published structural survey,not AREA

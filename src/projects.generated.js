@@ -17,7 +17,7 @@ export const projects = [
     "accent": "sage",
     "span": "standard",
     "visual": "swiss-territory",
-    "href": "./studies/switzerland-2050/",
+    "href": "./studies/swiss-made/",
     "portfolioCopy": {
       "pt": [
         "Uma investigação interativa sobre como a Suíça produz, importa, transforma e comercializa alimentos — e o que as mudanças climáticas e os limites do território podem significar para seu futuro.",

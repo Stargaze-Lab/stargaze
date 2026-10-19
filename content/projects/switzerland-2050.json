@@ -1,6 +1,6 @@
 {
-  "slug": "switzerland-2050",
-  "title": "Switzerland 2050 — Food × Territory",
+  "slug": "Swiss Made",
+  "title": "Label is not the Origin",
   "eyebrow": "Data Visualization · 2026",
   "summary": "An interactive investigation into how Switzerland produces, imports, transforms and trades food — and what a changing climate and limited territory could mean for its future.",
   "description": "An interactive investigation into how Switzerland produces, imports, transforms and trades food — and what a changing climate and limited territory could mean for its future.\n\nUsing Swiss open data, the project reveals the dependencies behind local food production, from global supply chains to the competing demands of agriculture, cities, forests and mountains.\n\nCombining data storytelling, generative visuals, interactive cartography and an experimental scenario lab, the experience invites visitors to explore the complexity of food systems and the choices ahead.\n\nAn independent Stargaze experiment in data journalism, creative coding and AI-assisted research.",
@@ -15,7 +15,7 @@
   "accent": "sage",
   "span": "standard",
   "visual": "swiss-territory",
-  "href": "./studies/switzerland-2050/",
+  "href": "./studies/swiss-made/",
   "portfolioCopy": {
     "pt": [
       "Uma investigação interativa sobre como a Suíça produz, importa, transforma e comercializa alimentos — e o que as mudanças climáticas e os limites do território podem significar para seu futuro.",

@@ -1,3 +1,7 @@
+# Atualização v12 · 17/10/2026
+
+Rota do novo case: `/studies/swiss-made/`; build bilíngue v1.3 integrado e fonte em `study-sources/swiss-made/`. Link anterior redireciona. Markdown Field Notes em `field-notes/AAAA-MM-DD-slug.md`, importado por `scripts/markdown-notes.mjs` no sync/build. Ver guia nessa pasta; somente status published entra na home. Preservar o fluxo JSON/editor. Entrega completa, sem depender do patch v11.
+
 # Stargaze — contexto para continuar
 
 Atualizado em 16/10/2026. Comece por este arquivo e por AGENTS.md; leia somente os arquivos relevantes à próxima tarefa. O objetivo agora é publicar textos autorais e desenvolver estudos, sem reabrir o redesign geral da home.
@@ -114,3 +118,7 @@ Capa SVG minimalista em verde-sálvia, no cartão e no popup. `src/swiss-outline
 Movimento limitado a poucos pixels. Respeita redução de movimento e botão global de pausa; suspende fora da tela e com a aba oculta. Montagem/desmontagem remove animação, eventos e observadores. O hero mantém suas quatro cenas. As demais cartelas mantêm o comportamento inline aprovado.
 
 Verificação: build, testes existentes de publicação/navegação/renderizadores, navegador Chromium em 1440px/390px, ausência de sobreposição e rolagem horizontal, abertura/fechamento/reabertura, textos PT/EN e descrições, hover, pausa, redução de movimento e carregamento do estudo sem erros JS ou assets locais 404. Revisão visual com fontes da Stargaze. Não foi feita uma nova auditoria de dados, áudio ou de todos os controles internos dos estudos. Nenhuma publicação remota executada; o usuário publica pelo GitHub Pages.
+
+## Patch de rota v11 — 16/10/2026
+
+O endereço do estudo passa a /studies/swiss-made/. O identificador interno switzerland-2050 permanece para preservar a home e traduções. Entrega pequena: stargaze-rota-swiss-made-v11.zip. Aplicador muda somente href, move a pasta anterior se necessário e preserva qualquer estudo já presente no destino. URL antiga redireciona com query/hash. Não redistribuir a versão antiga do estudo junto deste patch. Build e navegação/publicação passaram; migração repetida e redirecionamento verificados.

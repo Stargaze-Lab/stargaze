@@ -1,3 +1,7 @@
+# Entrega v12 — 17/10/2026
+
+Pacote completo, rota `/studies/swiss-made/` e publicação de Field Notes por Markdown. Comece por [LEIA-ME-v12.md](LEIA-ME-v12.md) e [field-notes/README.md](field-notes/README.md).
+
 # Stargaze — publicação
 
 Versão Equilíbrio preparada para publicar na raiz de `stargaze.glitchme.art`. Veja **PUBLICAR.md** para atualizar o repositório existente e **TEXTOS-DO-SITE.md** para a edição dos textos.

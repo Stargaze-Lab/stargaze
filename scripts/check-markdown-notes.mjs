@@ -1,0 +1,51 @@
+import assert from 'node:assert/strict';
+import { mkdtemp, mkdir, writeFile, readFile, rm, access } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { resolve } from 'node:path';
+import { readMarkdownNotes, syncMarkdownAssets } from './markdown-notes.mjs';
+import { publicationHTML } from '../tools/editor/publication.mjs';
+
+const root = await mkdtemp(resolve(tmpdir(), 'stargaze-markdown-'));
+const file = resolve(root, 'field-notes/2026-10-17-minha-nota.md');
+const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/l9sAAAAASUVORK5CYII=', 'base64');
+const entry = (status = 'published', path = 'images/foto.png') => `---\ntitle: "Uma nota: imagem e texto"\nauthor: Autoria de teste\nsummary: Resumo\nformat: ensaio\nstatus: ${status}\n---\n## Seção\n\nTexto **forte** e <script>alert(1)</script>.\n\n![Descrição acessível](${path} "Legenda da foto")`;
+try {
+  await mkdir(resolve(root, 'field-notes/images'), { recursive: true });
+  await writeFile(resolve(root, 'field-notes/images/foto.png'), png);
+  await writeFile(resolve(root, 'field-notes/_modelo.md'), 'IGNORADO');
+  await writeFile(file, entry());
+  let records = await readMarkdownNotes(root);
+  assert.equal(records.length, 1);
+  const note = records[0].note;
+  assert.equal(note.date, '2026-10-17'); assert.equal(note.slug, 'minha-nota');
+  assert.equal(note.media[0].alt, 'Descrição acessível');
+  const html = publicationHTML(note);
+  assert.ok(html.includes('<strong>forte</strong>') && html.includes('&lt;script&gt;'));
+  assert.ok(html.includes('Legenda da foto') && html.includes(`./media/${note.media[0].file}`));
+  await syncMarkdownAssets(root, records);
+  assert.deepEqual(await readFile(resolve(root, 'public/notes/minha-nota/media', note.media[0].file)), png);
+  await assert.rejects(syncMarkdownAssets(root, records, [{slug:'minha-nota'}]), /duplicado/);
+  await syncMarkdownAssets(root, records); // repeatable
+  await mkdir(resolve(root, 'public/notes/editor-note'), {recursive:true});
+  await writeFile(resolve(root, 'public/notes/editor-note/index.html'), 'Preservar');
+  await writeFile(file, entry('draft', 'images/ainda-nao-existe.png'));
+  records = await readMarkdownNotes(root); await syncMarkdownAssets(root, records);
+  await assert.rejects(access(resolve(root, 'public/notes/minha-nota')));
+  await access(resolve(root, 'public/notes/editor-note/index.html'));
+  await writeFile(resolve(root, 'fora.png'), png);
+  await writeFile(file, entry('published', '../fora.png'));
+  await assert.rejects(readMarkdownNotes(root), /fora de field-notes/);
+  await writeFile(file, entry('published', 'https://example.com/a.png'));
+  await assert.rejects(readMarkdownNotes(root), /imagem local/);
+  await writeFile(file, entry('published').replace('![Descrição acessível]', '![]'));
+  await assert.rejects(readMarkdownNotes(root), /Descreva/);
+  await writeFile(file, entry());
+  await writeFile(resolve(root, 'field-notes/2026-02-30-invalida.md'), entry());
+  await assert.rejects(readMarkdownNotes(root), /data válida/);
+  await rm(resolve(root, 'field-notes/2026-02-30-invalida.md'));
+  await syncMarkdownAssets(root, await readMarkdownNotes(root));
+  await rm(file);
+  await syncMarkdownAssets(root, await readMarkdownNotes(root));
+  await assert.rejects(access(resolve(root, 'public/notes/minha-nota')));
+  console.log('Markdown checks passed: dates, image copy, accessible rendering, drafts, deletion, editor preservation and invalid inputs.');
+} finally { await rm(root, {recursive:true, force:true}); }
