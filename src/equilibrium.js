@@ -1,4 +1,4 @@
-import {projects,sketches} from './projects.generated.js';
+import {resolveHomeGroups} from './project-catalog.js';
 import {notes} from './notes.generated.js';
 import home from '../content/home.json';
 import {createFieldEngine,nextSceneIndex} from './visual-fields.js';
@@ -17,10 +17,14 @@ const scenes=[
   {id:'kaleidoscope',name:'Caleidoscópio · matéria em simetria',short:'Lente',color:'#a8c8bc'},
 ];
 const sketchModules=import.meta.glob('./sketches/*.js');
-const sourceEntries=new Map([...projects,...sketches].map(entry=>[entry.slug,entry]));
-const groups={selection:home.selection,instruments:home.instruments,shelf:home.shelf};
-const collection=Object.values(groups).flat().map(item=>({...sourceEntries.get(item.slug),...item}));
+const projectRecords=Object.values(import.meta.glob('../content/projects/*.json',{eager:true,import:'default'}));
+const sketchRecords=Object.values(import.meta.glob('../content/sketches/*.json',{eager:true,import:'default'}));
+const groups=resolveHomeGroups(home,[...projectRecords,...sketchRecords]);
+const collection=Object.values(groups).flat();
 const bySlug=new Map(collection.map(item=>[item.slug,item]));
+const englishCopy=entry=>entry.portfolioCopy?.en
+  ? [entry.eyebrow||entry.category,entry.portfolioCopy.en[0],entry.state||'']
+  : projectEnglish[entry.slug]||[entry.category,entry.summary,entry.state||''];
 const engine=createFieldEngine();
 const abort=new AbortController();
 const on=(el,event,fn)=>el.addEventListener(event,fn,{signal:abort.signal});
@@ -94,7 +98,7 @@ function projectHref(entry){
 function openProject(slug){
   const entry=bySlug.get(slug);if(!entry)return;
   selectProject(slug);cleanupStage();dialogIndex=collection.findIndex(e=>e.slug===slug);
-  const translated=projectEnglish[entry.slug];
+  const translated=englishCopy(entry);
   document.querySelector('#project-dialog-label').textContent=t(entry.category,translated[0]);
   document.querySelector('#project-dialog-title').textContent=entry.title;
   document.querySelector('#project-dialog-summary').textContent=t(entry.summary,translated[1]);
@@ -103,7 +107,8 @@ function openProject(slug){
   context.open=false;context.querySelector('summary').textContent=copy?t('Sobre o estudo','About the study'):t('Contexto e referências','Context and references');
   document.querySelector('#project-dialog-references').innerHTML=copy?copy.slice(1).map((paragraph,index)=>index===copy.length-2?`<p><em>${escapeHTML(paragraph)}</em></p>`:`<p>${escapeHTML(paragraph)}</p>`).join(''):entry.slug==='lissajous'?renderLissajousContext(language):'';
   document.querySelector('#project-dialog-tags').innerHTML=(entry.tools||[]).map(tag=>`<span>${escapeHTML(tag)}</span>`).join('');
-  document.querySelector('#project-dialog-hint').textContent=entry.scene==='swiss-territory'?t('Passe o ponteiro ou toque para revelar as texturas do território.','Move your pointer or touch to reveal the textures of the territory.'):entry.scene==='network'?t('Arraste um nó para puxar a rede. Arraste o vazio para girar.','Drag a node to pull the network. Drag empty space to rotate.'):entry.scene==='kaleidoscope'?t('Arraste para reorganizar os fragmentos.','Drag to rearrange the fragments.'):entry.scene==='lissajous'?t('Clique para mudar a fase. Arraste para explorar a curva.','Click to shift the phase. Drag to explore the curve.'):t('Explore a capa com o mouse ou o toque.','Explore the cover with your pointer or touch.');
+  document.querySelector('#project-dialog-hint').textContent='';
+  document.querySelector('#project-dialog-hint').hidden=true;
   const action=document.querySelector('#project-dialog-action');action.replaceChildren();
   const href=projectHref(entry);
   if(entry.status==='live' && entry.sketch && sketchModules['./sketches/'+entry.sketch+'.js']){
@@ -112,12 +117,13 @@ function openProject(slug){
   }else if(href && entry.slug!=='life-threads') {
     const link=document.createElement('a');link.href=href;if(entry.slug==='lissajous'){const url=new URL(href);url.searchParams.set('lang',language);link.href=url.href;}link.target='_blank';link.rel='noopener noreferrer';link.className='outline-button';link.textContent=t('Abrir projeto completo ↗','Open full project ↗');action.append(link);
   }else{
-    const note=document.createElement('p');note.textContent=entry.slug==='life-threads'?t('Pesquisa pausada.','Research on hold.'):t('Capa animada. Experimento completo em integração.','Animated cover. Full experiment awaiting integration.');action.append(note);
+    const note=document.createElement('p');note.textContent=entry.slug==='life-threads'?t('Pesquisa pausada.','Research on hold.'):t('Estudo em desenvolvimento.','Study in development.');action.append(note);
   }
   if(!dialog.open)dialog.showModal();dialog.scrollTop=0;
   dialogField=entry.scene==='swiss-territory'?mountSwissCover(dialogArt,{paused:engine.paused}):engine.mount(dialogArt,entry.scene);
   dialogArt.dataset.cursor=entry.scene==='swiss-territory'?'explore':'drag';
-  document.querySelector('.dialog-caption').textContent=entry.scene==='swiss-territory'?t('Territórios imaginados. Capa abstrata, sem correspondência com usos reais do solo.','Imagined territories. An abstract cover, not a map of actual land use.'):t('Estudo de capa generativa.','Generative cover study.');
+  document.querySelector('.dialog-caption').textContent='';
+  document.querySelector('.dialog-caption').hidden=true;
 }
 async function startSketch(entry,button){
   cleanupStage();const token=loadToken;button.disabled=true;button.textContent=t('Abrindo instrumento…','Opening instrument…');
@@ -131,6 +137,7 @@ async function startSketch(entry,button){
     if(token!==loadToken||!dialog.open){cleanup?.();return;}
     cleanupSketch=typeof cleanup==='function'?cleanup:module.cleanup;
     document.querySelector('#project-dialog-hint').textContent=entry.sketch==='chromascope'?t('Arraste a lente para girar. Compor permite editar as peças.','Drag the lens to rotate. Compose lets you edit the pieces.'):entry.sketch==='lissajous'?t('Arraste para mudar a fase. Ajustar abre os controles.','Drag to shift phase. Settings opens the controls.'):t('Explore o instrumento e seus controles dentro do quadro.','Explore the instrument and its controls inside the frame.');
+    document.querySelector('#project-dialog-hint').hidden=false;
     button.textContent=t('Instrumento aberto','Instrument open');
   }catch(error){
     if(token!==loadToken)return;
@@ -163,7 +170,7 @@ const cycle=setInterval(()=>{
 },160);
 let cleanupNotes=mountNotes(notes);
 function updateLanguage(){
-  document.querySelectorAll('[data-card]').forEach(card=>{const entry=bySlug.get(card.dataset.card),en=projectEnglish[entry.slug];card.querySelector('.card-category').textContent=t(entry.category,en[0]);card.querySelector('.card-summary').textContent=t(entry.summary,en[1]);const state=card.querySelector('.card-state');if(state)state.textContent=t(entry.state,en[2]);card.querySelector('.card-tune').ariaLabel=t(`Abrir ${entry.title}`,`Open ${entry.title}`);});
+  document.querySelectorAll('[data-card]').forEach(card=>{const entry=bySlug.get(card.dataset.card),en=englishCopy(entry);card.querySelector('.card-category').textContent=t(entry.category,en[0]);card.querySelector('.card-summary').textContent=t(entry.summary,en[1]);const state=card.querySelector('.card-state');if(state)state.textContent=t(entry.state,en[2]);card.querySelector('.card-tune').ariaLabel=t(`Abrir ${entry.title}`,`Open ${entry.title}`);});
   document.querySelectorAll('[data-scene-index]').forEach(b=>{const i=Number(b.dataset.sceneIndex)+1;b.ariaLabel=t(`Cena ${i} de ${scenes.length}`,`Scene ${i} of ${scenes.length}`);});
   updatePauseButton();if(!selectedSlug)document.querySelector('#focus-message').textContent=t('Um mesmo lugar. Diferentes formas de olhar.','One place. Different ways of seeing.');
   else document.querySelector('#focus-message').textContent=t(`Campo sintonizado: ${bySlug.get(selectedSlug).title}.`,`Field tuned to ${bySlug.get(selectedSlug).title}.`);

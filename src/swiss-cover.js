@@ -42,9 +42,6 @@ export function swissCoverSvg(id='swiss-plate'){
       </g>
       <use href="#${id}-outline" stroke="currentColor" stroke-width="1.2" opacity=".65" stroke-linejoin="round"/>
     </g>
-    <g fill="currentColor" font-family="'DM Mono',monospace" font-size="11" letter-spacing="2" opacity=".44">
-      <text x="78" y="60">CH / 2050</text><text x="1122" y="60" text-anchor="end">FOOD × TERRITORY</text>
-    </g>
     <g class="swiss-key" transform="translate(360 747)" stroke="currentColor" stroke-width="1.1" opacity=".38">
       ${[0,1,2,3].map((i)=>`<use href="#${id}-glyph-${i}" x="${i*160}"/><path d="M${i*160+24} 0h56" stroke-dasharray="1 6"/>`).join('')}
     </g>

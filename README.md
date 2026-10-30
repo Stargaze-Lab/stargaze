@@ -1,3 +1,9 @@
+# Correção v14 — 28/10/2026
+
+A home lê os cadastros diretamente de content/projects e content/sketches. src/project-catalog.js resolve os identificadores (incluindo switzerland-2050 → swiss-made), prioriza os textos aprovados do projeto e rejeita cartões sem título, resumo ou link. O build executa essa validação. O arquivo projects.generated.js permanece para as outras páginas; a home não depende mais dele.
+
+O cartão de Swiss Made exibe título e resumo, e o popup tem o link para o estudo. Textos explicativos da capa foram removidos dos popups; instruções dos instrumentos aparecem somente depois de iniciá-los. Ver CORRECAO-CARTAO-v14.md.
+
 # Entrega v12 — 17/10/2026
 
 Pacote completo, rota `/studies/swiss-made/` e publicação de Field Notes por Markdown. Comece por [LEIA-ME-v12.md](LEIA-ME-v12.md) e [field-notes/README.md](field-notes/README.md).

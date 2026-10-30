@@ -25,7 +25,6 @@ const staticCopy={
   '#about-title':'One laboratory.<br /><em>Many questions.</em>',
   '.about-content p':'Stargaze grew from a desire to make projects that rarely find space in everyday design work. An independent practice of exploration, innovation and experimentation.',
   '.site-footer>span':'A field always in the making.','.archive-link':'View earlier studies',
-  '.dialog-caption':'Generative cover study.',
 };
 const originals=new Map();
 export function applyLanguage(){
@@ -60,11 +59,11 @@ export function mountLanguage(onChange){
   return()=>{abort.abort();geoAbort.abort();};
 }
 export const projectEnglish={
-  "switzerland-2050":["Data Visualization · 2026", "An interactive investigation into how Switzerland produces, imports, transforms and trades food — and what a changing climate and limited territory could mean for its future.", ""],
+  "swiss-made":["Data Visualization / Interactive Storytelling · 2026", "An interactive investigation into how Switzerland produces, imports and transforms food, revealing the systems and territorial limits behind the label “Swiss made.”", ""],
   'wikiverso':['Knowledge atlas','One idea leads to another. Small universes emerge from connections between subjects.',''],
   'colony-globe':['Data · territory · power','Six centuries of colonial rule, explored across space and time.',''],
   'celeste':['Personal celestial atlas','A place, a moment and a sky to explore.',''],
-  'music-box':['Sound instrument','Musical pieces arranged in space. The cover previews the sequential pulse of the next version.','Experiment available'],
+  'music-box':['Sound instrument','An instrument for composing with musical pieces and turning space into rhythm.','Experiment available'],
   'lissajous':['Frequency · phase · form','Two notes. One living curve.','Experiment available'],
   'chromascope':['Lens · symmetry · matter','Fragments transform into a field of reflections.','Experiment available'],
   'life-threads':['Interwoven biographies','Research on hold until a broader event dataset is available.','On hold'],

@@ -1,15 +1,17 @@
 {
-  "slug": "Swiss Made",
-  "title": "Label is not the Origin",
-  "eyebrow": "Data Visualization · 2026",
-  "summary": "An interactive investigation into how Switzerland produces, imports, transforms and trades food — and what a changing climate and limited territory could mean for its future.",
-  "description": "An interactive investigation into how Switzerland produces, imports, transforms and trades food — and what a changing climate and limited territory could mean for its future.\n\nUsing Swiss open data, the project reveals the dependencies behind local food production, from global supply chains to the competing demands of agriculture, cities, forests and mountains.\n\nCombining data storytelling, generative visuals, interactive cartography and an experimental scenario lab, the experience invites visitors to explore the complexity of food systems and the choices ahead.\n\nAn independent Stargaze experiment in data journalism, creative coding and AI-assisted research.",
+  "slug": "swiss-made",
+  "title": "The Label Is Not the Origin",
+  "eyebrow": "Data Visualization / Interactive Storytelling · 2026",
+  "category": "Data Visualization / Interactive Storytelling",
+  "year": 2026,
+  "credit": "Stargaze",
+  "summary": "An interactive investigation into how Switzerland produces, imports and transforms food, revealing the systems and territorial limits behind the label “Swiss made.”",
+  "description": "An interactive investigation into how Switzerland produces, imports and transforms food, revealing the systems and territorial limits behind the label “Swiss made.”",
   "tools": [
     "Data Visualization",
     "Interactive Storytelling",
-    "Creative Coding",
-    "Open Data",
-    "2026"
+    "2026",
+    "Stargaze"
   ],
   "date": "2026-10-15",
   "accent": "sage",
@@ -18,16 +20,12 @@
   "href": "./studies/swiss-made/",
   "portfolioCopy": {
     "pt": [
-      "Uma investigação interativa sobre como a Suíça produz, importa, transforma e comercializa alimentos — e o que as mudanças climáticas e os limites do território podem significar para seu futuro.",
-      "A partir de dados públicos suíços, o projeto revela as dependências por trás da produção local, das cadeias internacionais de abastecimento à disputa por espaço entre agricultura, cidades, florestas e montanhas.",
-      "Combinando storytelling de dados, visualizações generativas, cartografia interativa e um laboratório experimental de cenários, a experiência convida o público a explorar a complexidade dos sistemas alimentares e as escolhas para o futuro.",
-      "Um experimento independente da Stargaze em jornalismo de dados, creative coding e pesquisa assistida por inteligência artificial."
+      "Uma investigação interativa sobre como a Suíça produz, importa e transforma alimentos, revelando os sistemas e os limites territoriais por trás do rótulo “Swiss made”.",
+      "Crédito: Stargaze · 2026."
     ],
     "en": [
-      "An interactive investigation into how Switzerland produces, imports, transforms and trades food — and what a changing climate and limited territory could mean for its future.",
-      "Using Swiss open data, the project reveals the dependencies behind local food production, from global supply chains to the competing demands of agriculture, cities, forests and mountains.",
-      "Combining data storytelling, generative visuals, interactive cartography and an experimental scenario lab, the experience invites visitors to explore the complexity of food systems and the choices ahead.",
-      "An independent Stargaze experiment in data journalism, creative coding and AI-assisted research."
+      "An interactive investigation into how Switzerland produces, imports and transforms food, revealing the systems and territorial limits behind the label “Swiss made.”",
+      "Credit: Stargaze · 2026."
     ]
   }
 }

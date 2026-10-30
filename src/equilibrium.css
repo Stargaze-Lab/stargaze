@@ -38,6 +38,7 @@ dialog{color:var(--ink);background:var(--bg);border:1px solid var(--line);paddin
 .works .project-grid .project-card[data-size=feature] .card-meta>div{max-width:53%}
 .works .project-grid .project-card[data-size=feature] h3{font-size:clamp(30px,4.2vw,60px);line-height:1.04;letter-spacing:-.045em;text-wrap:balance}
 .works .project-grid .project-card[data-size=feature] .card-category{color:#a8c8bc;max-width:300px}
+.works .project-grid .project-card[data-size=feature] .card-summary{display:block;font-size:clamp(14px,1.2vw,17px);line-height:1.55;max-width:42ch;margin:16px 0 0;color:var(--muted)}
 .swiss-cover{position:absolute;inset:0;overflow:hidden;color:#a8c8bc;pointer-events:none}
 .swiss-territory-svg{display:block;width:100%;height:100%;overflow:visible}
 .project-card[data-size=feature] .swiss-cover{inset:0 -2% 0 26%}
@@ -48,4 +49,6 @@ dialog{color:var(--ink);background:var(--bg);border:1px solid var(--line);paddin
   .works .project-grid .project-card[data-size=feature] .card-meta{padding:24px;background:linear-gradient(0deg,#0a0b0c 0%,#0a0b0ceb 20%,#0a0b0c00 60%)}
   .works .project-grid .project-card[data-size=feature] .card-meta>div{max-width:95%}
   .works .project-grid .project-card[data-size=feature] h3{font-size:clamp(28px,7.8cqw,48px);max-width:540px}
+  .works .project-grid .project-card[data-size=feature]{min-height:440px}
+  .works .project-grid .project-card[data-size=feature] .card-summary{font-size:14px;line-height:1.5}
 }

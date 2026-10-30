@@ -1,11 +1,11 @@
 {
   "selection": [
     {
-      "slug": "switzerland-2050",
+      "slug": "swiss-made",
       "scene": "swiss-territory",
       "color": "#a8c8bc",
-      "category": "Data Visualization · 2026",
-      "summary": "Uma investigação interativa sobre como a Suíça produz, importa, transforma e comercializa alimentos — e o que as mudanças climáticas e os limites do território podem significar para seu futuro.",
+      "category": "Data Visualization / Interactive Storytelling · 2026",
+      "summary": "Uma investigação interativa sobre como a Suíça produz, importa e transforma alimentos, revelando os sistemas e os limites territoriais por trás do rótulo “Swiss made”.",
       "size": "feature"
     },
     {
@@ -39,7 +39,7 @@
       "scene": "music",
       "color": "#e7bd6d",
       "category": "Instrumento sonoro",
-      "summary": "Peças musicais distribuídas no espaço. A capa antecipa o pulso sequencial da próxima versão.",
+      "summary": "Um instrumento para compor com peças musicais e transformar espaço em ritmo.",
       "state": "Experimento disponível",
       "size": "wide"
     },
