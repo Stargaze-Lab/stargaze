@@ -1,4 +1,14 @@
-# Correção v14 — 28/10/2026
+# Stargaze — versão completa v16 · 30/10/2026
+
+Esta é a entrega consolidada a partir do ZIP de 30/out. Inclui a fonte completa da home, os cadastros dos projetos e experimentos, os instrumentos inline, Field Notes e o Swiss Made exatamente como enviado em public/studies/swiss-made.
+
+Comece por **LEIA-ME-v16.md**. Não é necessário aplicar v13, v14 ou v15. As seções e documentos de entregas anteriores permanecem como histórico; as instruções atuais estão em LEIA-ME-v16.md e PUBLICAR.md.
+
+Com Node 22 instalado: `npm ci`, `npm run build`, `npm run preview`. O build inclui todos os estudos estáticos; o workflow do GitHub publica esse mesmo resultado sem fazer uma segunda cópia das pastas.
+
+Foram restaurados 53 arquivos ausentes, incluindo content/sketches, os outros projetos e os módulos de src. Os arquivos já presentes no envio foram preservados, exceto esta documentação de entrega, o workflow para retirar uma cópia redundante e os índices gerados pelo build.
+
+# Correção v14 — 28/10/2026 (histórico)
 
 A home lê os cadastros diretamente de content/projects e content/sketches. src/project-catalog.js resolve os identificadores (incluindo switzerland-2050 → swiss-made), prioriza os textos aprovados do projeto e rejeita cartões sem título, resumo ou link. O build executa essa validação. O arquivo projects.generated.js permanece para as outras páginas; a home não depende mais dele.
 

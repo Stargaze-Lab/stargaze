@@ -1,4 +1,16 @@
-# Atualização v12 · 17/10/2026
+# Estado atual — v16 · 30/10/2026
+
+Base autoritativa: ZIP stargaze_2026 out 30.zip enviado pelo usuário. O envio continha somente seis arquivos em src e dois JSONs em content; as pastas de instrumentos e os outros cadastros estavam ausentes. Foram restaurados 53 arquivos faltantes a partir da fonte completa v14, sem substituir os arquivos existentes do usuário. O build completo e a publicação devem ser feitos usando esta pasta inteira, não uma combinação de patches.
+
+Swiss Made: public/studies/swiss-made contém o build atualizado enviado pelo usuário, com a cesta ilustrada. Preservar seus bytes. A pasta study-sources/swiss-made também foi preservada do envio, mas é uma fonte anterior: não recompilar essa pasta sobre o build atual sem receber a fonte correspondente. Este trabalho não alterou a pesquisa, os textos ou os dados do estudo.
+
+Cartão: The Label Is Not the Origin, slug swiss-made, descrição PT/EN, link ./studies/swiss-made/, crédito Stargaze, 2026. O identificador antigo switzerland-2050 é aceito pelo resolver. Título e resumo visíveis; popup com ação antes dos detalhes; sem textos sobre capa/animação. O caminho público antigo redireciona para swiss-made.
+
+Home importa JSONs diretamente. src/project-catalog.js valida os relacionamentos e o build rejeita cartões sem cadastro/título/resumo/link. Field Notes por Markdown e editor local foram preservados; não há textos autorais publicados no material recebido. Não fabricar notas.
+
+GitHub Actions: npm run build já copia estudos via finalize-site.mjs; removida a cópia redundante no workflow. Entrega completa versionada: stargaze-2026-10-30-v16.zip. Orientação atual em LEIA-ME-v16.md e PUBLICAR.md; os textos abaixo são históricos.
+
+# Atualização v12 · 17/10/2026 (histórico)
 
 Rota do novo case: `/studies/swiss-made/`; build bilíngue v1.3 integrado e fonte em `study-sources/swiss-made/`. Link anterior redireciona. Markdown Field Notes em `field-notes/AAAA-MM-DD-slug.md`, importado por `scripts/markdown-notes.mjs` no sync/build. Ver guia nessa pasta; somente status published entra na home. Preservar o fluxo JSON/editor. Entrega completa, sem depender do patch v11.
 

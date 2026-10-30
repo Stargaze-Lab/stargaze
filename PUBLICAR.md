@@ -1,40 +1,31 @@
-# Publicar a Stargaze
+# Publicar a Stargaze — v16
 
-Este pacote promove a home Equilíbrio ao endereço principal `/`. Ele mantém os caminhos dos estudos existentes, o caderno local separado, PT/EN e as interações da versão aprovada. O domínio configurado em `public/CNAME` é `stargaze.glitchme.art`.
+A fonte completa está neste pacote. O domínio continua stargaze.glitchme.art. Comece por LEIA-ME-v16.md para testar a pasta separadamente e copiá-la para o repositório sem apagar arquivos.
 
-## Usando seu repositório atual no Mac
+## Build e publicação
 
-1. Guarde um ZIP ou um commit da versão atual antes de copiar os arquivos.
-2. Extraia este pacote e **mescle o conteúdo da pasta `stargaze` com a raiz do repositório atual**. Não substitua a pasta inteira: conserve `.git`, seus rascunhos locais, notas próprias e arquivos que você tenha alterado depois do ZIP enviado em 16 de outubro. Se houver alterações posteriores em um arquivo de mesmo nome, compare antes de substituir.
-3. No terminal dessa pasta, execute `npm ci` e depois `npm run build`.
-4. Execute `npm run preview`. Abra o endereço indicado, confira a home em português e inglês, os popups e os links para Wikiverso, Empires & Colonies e Celeste. No celular, confira também o tamanho dos cards e a rolagem.
-5. Faça commit e push no repositório de produção pelo seu fluxo habitual. O workflow **Deploy Stargaze portfolio to Pages** roda ao enviar para `main`; também pode ser iniciado em Actions → Run workflow.
-6. Quando o workflow terminar com sucesso, confira `https://stargaze.glitchme.art/`. Nas configurações existentes do Pages, mantenha a publicação por GitHub Actions e o domínio já configurado. Não há necessidade de mudar DNS para atualizar o conteúdo.
+1. Use Node 22, como no workflow do GitHub.
+2. Na raiz da pasta, rode `npm ci` e `npm run build`.
+3. Rode `npm run preview`. Confira a home PT/EN, o cartão The Label Is Not the Origin, o botão para /studies/swiss-made/ e os instrumentos inline.
+4. Faça commit/push pelo fluxo habitual. O workflow Deploy Stargaze portfolio to Pages roda ao enviar para main e publica dist.
+5. Aguarde o deploy concluir e confira o site. As configurações de domínio e DNS não precisam ser alteradas.
 
-O build inclui os estudos das pastas `colony`, `wikiverso`, `string-tuner` e `experimento-01`, além dos arquivos de `public/`. O editor e seus rascunhos ficam fora do resultado publicado. Não envie a pasta de rascunhos ao GitHub.
+O comando de build já inclui os estudos estáticos. O workflow não deve copiá-los novamente para dentro das próprias pastas. Dependências instaladas e dist são gerados localmente; não fazem parte do ZIP de fonte.
 
-## Textos e próximos posts
+## Swiss Made
 
-- Textos da home e apresentação dos projetos: veja `TEXTOS-DO-SITE.md`.
-- Artigos, ensaios, imagens e vídeos: execute `npm run editor` e siga `CADERNO-LOCAL.md`.
-- Um ZIP de nota deve ser mesclado na raiz do projeto; depois, gere e publique o site novamente. A nota passa a aparecer na home.
+O build atual enviado em 30/out está em `public/studies/swiss-made/`, preservado integralmente. O cadastro do cartão está em `content/projects/switzerland-2050.json` (nome legado), com slug `swiss-made` e título **The Label Is Not the Origin**. A seleção da home está em `content/home.json`.
 
-O layout anterior está guardado como fonte em `archive/home-before-equilibrium.html`. Os estudos antigos de layout continuam em `/design-studies/`, sem indexação e sem chamada na home principal. Nada é publicado no seu GitHub automaticamente por este pacote.
+Para atualizar o estudo no futuro, copie o conteúdo do novo dist do estudo diretamente para `public/studies/swiss-made/`: index.html, assets e data. Não crie uma pasta dist intermediária e não atualize apenas o dist da home, pois ele é recriado a cada build.
 
-## Switzerland 2050 — incluído na v10
+A fonte em `study-sources/swiss-made/` foi preservada do envio, mas é anterior ao build atual. Não a recompile sobre a versão atual; use a fonte correspondente à última versão do estudo.
 
-Esta entrega completa parte do ZIP de 16/out enviado pelo usuário. O cartão e os textos PT/EN já estão integrados, e o estudo compilado está em `public/studies/swiss-made/`. Não é necessário copiar os JSONs separadamente.
+## Field Notes
 
-1. Mescle a pasta `stargaze/` deste ZIP no seu repositório, preservando `.git` e arquivos alterados após o envio de 16/out.
-2. Rode `npm ci` e `npm run build`.
-3. Confira com `npm run preview`: cartão Switzerland 2050, texto PT/EN, popup e botão Abrir projeto completo.
-4. Faça commit/push pelo fluxo habitual. O GitHub Actions publica o resultado de `dist/`.
-5. Após concluir, confira `https://stargaze.glitchme.art/studies/swiss-made/`.
+O fluxo de Markdown está em `field-notes/README.md`. Crie um arquivo `AAAA-MM-DD-slug.md`, acrescente as fotos locais e use `status: published` quando quiser publicar. O build inclui a nota na home e gera sua página. Rascunhos não entram no site publicado.
 
-Para atualizar somente o estudo no futuro, copie o conteúdo do novo build para `public/studies/swiss-made/`: `index.html`, `assets/` e `data/` diretamente ali. Não coloque uma segunda pasta `dist` dentro e não edite somente o `dist` gerado pela Stargaze.
+O editor local continua disponível por `npm run editor`; instruções em CADERNO-LOCAL.md. As notas existentes não devem ser substituídas por modelos vazios.
 
-A capa pode ser editada em `src/swiss-cover.js` (símbolos/interação), `src/swiss-outline.js` (perímetro) e no bloco Switzerland 2050 de `src/equilibrium.css`. A cópia SVG estática está em `public/covers/switzerland-2050.svg`.
+## Atualizações completas
 
-## Field Notes em Markdown — v12
-
-Crie `field-notes/AAAA-MM-DD-slug.md` com `status: published`, conforme `field-notes/README.md`. O build gera a página e a inclui na home. Commit/push dispara o workflow; copiar Markdown diretamente no servidor estático não publica a nota.
+Ao copiar uma entrega, mescle os arquivos dentro do repositório. Não substitua uma pasta por outra parcial. A v16 já contém toda a estrutura necessária, sem depender dos patches v13, v14 ou v15. Compare alterações feitas depois do ZIP de 30/out antes de sobrescrever arquivos de mesmo nome.

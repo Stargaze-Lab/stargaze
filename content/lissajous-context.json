@@ -1,0 +1,28 @@
+{
+  "pt": {
+    "body": "Duas oscilações desenham uma curva. Estudadas por Bowditch e Lissajous, essas formas aproximam matemática, luz e som.",
+    "links": [
+      {
+        "label": "As curvas e sua história · Wikipédia",
+        "url": "https://pt.wikipedia.org/wiki/Curva_de_Lissajous"
+      },
+      {
+        "label": "Jules Lissajous · artigo original, 1857 (francês)",
+        "url": "https://gallica.bnf.fr/ark:/12148/bpt6k65708374/f151"
+      }
+    ]
+  },
+  "en": {
+    "body": "Two oscillations draw a curve. Studied by Bowditch and Lissajous, these forms connect mathematics, light and sound.",
+    "links": [
+      {
+        "label": "The curves and their history · Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Lissajous_curve"
+      },
+      {
+        "label": "Jules Lissajous · original paper, 1857 (French)",
+        "url": "https://gallica.bnf.fr/ark:/12148/bpt6k65708374/f151"
+      }
+    ]
+  }
+}
