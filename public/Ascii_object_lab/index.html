@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#070619" />
+  <meta name="description" content="A 3D ASCII type lab. Import models, shape light and glyphs, and export editable PNG, SVG, TXT and JSON presets." />
+  <title>ASCII / OBJECT — 3D Type Lab</title>
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
+  <!-- All three.js modules use the SAME version. Static-host friendly (GitHub Pages). -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand" aria-label="ASCII Object Lab">
+        <div class="brand-symbol">A<span>✳</span></div>
+        <div class="brand-wordmark">ASCII<span class="dim">/</span>OBJECT <span class="version">LAB_03</span></div>
+      </div>
+      <div class="top-caption"><span class="live-dot"></span> INTERACTIVE 3D → TYPE STUDY</div>
+      <a class="reference-link" href="https://ship.space/" target="_blank" rel="noopener noreferrer">VISUAL REFERENCE ↗</a>
+    </header>
+
+    <div class="workspace">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="section-index">01 / INPUT & PARAMETERS</div>
+          <h1>Make matter<br /><em>out of type.</em></h1>
+          <p>Turn any 3D mesh into a field of characters, light, and shadow.</p>
+        </div>
+
+        <section class="control-section upload-section">
+          <div class="section-heading"><span>MODEL / FILE</span><span class="heading-icon">↗</span></div>
+          <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Import a 3D model">
+            <input id="modelInput" type="file" accept=".glb,.gltf,.obj,.stl" hidden />
+            <div class="upload-glyph">↥</div>
+            <strong>Drop your 3D model here</strong>
+            <small>or click to browse</small>
+            <span class="file-hint">GLB · GLTF* · OBJ · STL · MAX 60 MB</span>
+          </div>
+          <div class="model-line"><span id="modelName">PRESET / ORBITAL KNOT</span><span id="modelBadge">LIVE</span></div>
+          <div class="model-buttons" id="modelPresets" role="group" aria-label="Preset models">
+            <button class="preset-button active" data-model="knot">KNOT</button>
+            <button class="preset-button" data-model="orb">ORB</button>
+            <button class="preset-button" data-model="station">SPACECRAFT</button>
+            <button class="preset-button" data-model="teapot">TEAPOT</button>
+          </div>
+        </section>
+
+        <section class="control-section">
+          <div class="section-heading"><span>ASCII / RASTER</span><span>02</span></div>
+          <label class="field-label" for="charsetPreset">GLYPH RAMP</label>
+          <select id="charsetPreset" class="select-field">
+            <option value="ship">SHIP-INSPIRED · LETTERS</option>
+            <option value="classic">CLASSIC · SYMBOLS</option>
+            <option value="dense">DENSE · TECHNICAL</option>
+            <option value="dots">DOT MATRIX · CIRCLES</option>
+            <option value="orbitals">ORBITAL · RINGS</option>
+            <option value="braille">BRAILLE · DOT CELLS</option>
+            <option value="blocks">BLOCKS · PIXEL WEIGHT</option>
+            <option value="stars">ASTERISKS · SPARKS</option>
+            <option value="symbols">SYMBOLS · UNCOMMON</option>
+            <option value="binary">BINARY · MINIMAL</option>
+            <option value="custom">CUSTOM RAMP</option>
+          </select>
+          <label class="field-label" for="charsetInput">GLYPH SEQUENCE <span class="help-note">DARK → LIGHT</span></label>
+          <input id="charsetInput" class="text-field mono" type="text" spellcheck="false" value=" .,:;i1rXSGMH" maxlength="70" />
+
+          <div class="slider-field"><div class="slider-label"><label for="cellSize">Cell size <span class="field-translation">/ resolution</span></label><output id="cellSizeValue">14 px</output></div><input id="cellSize" type="range" min="8" max="30" step="1" value="14" /></div>
+          <div class="slider-field"><div class="slider-label"><label for="dither">Ordered dither <span class="field-translation">/ texture</span></label><output id="ditherValue">36%</output></div><input id="dither" type="range" min="0" max="100" step="1" value="36" /></div>
+          <div class="slider-field"><div class="slider-label"><label for="contrast">Contrast <span class="field-translation">/ definition</span></label><output id="contrastValue">1.40×</output></div><input id="contrast" type="range" min="0.5" max="3" step="0.05" value="1.4" /></div>
+          <div class="slider-field"><div class="slider-label"><label for="exposure">Exposure <span class="field-translation">/ brightness</span></label><output id="exposureValue">+0.02</output></div><input id="exposure" type="range" min="-0.6" max="0.6" step="0.02" value="0.02" /></div>
+          <div class="slider-field"><div class="slider-label"><label for="gamma">Gamma <span class="field-translation">/ midtones</span></label><output id="gammaValue">1.00</output></div><input id="gamma" type="range" min="0.5" max="2.2" step="0.05" value="1" /></div>
+          <div class="switch-line"><span>Invert glyph density</span><label class="switch"><input id="invert" type="checkbox" /><span class="switch-ui"></span></label></div>
+        </section>
+
+        <section class="control-section">
+          <div class="section-heading"><span>LIGHT / VOLUME</span><span>03</span></div>
+          <div class="slider-field"><div class="slider-label"><label for="keyLight">Key intensity</label><output id="keyLightValue">2.10</output></div><input id="keyLight" type="range" min="0" max="4" step="0.1" value="2.1" /></div>
+          <div class="slider-field"><div class="slider-label"><label for="ambient">Ambient light</label><output id="ambientValue">0.35</output></div><input id="ambient" type="range" min="0" max="1.5" step="0.05" value="0.35" /></div>
+          <div class="slider-field"><div class="slider-label"><label for="lightX">Light direction X</label><output id="lightXValue">-3.0</output></div><input id="lightX" type="range" min="-8" max="8" step="0.5" value="-3" /></div>
+          <div class="slider-field"><div class="slider-label"><label for="lightY">Light direction Y</label><output id="lightYValue">5.0</output></div><input id="lightY" type="range" min="-8" max="8" step="0.5" value="5" /></div>
+          <div class="switch-line"><span>Auto-rotate</span><label class="switch"><input id="autoRotate" type="checkbox" checked /><span class="switch-ui"></span></label></div>
+          <div class="slider-field"><div class="slider-label"><label for="speed">Rotation speed</label><output id="speedValue">0.50×</output></div><input id="speed" type="range" min="0.05" max="2" step="0.05" value="0.5" /></div>
+        </section>
+
+        <section class="control-section">
+          <div class="section-heading"><span>RECONSTRUCTION / MOTION</span><span>04</span></div>
+          <div class="switch-line first-switch"><span>Assemble on model load</span><label class="switch"><input id="rebuildEnabled" type="checkbox" checked /><span class="switch-ui"></span></label></div>
+          <div class="slider-field"><div class="slider-label"><label for="rebuildTime">Assembly duration</label><output id="rebuildTimeValue">2.50 s</output></div><input id="rebuildTime" type="range" min="0.6" max="7" step="0.1" value="2.5" /></div>
+          <div class="rebuild-status"><span id="rebuildState">ASSEMBLY READY</span><span id="rebuildPercent">100%</span></div>
+          <div class="rebuild-meter"><div id="rebuildMeterFill"></div></div>
+          <button class="line-button" id="rebuildReplay">↻ &nbsp; REPLAY RECONSTRUCTION</button>
+          <small class="section-footnote">A screen-space glyph dissolve. The geometry itself remains intact.</small>
+        </section>
+
+        <section class="control-section palette-section">
+          <div class="section-heading"><span>SHIP / NIGHT PALETTE</span><span>05</span></div>
+          <div class="palette-grid">
+            <label class="color-control"><input id="bgColor" type="color" value="#070619" /><span>BACKGROUND</span></label>
+            <label class="color-control"><input id="shadowColor" type="color" value="#8381be" /><span>SHADOW</span></label>
+            <label class="color-control"><input id="midColor" type="color" value="#b3b0fd" /><span>MIDTONE</span></label>
+            <label class="color-control"><input id="highColor" type="color" value="#f4f2ff" /><span>HIGHLIGHT</span></label>
+          </div>
+          <div class="switch-line"><span>Orbital guides + stars</span><label class="switch"><input id="guides" type="checkbox" checked /><span class="switch-ui"></span></label></div>
+          <button class="line-button" id="resetPalette">↺ &nbsp; RESTORE REFERENCE PALETTE</button>
+        </section>
+
+        <section class="control-section final-section">
+          <div class="section-heading"><span>PRESET</span><span>06</span></div>
+          <div class="inline-actions"><button id="exportPreset" class="line-button">↓ SAVE JSON</button><button id="importPreset" class="line-button">↑ LOAD JSON</button><input id="presetInput" type="file" accept=".json,application/json" hidden /></div>
+          <small class="section-footnote">3D files stay in your browser. Nothing is uploaded to a server.</small>
+        </section>
+      </aside>
+
+      <main class="stage" aria-label="3D ASCII preview">
+        <div class="stage-header"><div><span class="stage-index">VIEWPORT / 001</span><h2>ASCII OBJECT</h2></div><div class="live-state"><span class="live-dot"></span> REAL-TIME RENDER</div></div>
+        <div class="canvas-shell" id="canvasShell">
+          <canvas id="asciiCanvas" width="1000" height="760" aria-label="3D model converted into ASCII art"></canvas>
+          <div id="interactionLayer" aria-label="Drag to orbit the model, scroll to zoom"></div>
+          <div id="dropOverlay" class="drop-overlay"><div class="upload-glyph big">↥</div><strong>DROP MODEL TO LOAD</strong><span>GLB / GLTF / OBJ / STL</span></div>
+          <div class="canvas-watermark"><span>FIG. 001</span><span>3D → ASCII</span></div>
+          <div class="canvas-hint">DRAG TO ORBIT <span>·</span> SCROLL TO ZOOM</div>
+        </div>
+        <div class="stage-actions"><div class="stage-actions-left"><button id="resetView" class="utility-btn"><span>⌖</span> RESET VIEW</button><button id="playPause" class="utility-btn"><span id="playIcon">Ⅱ</span> <span id="playText">PAUSE MOTION</span></button><button id="replayStage" class="utility-btn"><span>↻</span> REBUILD</button></div><div class="frame-stat" id="gridStat">— COL × — ROW / GLYPHS</div></div>
+        <div class="export-panel">
+          <div class="export-info"><span>EXPORT / OUTPUT</span><p>Type, color and composition, ready for your layouts and websites.</p></div>
+          <div class="export-actions"><button id="exportPng" class="export-btn primary">↓ PNG</button><button id="exportSvg" class="export-btn">↓ SVG</button><button id="exportTxt" class="export-btn">↓ ASCII.TXT</button><button id="copyEmbed" class="export-btn embed-primary">&lt;/&gt; COPY EMBED</button><button id="downloadEmbed" class="export-btn">↓ EMBED HTML</button></div>
+        </div>
+        <p class="embed-note">EMBED / The 3D model, glyph ramp, palette and motion are included in the copied HTML. Three.js loads from CDN. <span id="embedStatus" aria-live="polite"></span></p>
+        <div class="stage-bottom"><span>RENDERED LOCALLY / NO UPLOAD</span><span>REFERENCE COLORS FROM USER SCREENSHOT</span></div>
+      </main>
+    </div>
+    <footer class="footer"><span>ASCII / OBJECT LAB — UNOFFICIAL DESIGN STUDY</span><span>INSPIRED BY <a href="https://ship.space/" target="_blank" rel="noopener noreferrer">SHIP.SPACE ↗</a> · BUILT WITH THREE.JS</span></footer>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="embedDialog" class="embed-dialog" aria-labelledby="embedTitle">
+    <form method="dialog"><button class="embed-close" aria-label="Close dialog">×</button></form>
+    <h2 id="embedTitle">EMBED HTML / READY TO COPY</h2>
+    <p>Copy the code below and paste it into an HTML-enabled website. The model is stored inside the snippet — no separate GLB hosting needed.</p>
+    <textarea id="embedCode" readonly spellcheck="false" aria-label="Embed code"></textarea>
+    <div class="embed-dialog-actions"><button id="copyFromDialog" class="export-btn primary">COPY CODE</button><button id="downloadFromDialog" class="export-btn">DOWNLOAD HTML</button></div>
+    <small>Requires an internet connection for Three.js. Some website builders strip iframes or restrict embedded scripts.</small>
+  </dialog>
+  <script>
+    // Catches module network failures before main.js can execute.
+    window.addEventListener('error', (e) => {
+      if (e.message && /module|fetch|CORS/i.test(e.message)) {
+        const el = document.querySelector('#toast');
+        if (el) { el.textContent = 'Unable to load Three.js. Check your internet connection.'; el.classList.add('visible'); }
+      }
+    });
+  </script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
